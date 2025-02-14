@@ -6,7 +6,7 @@
       "version": "20"
     }
   },
-  "forwardPorts": [3000, 8081, 4040],
+  "forwardPorts": [3000, 8081, 4040, 3001],
   "portsAttributes": {
     "3000": {
       "label": "Frontend",
@@ -19,9 +19,13 @@
     "4040": {
       "label": "Ngrok Interface",
       "onAutoForward": "notify"
+    },
+    "3001": {
+      "label": "Twilio Dev Phone",
+      "onAutoForward": "notify"
     }
   },
-  "postCreateCommand": "cd webapp && npm install && cd ../websocket-server && npm install",
+  "postCreateCommand": "cd webapp && npm install && cd ../websocket-server && npm install && npm install -g twilio-cli && npm install -g @twilio/plugin-dev-phone && twilio plugins:install @twilio/plugin-dev-phone",
   "customizations": {
     "vscode": {
       "extensions": [

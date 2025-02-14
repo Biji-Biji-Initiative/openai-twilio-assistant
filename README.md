@@ -29,6 +29,18 @@ npm run dev
 ngrok http 8081
 ```
 
+4. Set up Twilio Dev Phone:
+```bash
+# Login to Twilio (you'll need your Account SID and Auth Token)
+twilio login
+
+# Start the Dev Phone
+twilio dev-phone
+
+# The Dev Phone will be available at:
+# http://localhost:3001
+```
+
 ## Environment Variables
 
 The environment variables are already configured in the repository. If you need to modify them:
@@ -51,6 +63,7 @@ The environment variables are already configured in the repository. If you need 
 - Frontend: 3000
 - WebSocket Server: 8081
 - Ngrok Interface: 4040
+- Twilio Dev Phone: 3001
 
 ## Development in Codespaces
 
@@ -59,13 +72,28 @@ The development environment is pre-configured with:
 - TypeScript support
 - ESLint and Prettier
 - Ngrok
+- Twilio CLI and Dev Phone
 - All necessary development tools
+
+## Using Twilio Dev Phone
+
+1. After starting the Dev Phone, open http://localhost:3001
+2. Log in with your Twilio credentials if prompted
+3. You'll see a phone interface where you can:
+   - Make outbound calls
+   - Receive inbound calls
+   - Test your Twilio application locally
+   - View call logs and debugging information
 
 ## Troubleshooting
 
 If port 8081 is already in use:
 1. Find the process: `lsof -i :8081`
 2. Kill the process: `kill <PID>`
+
+If Twilio Dev Phone doesn't start:
+1. Make sure you're logged in: `twilio login`
+2. Try reinstalling the plugin: `twilio plugins:install @twilio/plugin-dev-phone`
 
 For any other issues, please contact the team lead.
 

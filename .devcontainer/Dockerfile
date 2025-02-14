@@ -13,6 +13,11 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
 
+# Install Twilio CLI and Dev Phone
+RUN npm install -g twilio-cli \
+    && npm install -g @twilio/plugin-dev-phone \
+    && twilio plugins:install @twilio/plugin-dev-phone
+
 # Set up workspace directory
 WORKDIR /workspace
 
