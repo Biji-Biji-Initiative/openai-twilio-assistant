@@ -1,6 +1,73 @@
-# OpenAI Realtime API with Twilio Quickstart
+# OpenAI Twilio Assistant
 
-Combine OpenAI's Realtime API and Twilio's phone calling capability to build an AI calling assistant.
+This project combines OpenAI's Realtime API with Twilio's phone calling capability to build an AI calling assistant.
+
+## Quick Setup with GitHub Codespaces
+
+1. Click the "Code" button on the repository
+2. Select "Create codespace on main"
+3. Wait for the codespace to be created and initialized
+
+## Running the Application
+
+You'll need to run three components:
+
+1. Start the webapp (Frontend):
+```bash
+cd webapp
+npm run dev
+```
+
+2. Start the websocket server:
+```bash
+cd websocket-server
+npm run dev
+```
+
+3. Start ngrok:
+```bash
+ngrok http 8081
+```
+
+## Environment Variables
+
+The environment variables are already configured in the repository. If you need to modify them:
+
+### Webapp (.env)
+- OPENAI_API_KEY
+- TWILIO_ACCOUNT_SID
+- TWILIO_AUTH_TOKEN
+- TWILIO_PHONE_NUMBER
+- NEXT_PUBLIC_BACKEND_URL
+
+### Websocket Server (.env)
+- PUBLIC_URL
+- OPENAI_API_KEY
+- TWILIO_ACCOUNT_SID
+- TWILIO_AUTH_TOKEN
+
+## Ports
+
+- Frontend: 3000
+- WebSocket Server: 8081
+- Ngrok Interface: 4040
+
+## Development in Codespaces
+
+The development environment is pre-configured with:
+- Node.js 20
+- TypeScript support
+- ESLint and Prettier
+- Ngrok
+- All necessary development tools
+
+## Troubleshooting
+
+If port 8081 is already in use:
+1. Find the process: `lsof -i :8081`
+2. Kill the process: `kill <PID>`
+
+For any other issues, please contact the team lead.
 
 <img width="1728" alt="Screenshot 2024-12-18 at 4 59 30 PM" src="https://github.com/user-attachments/assets/d3c8dcce-b339-410c-85ca-864a8e0fc326" />
 
