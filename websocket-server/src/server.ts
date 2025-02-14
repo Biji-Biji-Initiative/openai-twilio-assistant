@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import { WebSocketServer, WebSocket } from "ws";
 import { IncomingMessage } from "http";
 import dotenv from "dotenv";
@@ -38,11 +38,11 @@ const twimlTemplate = readFileSync(join(__dirname, "../twiml.xml"), "utf-8");
 // Initialize Twilio client
 const twilioClient = twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
 
-app.get("/public-url", (req, res) => {
+app.get("/public-url", (req: Request, res: Response) => {
   res.json({ publicUrl: PUBLIC_URL });
 });
 
-app.all("/twiml", (req, res) => {
+app.all("/twiml", (req: Request, res: Response) => {
   const wsUrl = new URL(PUBLIC_URL);
   wsUrl.protocol = "wss:";
   wsUrl.pathname = `/call`;
@@ -52,39 +52,42 @@ app.all("/twiml", (req, res) => {
 });
 
 // New endpoint to list available tools (schemas)
-app.get("/tools", (req, res) => {
+app.get("/tools", (req: Request, res: Response) => {
   res.json(functions.map((f) => f.schema));
 });
 
 // Add outbound call endpoint
-app.post("/outbound-call", async (req, res) => {
-  try {
-    const { to } = req.body;
-    if (!to) {
-      return res.status(400).json({ error: "Missing 'to' phone number." });
+app.post("/outbound-call", (req: Request, res: Response) => {
+  (async () => {
+    try {
+      const { to } = req.body;
+      if (!to) {
+        res.status(400).json({ error: "Missing 'to' phone number." });
+        return;
+      }
+
+      // TwiML with <Stream> referencing your bridging route
+      const outboundTwiML = `
+        <Response>
+          <Connect>
+            <Stream url="${PUBLIC_URL}/call" />
+          </Connect>
+        </Response>
+      `;
+
+      const call = await twilioClient.calls.create({
+        from: TWILIO_PHONE_NUMBER,
+        to,
+        twiml: outboundTwiML,
+      });
+
+      console.log(`Outbound call to ${to} initiated. SID: ${call.sid}`);
+      res.json({ success: true, sid: call.sid });
+    } catch (err) {
+      console.error("Error in /outbound-call:", err);
+      res.status(500).json({ error: err instanceof Error ? err.message : "Unknown error" });
     }
-
-    // TwiML with <Stream> referencing your bridging route
-    const outboundTwiML = `
-      <Response>
-        <Connect>
-          <Stream url="${PUBLIC_URL}/call" />
-        </Connect>
-      </Response>
-    `;
-
-    const call = await twilioClient.calls.create({
-      from: TWILIO_PHONE_NUMBER,
-      to,
-      twiml: outboundTwiML,
-    });
-
-    console.log(`Outbound call to ${to} initiated. SID: ${call.sid}`);
-    res.json({ success: true, sid: call.sid });
-  } catch (err) {
-    console.error("Error in /outbound-call:", err);
-    res.status(500).json({ error: err instanceof Error ? err.message : "Unknown error" });
-  }
+  })();
 });
 
 let currentCall: WebSocket | null = null;
