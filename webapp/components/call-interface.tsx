@@ -9,6 +9,7 @@ import FunctionCallsPanel from "@/components/function-calls-panel";
 import { Item } from "@/components/types";
 import handleRealtimeEvent from "@/lib/handle-realtime-event";
 import PhoneNumberChecklist from "@/components/phone-number-checklist";
+import StatusPanel from "@/components/StatusPanel";
 
 const CallInterface = () => {
   const [selectedPhoneNumber, setSelectedPhoneNumber] = useState("");
@@ -75,14 +76,17 @@ const CallInterface = () => {
             />
           </div>
 
-          {/* Middle Column: Transcript */}
+          {/* Middle Column: Transcript and Status */}
           <div className="col-span-6 flex flex-col gap-4 h-full overflow-hidden">
             <PhoneNumberChecklist
               selectedPhoneNumber={selectedPhoneNumber}
               allConfigsReady={allConfigsReady}
               setAllConfigsReady={setAllConfigsReady}
             />
-            <Transcript items={items} />
+            <div className="flex-grow overflow-hidden">
+              <Transcript items={items} />
+            </div>
+            <StatusPanel />
           </div>
 
           {/* Right Column: Function Calls */}

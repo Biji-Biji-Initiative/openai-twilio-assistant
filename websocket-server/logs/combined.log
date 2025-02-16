@@ -1,0 +1,336 @@
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T10:00:32.991Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T10:01:44.900Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T10:02:56.438Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T10:03:33.062Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T10:03:33.212Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T10:03:33.360Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T17:42:00.057Z"}
+{"code":1006,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T17:43:56.219Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T17:44:40.115Z"}
+{"code":1006,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T17:45:29.277Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T17:46:18.312Z"}
+{"code":1006,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T17:47:34.803Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T17:48:08.709Z"}
+{"code":1006,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T17:48:45.460Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T17:54:49.460Z"}
+{"code":1006,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T17:55:16.400Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:00:59.707Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:03:03.741Z"}
+{"code":1006,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:04:00.864Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:07:24.761Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:07:25.102Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:07:25.273Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:07:25.432Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:07:42.070Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:07:53.269Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:07:53.414Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:07:53.581Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:07:55.657Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:07:56.001Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:07:56.199Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:07:56.398Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:08:22.304Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:08:22.462Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:08:22.612Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:08:22.807Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:08:23.899Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:08:25.886Z"}
+{"code":1006,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:08:43.004Z"}
+{"code":1006,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:08:43.006Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:04.519Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:06.451Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:06.569Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:06.685Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:08.693Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:08.841Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:08.954Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:09.070Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:09.828Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:09.944Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:10.095Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:10.204Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:10.322Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:11.079Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:11.185Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:11.188Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:11.302Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:11.311Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:11.415Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:11.530Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:11.645Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:13.454Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:13.606Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:13.607Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:13.758Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:13.759Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:13.951Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:14.098Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:14.251Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:15.891Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:16.040Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:16.041Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:16.185Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:16.186Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:16.330Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:16.486Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:16.639Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:18.353Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:18.502Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:18.536Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:18.667Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:18.696Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:18.729Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:20.847Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:21.008Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:21.009Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:21.283Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:21.352Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:21.426Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:21.586Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:21.731Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:27.989Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:28.236Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:28.400Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:28.553Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:30.576Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:30.719Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:30.874Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:31.048Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:33.049Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:33.203Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:33.362Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:33.518Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:35.530Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:35.713Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:35.870Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:36.025Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:38.056Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:38.177Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:38.363Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:38.622Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:40.507Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:40.763Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:40.920Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:41.068Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:43.020Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:43.158Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:43.284Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:43.400Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:45.407Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:45.530Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:45.642Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:45.757Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:47.756Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:47.874Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:47.990Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:48.115Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:50.095Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:50.227Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:50.345Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:50.463Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:52.467Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:52.573Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:52.673Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:52.783Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:54.801Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:54.928Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:55.042Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:55.158Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:57.162Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:57.282Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:57.395Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:57.507Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:59.532Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:59.645Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:59.751Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:25:59.852Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:01.864Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:01.963Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:02.074Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:02.173Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:04.180Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:04.299Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:04.396Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:04.508Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:07.176Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:07.292Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:07.399Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:07.530Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:09.490Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:09.604Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:09.723Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:09.839Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:11.836Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:12.387Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:12.500Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:12.603Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:14.681Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:15.272Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:15.447Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:15.565Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:17.684Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:17.794Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:17.913Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:18.031Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:20.442Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:20.835Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:20.942Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:21.051Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:23.500Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:23.697Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:23.816Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:23.924Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:26.486Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:26.773Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:26.920Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:27.089Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:29.170Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:29.949Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:30.268Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:30.384Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:32.970Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:33.494Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:33.626Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:34.481Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:36.562Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:36.632Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:36.802Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:36.902Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:39.289Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:39.790Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:40.051Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:40.196Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:43.731Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:44.564Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:44.863Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:45.159Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:48.811Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:49.316Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:49.670Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:49.859Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:52.151Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:53.358Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:54.129Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:55.017Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:56.883Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:57.214Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:58.360Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:26:59.978Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:01.188Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:02.023Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:02.713Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:06.315Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:06.576Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:06.576Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:06.869Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:07.145Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:09.267Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:10.138Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:19.945Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:20.370Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:22.360Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:25.957Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:26.291Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:26.884Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:28.382Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:28.935Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:29.236Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:29.911Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:31.379Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:32.671Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:32.922Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:34.944Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:35.154Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:38.682Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:38.886Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:39.089Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:41.446Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:41.837Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:42.051Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:42.317Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:44.306Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:44.989Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:45.149Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:45.405Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:53.556Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:53.786Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:54.007Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:54.495Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:56.945Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:57.731Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:27:58.857Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:28:00.050Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:28:01.213Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:28:02.007Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:28:02.296Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:28:02.823Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:28:14.219Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:28:14.328Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:28:14.461Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:28:14.612Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:28:23.777Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:28:28.532Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:28:29.676Z"}
+{"code":1001,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:28:29.679Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:54:04.079Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:54:06.111Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:54:06.257Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:54:06.405Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:54:08.756Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:54:08.912Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:54:09.252Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:54:09.445Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:54:11.767Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:54:11.916Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:54:12.609Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:54:12.832Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:54:15.610Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:54:15.783Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:54:16.068Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:54:16.281Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:54:18.167Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:54:18.463Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:54:18.657Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:54:18.849Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:54:23.059Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:54:24.440Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:54:24.699Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:54:24.877Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:54:32.698Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:54:32.701Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:54:40.407Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:54:40.878Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:54:41.376Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:54:44.149Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:54:45.133Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:54:45.686Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:54:45.963Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:54:46.428Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:54:53.663Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:54:55.363Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:54:55.550Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:54:55.686Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:55:07.781Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:55:08.140Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:55:08.733Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:55:09.100Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:55:21.852Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:55:28.720Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:55:29.095Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:55:30.388Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:55:33.898Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:55:34.879Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:55:35.053Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:55:35.193Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:55:38.593Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:58:03.916Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:58:04.033Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T18:58:04.346Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T18:58:05.826Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T18:58:10.154Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T19:08:25.808Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T19:08:25.953Z"}
+{"code":1000,"level":"info","message":"[Frontend] Connection closed","reason":"New connection replacing old","service":"twilio-openai-service","timestamp":"2025-02-16T19:08:26.101Z"}
+{"code":1005,"level":"info","message":"[Frontend] Connection closed","reason":"","service":"twilio-openai-service","timestamp":"2025-02-16T19:08:26.227Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T19:08:26.361Z"}
+{"hasExistingCall":false,"hasExistingModel":false,"level":"info","message":"[Frontend] New connection established","service":"twilio-openai-service","timestamp":"2025-02-16T19:09:10.233Z"}

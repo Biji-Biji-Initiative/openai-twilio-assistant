@@ -73,7 +73,10 @@ export const ToolConfigurationDialog: React.FC<
             </SelectTrigger>
             <SelectContent>
               {allTemplates.map((template) => (
-                <SelectItem key={template.name} value={template.name}>
+                <SelectItem 
+                  key={`${template.source}-${template.name}`} 
+                  value={template.name}
+                >
                   <span className="flex items-center">
                     {template.name}
                     {template.source === "backend" && <BackendTag />}

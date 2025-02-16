@@ -15,6 +15,7 @@ import { toolTemplates } from "@/lib/tool-templates";
 import { ToolConfigurationDialog } from "./tool-configuration-dialog";
 import { BackendTag } from "./backend-tag";
 import { useBackendTools } from "@/lib/use-backend-tools";
+import ConfigurationPreview from "./ConfigurationPreview";
 
 interface SessionConfigurationPanelProps {
   callStatus: string;
@@ -41,7 +42,7 @@ const SessionConfigurationPanel: React.FC<SessionConfigurationPanelProps> = ({
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
 
   // Custom hook to fetch backend tools every 3 seconds
-  const backendTools = useBackendTools("http://localhost:8081/tools", 3000);
+  const backendTools = useBackendTools(`${process.env.NEXT_PUBLIC_BACKEND_URL}/tools`, 3000);
 
   // Track changes to determine if there are unsaved modifications
   useEffect(() => {
@@ -61,14 +62,25 @@ const SessionConfigurationPanel: React.FC<SessionConfigurationPanelProps> = ({
   const handleSave = async () => {
     setSaveStatus("saving");
     try {
-      await onSave({
+      const payload = {
         instructions,
         voice,
         tools: tools.map((tool) => JSON.parse(tool)),
+      };
+      
+      // Log the complete payload before sending
+      console.log("[SessionConfig] Preparing to send session.update payload:", {
+        type: "session.update",
+        session: payload
       });
+      
+      await onSave(payload);
       setSaveStatus("saved");
       setHasUnsavedChanges(false);
+      
+      console.log("[SessionConfig] Successfully sent configuration update");
     } catch (error) {
+      console.error("[SessionConfig] Error sending configuration:", error);
       setSaveStatus("error");
     }
   };
@@ -249,6 +261,12 @@ const SessionConfigurationPanel: React.FC<SessionConfigurationPanelProps> = ({
                 </Button>
               </div>
             </div>
+
+            {/* Add Configuration Preview */}
+            <ConfigurationPreview 
+              instructions={instructions} 
+              voice={voice} 
+            />
 
             <Button
               className="w-full mt-4"

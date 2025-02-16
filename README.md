@@ -8,9 +8,75 @@ This project combines OpenAI's Realtime API with Twilio's phone calling capabili
 2. Select "Create codespace on main"
 3. Wait for the codespace to be created and initialized
 
+## Configuration Best Practices
+
+### Environment Variables
+The application uses environment variables for all URLs and credentials. Never hardcode these values:
+
+1. Webapp (.env):
+```bash
+OPENAI_API_KEY=your_key
+TWILIO_ACCOUNT_SID=your_sid
+TWILIO_AUTH_TOKEN=your_token
+TWILIO_PHONE_NUMBER=your_number
+NEXT_PUBLIC_BACKEND_URL=https://your-ngrok-domain.ngrok.io  # Must match websocket-server
+```
+
+2. Websocket Server (.env):
+```bash
+PUBLIC_URL=https://your-ngrok-domain.ngrok.io  # Must match webapp
+OPENAI_API_KEY=your_key
+TWILIO_ACCOUNT_SID=your_sid
+TWILIO_AUTH_TOKEN=your_token
+TWILIO_PHONE_NUMBER=your_number
+```
+
+### Critical Rules
+1. Always use environment variables for URLs - never hardcode localhost or domain names
+2. Keep `NEXT_PUBLIC_BACKEND_URL` and `PUBLIC_URL` in sync between webapp and websocket-server
+3. Start services in this exact order:
+   - Run cleanup script first
+   - Start ngrok
+   - Start websocket server
+   - Start webapp
+
+### Common Issues and Solutions
+1. If you see CORS errors:
+   - Verify environment variables are set correctly
+   - Check that ngrok is running
+   - Ensure websocket server started after ngrok
+
+2. If WebSocket connections fail:
+   - Verify ngrok is running with correct domain
+   - Check both .env files have matching URLs
+   - Restart services in correct order
+
+3. If "Check ngrok" button fails:
+   - Verify `/public-url` endpoint is working
+   - Test with: `curl https://your-ngrok-domain.ngrok.io/public-url`
+
 ## Running the Application
 
-You'll need to run three components:
+### Quick Start
+The easiest way to start all services is to use the provided startup script:
+
+```bash
+./start.sh
+```
+
+This script will:
+1. Check for required environment files
+2. Clean up any existing processes
+3. Start all services in the correct order
+4. Verify each service is running properly
+5. Show you the URLs to access the application
+
+To stop all services, either:
+- Press Ctrl+C in the terminal running start.sh
+- Run `./cleanup.sh` in another terminal
+
+### Manual Setup
+If you prefer to run components manually, you'll need to run three components:
 
 1. Start the webapp (Frontend):
 ```bash
@@ -26,7 +92,7 @@ npm run dev
 
 3. Start ngrok:
 ```bash
-ngrok http 8081
+ngrok http --domain=your-permanent-domain.ngrok.io 8081
 ```
 
 4. Set up Twilio Dev Phone:
@@ -60,10 +126,31 @@ The environment variables are already configured in the repository. If you need 
 
 ## Ports
 
-- Frontend: 3000
+The application uses several fixed ports:
+- Frontend (webapp): 3000
 - WebSocket Server: 8081
 - Ngrok Interface: 4040
 - Twilio Dev Phone: 3001
+
+### Handling Port Conflicts
+
+Before starting the application, ensure no other processes are using these ports. You can use the provided cleanup script:
+
+```bash
+# Clean up any processes using required ports
+./cleanup.sh
+```
+
+Then start the services in this order:
+1. Frontend (webapp)
+2. WebSocket Server
+3. Ngrok
+4. Twilio Dev Phone
+
+If you still experience port conflicts:
+1. Run `lsof -i :PORT_NUMBER` to identify the process using a specific port
+2. Use `kill -9 PID` to terminate the process
+3. Or use the cleanup script mentioned above
 
 ## Development in Codespaces
 
@@ -96,6 +183,28 @@ If Twilio Dev Phone doesn't start:
 2. Try reinstalling the plugin: `twilio plugins:install @twilio/plugin-dev-phone`
 
 For any other issues, please contact the team lead.
+
+## Development Guidelines
+
+1. **URL Management**:
+   - Always use environment variables for URLs
+   - Never hardcode localhost or domain names
+   - Keep webapp and websocket-server URLs in sync
+
+2. **Service Order**:
+   - Always start services in the correct order
+   - Use cleanup script before starting
+   - Verify each service is running before starting the next
+
+3. **Code Changes**:
+   - Test all endpoints after making changes
+   - Verify CORS configuration if modifying server
+   - Check WebSocket connections after URL changes
+
+4. **Environment Variables**:
+   - Double-check both .env files after changes
+   - Verify ngrok URL matches in both files
+   - Test public endpoints after URL changes
 
 <img width="1728" alt="Screenshot 2024-12-18 at 4 59 30 PM" src="https://github.com/user-attachments/assets/d3c8dcce-b339-410c-85ca-864a8e0fc326" />
 
@@ -189,11 +298,18 @@ Twilio needs to be able to reach your websocket server. If you're running it loc
 
 We have set the `websocket-server` to run on port `8081` by default, so that is the port we will be forwarding.
 
+If you have a paid ngrok account with a permanent URL:
+```shell
+# Use your permanent domain
+ngrok http --domain=your-permanent-domain.ngrok.io 8081
+```
+
+For free accounts:
 ```shell
 ngrok http 8081
 ```
 
-Make note of the `Forwarding` URL. (e.g. `https://54c5-35-170-32-42.ngrok-free.app`)
+Make note of the `Forwarding` URL and update it in `websocket-server/.env` as `PUBLIC_URL`.
 
 ### Websocket URL
 
