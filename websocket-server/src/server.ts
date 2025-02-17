@@ -1,209 +1,108 @@
-import express from "express";
+import express, { Application } from "express";
 import { createServer } from "http";
 import WebSocket from "ws";
-import dotenv from "dotenv";
 import cors from "cors";
-import twilio from "twilio";
-import { logger } from "./utils/logger";
-import { setupWebSocketServer, currentLogs } from "./handlers/ws-handler";
-import { handleHttpRequest } from "./handlers/http-handler";
-import { isOriginAllowed, verifyWebSocketClient, generateStreamingTwiML, logCallDetails, formatErrorDetails } from "./utils";
+import logger from "./utils/logger";
+import { isOriginAllowed } from "./utils";
+import { WebSocketEventHandler } from './handlers/event-handler';
+import { env } from './config/environment';
+import { errorHandler, notFoundHandler } from './middleware/error-handler';
+import { sessionService } from './services/session-service';
+import apiRouter from './routes/api';
 
-dotenv.config();
+export async function startServer(): Promise<ReturnType<typeof createServer>> {
+  const app: Application = express();
+  
+  // Trust proxy - required for rate limiting behind ngrok
+  app.set('trust proxy', 1);
+  
+  const server = createServer(app);
+  const wss = new WebSocket.Server({ server });
 
-const app = express();
-const server = createServer(app);
+  // Global CORS middleware configuration
+  const corsOptions = {
+    origin: function (origin: string | undefined, callback: (error: Error | null, allow?: boolean) => void) {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) {
+        logger.info('[CORS] Allowing request with no origin');
+        callback(null, true);
+        return;
+      }
 
-// Global CORS middleware configuration
-const corsOptions = {
-  origin: function (origin: string | undefined, callback: (error: Error | null, allow?: boolean) => void) {
-    // Allow requests with no origin (like mobile apps, curl, etc.)
-    if (!origin) {
-      logger.info('[CORS] Allowing request with no origin');
-      callback(null, true);
-      return;
-    }
+      // In development, be more permissive with CORS
+      if (env.NODE_ENV === 'development') {
+        logger.info(`[CORS] Development mode - allowing origin: ${origin}`);
+        callback(null, true);
+        return;
+      }
 
-    if (isOriginAllowed(origin)) {
-      logger.info(`[CORS] Allowing origin: ${origin}`);
-      callback(null, true);
-    } else {
-      logger.warn(`[CORS] Rejected origin: ${origin}`);
-      callback(new Error('CORS not allowed'));
-    }
-  },
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Cache-Control', 'Pragma', 'Accept'],
-  exposedHeaders: ['Content-Length', 'Content-Type']
-};
+      if (isOriginAllowed(origin)) {
+        logger.info(`[CORS] Allowing origin: ${origin}`);
+        callback(null, true);
+      } else {
+        logger.warn(`[CORS] Rejected origin: ${origin}`);
+        callback(new Error('CORS not allowed'));
+      }
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Cache-Control', 'Pragma', 'Accept', 'Origin'],
+    exposedHeaders: ['Content-Length', 'Content-Type']
+  };
 
-// Apply CORS middleware
-app.use(cors(corsOptions));
+  // Middleware
+  app.use(cors(corsOptions));
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
 
-// Add CORS headers for WebSocket upgrade requests
-app.use((req, res, next) => {
-  const origin = req.headers.origin;
-  if (origin && isOriginAllowed(origin)) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+  // Add CORS headers for WebSocket upgrade requests
+  app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Origin');
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     
     if (req.method === 'OPTIONS') {
       res.sendStatus(200);
       return;
     }
-  }
-  next();
-});
+    next();
+  });
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+  // Mount API routes
+  app.use('/api', apiRouter);
 
-// Initialize WebSocket server
-const wss = new WebSocket.Server({ server });
+  // WebSocket connection handling
+  wss.on('connection', (ws: WebSocket) => {
+    const sessionId = sessionService.createSession(ws);
+    const handler = new WebSocketEventHandler(ws);
+    
+    ws.on('message', async (message: string) => {
+      await handler.handleMessage(message);
+    });
 
-// Environment variables
-const PORT = process.env.PORT || 8081;
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
-const PUBLIC_URL = process.env.PUBLIC_URL?.replace(/\/$/, "") as string; // Remove trailing slash if present
-const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID;
-const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN;
-const TWILIO_PHONE_NUMBER = process.env.TWILIO_PHONE_NUMBER;
+    ws.on('error', (error: Error) => {
+      logger.error('WebSocket error:', error);
+    });
 
-// Log environment variables (excluding sensitive data)
-logger.info('Environment variables:', {
-  PORT,
-  OPENAI_API_KEY: OPENAI_API_KEY ? '[SET]' : '[NOT SET]',
-  TWILIO_ACCOUNT_SID: TWILIO_ACCOUNT_SID ? '[SET]' : '[NOT SET]',
-  TWILIO_AUTH_TOKEN: TWILIO_AUTH_TOKEN ? '[SET]' : '[NOT SET]',
-  TWILIO_PHONE_NUMBER: TWILIO_PHONE_NUMBER ? '[SET]' : '[NOT SET]'
-});
+    ws.on('close', () => {
+      sessionService.removeSession(sessionId);
+      logger.info('Client disconnected:', { sessionId });
+    });
+  });
 
-// Only exit in production if variables are missing
-if (process.env.NODE_ENV === 'production' && (!OPENAI_API_KEY || !PUBLIC_URL || !TWILIO_ACCOUNT_SID || !TWILIO_AUTH_TOKEN || !TWILIO_PHONE_NUMBER)) {
-  logger.error("[Server] Missing required environment variables in production");
-  process.exit(1);
+  // Error handling
+  app.use('*', notFoundHandler);
+  app.use(errorHandler);
+
+  // Start server
+  server.listen(env.PORT, () => {
+    logger.info(`Server is running on port ${env.PORT}`);
+    logger.info(`Public URL: ${env.PUBLIC_URL || `http://localhost:${env.PORT}`}`);
+    logger.info('WebSocket endpoints:');
+    logger.info(`- Call: ${env.PUBLIC_URL || `http://localhost:${env.PORT}`}/call`);
+    logger.info(`- Logs: ${env.PUBLIC_URL || `http://localhost:${env.PORT}`}/logs`);
+  });
+
+  return server;
 }
-
-logger.info("[Server] Using PUBLIC_URL:", PUBLIC_URL || 'http://localhost:8081');
-
-// Initialize Twilio client
-const twilioClient = twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
-
-// Setup WebSocket server with OpenAI integration
-setupWebSocketServer(wss, OPENAI_API_KEY || '');
-
-// Setup HTTP routes
-app.use(handleHttpRequest);
-
-// Inbound call handler
-app.post("/incoming-call", (req: express.Request, res: express.Response) => {
-  const callDetails = {
-    from: req.body.From,
-    to: req.body.To,
-    callSid: req.body.CallSid,
-    direction: 'inbound',
-    timestamp: new Date().toISOString()
-  };
-
-  logCallDetails('IncomingCall', callDetails, 'Received inbound call');
-
-  const twiml = generateStreamingTwiML(PUBLIC_URL, 'Connected');
-  res.type('text/xml');
-  res.send(twiml.toString());
-});
-
-// Status callback endpoint (shared between inbound and outbound calls)
-app.post("/status-callback", (req: express.Request, res: express.Response) => {
-  const {
-    CallSid: callSid,
-    CallStatus: callStatus,
-    CallDuration: duration,
-    ErrorCode: errorCode,
-    ErrorMessage: errorMessage,
-    SequenceNumber: sequence,
-    Direction: direction,
-    CallbackSource: source,
-    Timestamp: eventTimestamp,
-  } = req.body;
-
-  const statusDetails = {
-    callSid,
-    callStatus,
-    duration: duration || 0,
-    sequence,
-    direction,
-    source,
-    eventTimestamp,
-    ...(errorCode && { errorCode, errorMessage })
-  };
-
-  logCallDetails('StatusCallback', statusDetails, 'Call status update received');
-
-  // Forward status updates to the frontend if logs connection exists
-  if (currentLogs?.readyState === WebSocket.OPEN) {
-    try {
-      currentLogs.send(JSON.stringify({
-        type: "call.status",
-        ...statusDetails,
-        timestamp: new Date().toISOString(),
-      }));
-      logger.debug('[StatusCallback] Forwarded status to frontend');
-    } catch (err) {
-      const error = formatErrorDetails(err);
-      logger.error('[StatusCallback] Error forwarding status to frontend:', error);
-
-      // Try to notify frontend about the error
-      try {
-        currentLogs.send(JSON.stringify({
-          type: "error",
-          error: "Failed to forward call status",
-          details: error.message,
-          timestamp: new Date().toISOString(),
-        }));
-      } catch (sendError) {
-        logger.error('[StatusCallback] Failed to send error notification:', formatErrorDetails(sendError));
-      }
-    }
-  } else {
-    logger.warn('[StatusCallback] No active logs connection to forward status');
-  }
-
-  res.sendStatus(200);
-});
-
-// Add health check endpoint
-app.get('/health', (req, res) => {
-  res.json({
-    status: 'ok',
-    service: 'websocket-server',
-    environment: {
-      publicUrl: process.env.PUBLIC_URL || 'http://localhost:8081',
-      mode: process.env.NODE_ENV || 'development'
-    },
-    timestamp: new Date().toISOString()
-  });
-});
-
-// Error handling middleware
-app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
-  const error = formatErrorDetails(err);
-  logger.error('[Server] Unhandled error:', error);
-  
-  res.status(500).json({
-    error: 'Internal Server Error',
-    message: error.message
-  });
-});
-
-// Start server
-server.listen(PORT, () => {
-  const publicUrl = process.env.PUBLIC_URL || `http://localhost:${PORT}`;
-  logger.info(`Server is running on port ${PORT}`);
-  logger.info(`Public URL: ${publicUrl}`);
-  logger.info(`WebSocket endpoints:`);
-  logger.info(`- Call: ${publicUrl}/call`);
-  logger.info(`- Logs: ${publicUrl}/logs`);
-});
