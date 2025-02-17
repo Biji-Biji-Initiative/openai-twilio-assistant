@@ -1,65 +1,67 @@
-export const toolTemplates = [
+export interface ToolTemplate {
+  name: string;
+  description: string;
+  parameters: {
+    type: string;
+    properties: Record<string, any>;
+    required: string[];
+  };
+}
+
+export const toolTemplates: ToolTemplate[] = [
   {
-    name: "get_weather",
-    type: "function",
-    description: "Get the current weather",
+    name: "search",
+    description: "Search for information on a given topic",
     parameters: {
       type: "object",
       properties: {
-        location: { type: "string" },
-      },
-    },
-  },
-  {
-    name: "ping_no_args",
-    type: "function",
-    description: "A simple ping tool with no arguments",
-    parameters: {
-      type: "object",
-      properties: {},
-    },
-  },
-  {
-    name: "get_user_nested_args",
-    type: "function",
-    description: "Fetch user profile by nested identifier",
-    parameters: {
-      type: "object",
-      properties: {
-        user: {
-          type: "object",
-          properties: {
-            id: { type: "string" },
-            metadata: {
-              type: "object",
-              properties: {
-                region: { type: "string" },
-                role: { type: "string" },
-              },
-            },
-          },
+        query: {
+          type: "string",
+          description: "The search query",
         },
       },
+      required: ["query"],
     },
   },
   {
-    name: "calculate_route_more_properties",
-    type: "function",
-    description: "Calculate travel route with multiple parameters",
+    name: "lookup",
+    description: "Look up specific information in a database",
     parameters: {
       type: "object",
       properties: {
-        start: { type: "string" },
-        end: { type: "string" },
-        mode: { type: "string", enum: ["car", "bike", "walk"] },
-        options: {
-          type: "object",
-          properties: {
-            avoid_highways: { type: "boolean" },
-            scenic_route: { type: "boolean" },
-          },
+        id: {
+          type: "string",
+          description: "The ID to look up",
+        },
+        type: {
+          type: "string",
+          description: "The type of information to look up",
+          enum: ["customer", "order", "product"],
         },
       },
+      required: ["id", "type"],
+    },
+  },
+  {
+    name: "calculate",
+    description: "Perform a calculation",
+    parameters: {
+      type: "object",
+      properties: {
+        operation: {
+          type: "string",
+          description: "The operation to perform",
+          enum: ["add", "subtract", "multiply", "divide"],
+        },
+        numbers: {
+          type: "array",
+          items: {
+            type: "number",
+          },
+          description: "The numbers to calculate with",
+        },
+      },
+      required: ["operation", "numbers"],
     },
   },
 ];

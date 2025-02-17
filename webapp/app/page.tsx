@@ -1,6 +1,6 @@
 "use client";
 
-import ConsoleTabs from "@/components/ConsoleTabs";
+import { ConsoleTabs } from "@/components/console/tabs";
 import { useState } from "react";
 
 export default function Page() {

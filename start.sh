@@ -85,6 +85,14 @@ check_env_vars() {
     print_status "Environment files found"
 }
 
+# Kill existing processes
+cleanup() {
+    print_status "Cleaning up existing processes..."
+    pkill -f "ngrok"
+    pkill -f "node"
+    sleep 2
+}
+
 # Main startup sequence
 main() {
     echo "Starting OpenAI Twilio Assistant..."
@@ -93,8 +101,7 @@ main() {
     check_env_vars
     
     # Clean up existing processes
-    print_status "Cleaning up existing processes..."
-    ./cleanup.sh
+    cleanup
     
     # Start ngrok
     print_status "Starting ngrok..."
@@ -148,7 +155,7 @@ main() {
 }
 
 # Trap Ctrl+C and call cleanup
-trap './cleanup.sh; exit 0' INT
+trap 'cleanup; exit 0' INT
 
 # Start the application
 main 

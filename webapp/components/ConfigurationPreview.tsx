@@ -1,37 +1,45 @@
-import React from "react";
+import React from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Bot, Mic2 } from 'lucide-react';
 
 interface ConfigurationPreviewProps {
   instructions: string;
   voice: string;
 }
 
-const ConfigurationPreview: React.FC<ConfigurationPreviewProps> = ({
+export default function ConfigurationPreview({
   instructions,
   voice,
-}) => {
+}: ConfigurationPreviewProps) {
   return (
-    <div className="mt-4 p-4 border rounded bg-gray-100">
-      <h2 className="text-lg font-bold mb-2">Configuration Preview</h2>
-
-      {/* Show the chosen voice clearly */}
-      <p className="text-sm mb-2">
-        <strong>Voice:</strong> {voice}
-      </p>
-
-      {/* Show the instructions clearly */}
-      <p className="text-sm mb-2">
-        <strong>Instructions:</strong> {instructions}
-      </p>
-
-      {/* Show JSON for developer reference */}
-      <div className="mt-4 pt-4 border-t border-gray-200">
-        <p className="text-xs text-gray-500 mb-1">Developer Preview:</p>
-        <pre className="text-xs text-gray-800 overflow-auto">
-          {JSON.stringify({ instructions, voice }, null, 2)}
-        </pre>
-      </div>
-    </div>
+    <Card className="bg-muted/50">
+      <CardHeader className="pb-2">
+        <CardTitle className="text-sm font-medium">Preview</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <ScrollArea className="h-[120px]">
+          <div className="space-y-4">
+            <div className="flex items-start gap-3">
+              <div className="shrink-0 w-8 h-8 rounded-full flex items-center justify-center border bg-secondary border-secondary">
+                <Bot className="h-4 w-4" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <span className="text-sm font-medium">Assistant</span>
+                  <span className="text-xs text-muted-foreground flex items-center gap-1">
+                    <Mic2 className="h-3 w-3" />
+                    {voice}
+                  </span>
+                </div>
+                <p className="text-sm text-muted-foreground leading-relaxed break-words">
+                  {instructions}
+                </p>
+              </div>
+            </div>
+          </div>
+        </ScrollArea>
+      </CardContent>
+    </Card>
   );
-};
-
-export default ConfigurationPreview; 
+}

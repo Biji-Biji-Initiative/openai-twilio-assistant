@@ -1,0 +1,353 @@
+---
+description: Component Structure and Behavior Rules
+globs: 
+---
+## File Organization
+```
+webapp/components/
+├── ui/                    # Reusable UI components
+├── [feature]/            # Feature-specific components
+└── [feature]/components/ # Sub-components for complex features
+```
+
+## Component File Structure
+
+1. **Imports**
+   ```typescript
+   // 1. React and Next.js imports
+   "use client";
+   import * as React from "react";
+   
+   // 2. Third-party library imports
+   import { cva } from "class-variance-authority";
+   
+   // 3. UI component imports
+   import { Button } from "@/components/ui/button";
+   
+   // 4. Utility imports
+   import { cn } from "@/lib/utils";
+   
+   // 5. Type imports
+   import type { ComponentProps } from "@/types";
+   
+   // 6. Hook imports
+   import { useCustomHook } from "@/hooks/useCustomHook";
+   ```
+
+2. **Type Definitions**
+   ```typescript
+   interface ComponentProps {
+     // Required props first
+     required: string;
+     // Optional props second
+     optional?: string;
+     // Callback props with clear types
+     onAction?: (data: ActionData) => void;
+     // Boolean flags last
+     disabled?: boolean;
+   }
+   ```
+
+## Component Implementation Rules
+
+1. **Component Declaration**
+   ```typescript
+   export const Component = React.forwardRef<HTMLElement, ComponentProps>(({
+     // Destructure props with defaults
+     required,
+     optional = "default",
+     onAction,
+     disabled = false,
+     // Rest props for HTML attributes
+     ...props
+   }, ref) => {
+     return (
+       // Implementation
+     );
+   });
+   Component.displayName = "Component";
+   ```
+
+2. **State Management**
+   - Use `useState` for simple component state
+   - Use `useReducer` for complex state logic
+   - Define state near the top of the component
+   ```typescript
+   const [state, setState] = useState(initialState);
+   const [store, dispatch] = useReducer(reducer, initialState);
+   ```
+
+3. **Effects and Callbacks**
+   - Place after state declarations
+   - Use cleanup functions
+   - Memoize callbacks with `useCallback`
+   ```typescript
+   useEffect(() => {
+     // Effect logic
+     return () => {
+       // Cleanup
+     };
+   }, [dependencies]);
+
+   const handleAction = useCallback(() => {
+     // Action logic
+   }, [dependencies]);
+   ```
+
+## Styling Guidelines
+
+1. **Class Organization**
+   ```typescript
+   className={cn(
+     // 1. Layout classes
+     "flex flex-col",
+     // 2. Spacing classes
+     "gap-4 p-6",
+     // 3. Sizing classes
+     "w-full h-full",
+     // 4. Typography classes
+     "text-sm font-medium",
+     // 5. Visual classes (borders, shadows, etc)
+     "border rounded-lg shadow-sm",
+     // 6. State classes
+     "hover:bg-accent",
+     // 7. Responsive classes
+     "sm:flex-row md:gap-6",
+     // 8. Custom classes
+     className
+   )}
+   ```
+
+2. **Variants and Sizes**
+   ```typescript
+   const componentVariants = cva("base-classes", {
+     variants: {
+       variant: {
+         default: "...",
+         secondary: "...",
+       },
+       size: {
+         sm: "...",
+         md: "...",
+         lg: "...",
+       },
+     },
+     defaultVariants: {
+       variant: "default",
+       size: "md",
+     },
+   });
+   ```
+
+## Dialog/Modal Components
+
+1. **Structure**
+   ```typescript
+   <Dialog>
+     <DialogContent className="size-classes">
+       <DialogHeader>
+         <DialogTitle>Clear Title</DialogTitle>
+         <DialogDescription>Helpful description</DialogDescription>
+       </DialogHeader>
+       
+       <div className="content-wrapper">
+         {/* Main content */}
+       </div>
+       
+       <DialogFooter>
+         {/* Action buttons */}
+       </DialogFooter>
+     </DialogContent>
+   </Dialog>
+   ```
+
+2. **Sizing Rules**
+   - Use fixed heights for predictable layouts
+   - Max height should be viewport relative
+   - Width should be appropriate for content
+   ```typescript
+   className="w-full max-w-[900px] h-[80vh] p-6"
+   ```
+
+## Form Components
+
+1. **Layout Pattern**
+   ```typescript
+   <div className="space-y-4">
+     <div className="space-y-2">
+       <Label>Field Label</Label>
+       <Input />
+       <p className="text-sm text-muted-foreground">
+         Helper text
+       </p>
+     </div>
+   </div>
+   ```
+
+2. **Validation Pattern**
+   ```typescript
+   const [error, setError] = useState<string | null>(null);
+   const [touched, setTouched] = useState(false);
+
+   const validate = useCallback(() => {
+     if (!value && required) {
+       setError("This field is required");
+       return false;
+     }
+     setError(null);
+     return true;
+   }, [value, required]);
+   ```
+
+## List/Grid Components
+
+1. **Structure**
+   ```typescript
+   <div className="space-y-4">
+     {items.map((item) => (
+       <div
+         key={item.id}
+         className="flex items-center gap-4 p-4 border rounded-lg"
+       >
+         {/* Item content */}
+       </div>
+     ))}
+   </div>
+   ```
+
+2. **Empty States**
+   ```typescript
+   {items.length === 0 ? (
+     <div className="text-center p-8 text-muted-foreground">
+       No items found
+     </div>
+   ) : (
+     // List content
+   )}
+   ```
+
+## Performance Guidelines
+
+1. **Memoization**
+   - Memoize expensive computations
+   - Use `useMemo` for complex derived values
+   - Use `useCallback` for function props
+   ```typescript
+   const memoizedValue = useMemo(() => {
+     return expensiveComputation(deps);
+   }, [deps]);
+   ```
+
+2. **Render Optimization**
+   - Use `React.memo` for pure components
+   - Keep components focused and small
+   - Avoid unnecessary re-renders
+   ```typescript
+   export const PureComponent = React.memo(function PureComponent() {
+     return <div>Optimized render</div>;
+   });
+   ```
+
+## Error Handling
+
+1. **Error Boundaries**
+   - Implement for feature components
+   - Provide fallback UI
+   ```typescript
+   <ErrorBoundary
+     fallback={<ErrorFallback />}
+   >
+     <FeatureComponent />
+   </ErrorBoundary>
+   ```
+
+2. **Loading States**
+   - Show loading indicators
+   - Maintain layout stability
+   ```typescript
+   {isLoading ? (
+     <LoadingSkeleton />
+   ) : error ? (
+     <ErrorMessage error={error} />
+   ) : (
+     <Content data={data} />
+   )}
+   ```
+
+## Accessibility Guidelines
+
+1. **Required Attributes**
+   - Proper ARIA labels
+   - Keyboard navigation
+   - Focus management
+   ```typescript
+   <button
+     aria-label="Close dialog"
+     onClick={onClose}
+     onKeyDown={handleKeyDown}
+   >
+     <Icon />
+   </button>
+   ```
+
+2. **Color Contrast**
+   - Use design system colors
+   - Test contrast ratios
+   - Provide sufficient contrast
+
+## Testing Requirements
+
+1. **Component Tests**
+   - Test user interactions
+   - Test state changes
+   - Test error states
+   ```typescript
+   test("component handles user interaction", () => {
+     render(<Component />);
+     // Test implementation
+   });
+   ```
+
+2. **Accessibility Tests**
+   - Test keyboard navigation
+   - Test screen reader compatibility
+   - Test ARIA attributes
+
+## Documentation
+
+1. **Component Comments**
+   ```typescript
+   /**
+    * Component description
+    * @param {ComponentProps} props - Component props
+    * @returns {JSX.Element} Rendered component
+    */
+   ```
+
+2. **Props Documentation**
+   ```typescript
+   interface Props {
+     /** Description of the prop */
+     prop: string;
+   }
+   ```
+
+## Security Considerations
+
+1. **Input Sanitization**
+   - Sanitize user input
+   - Prevent XSS attacks
+   - Validate file uploads
+
+2. **Access Control**
+   - Check user permissions
+   - Protect sensitive data
+   - Implement proper authentication
+
+---
+
+globs:
+  - "webapp/components/**/*.tsx"
+  - "webapp/components/**/*.ts"
+  - "webapp/app/**/*.tsx"
+  - "webapp/app/**/*.ts"

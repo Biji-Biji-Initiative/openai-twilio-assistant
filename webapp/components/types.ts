@@ -1,9 +1,9 @@
 export type Item = {
   id: string;
   object: string; // e.g. "realtime.item"
-  type: "message" | "function_call" | "function_call_output";
+  type: "message" | "function_call" | "function_call_output" | "call_status";
   timestamp?: string;
-  status?: "running" | "completed";
+  status?: string;
   // For "message" items
   role?: "system" | "user" | "assistant" | "tool";
   content?: { type: string; text: string }[];
@@ -13,6 +13,9 @@ export type Item = {
   params?: Record<string, any>;
   // For "function_call_output" items
   output?: string;
+  // For "call_status" items
+  phoneNumber?: string;
+  duration?: string;
 };
 
 export interface PhoneNumber {

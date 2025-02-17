@@ -1,32 +1,56 @@
 import { useState, useEffect } from "react";
 
+interface BackendTool {
+  name: string;
+  description: string;
+  parameters: Record<string, any>;
+}
+
 // Custom hook to fetch backend tools repeatedly
-export function useBackendTools(url: string, intervalMs: number) {
-  const [tools, setTools] = useState<any[]>([]);
+export function useBackendTools(url: string, pollInterval: number = 3000): BackendTool[] {
+  const [tools, setTools] = useState<BackendTool[]>([]);
 
   useEffect(() => {
-    let isMounted = true;
+    let mounted = true;
+    let timeoutId: NodeJS.Timeout;
 
-    const fetchTools = () => {
-      fetch(url)
-        .then((res) => res.json())
-        .then((data) => {
-          if (isMounted) setTools(data);
-        })
-        .catch((error) => {
-          // On failure, we just let it retry after interval
-          console.error("Error fetching backend tools:", error);
+    const fetchTools = async () => {
+      try {
+        // Ensure URL is properly formed
+        const apiUrl = url.startsWith('http') ? url : `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/tools`;
+        const response = await fetch(apiUrl, {
+          method: 'GET',
+          headers: {
+            'Cache-Control': 'no-cache',
+            'Accept': 'application/json'
+          }
         });
+
+        if (!response.ok) {
+          console.warn('[useBackendTools] Failed to fetch tools:', response.statusText);
+          return;
+        }
+
+        const data = await response.json();
+        if (mounted) {
+          setTools(data);
+        }
+      } catch (error) {
+        console.error('[useBackendTools] Error fetching tools:', error);
+      } finally {
+        if (mounted) {
+          timeoutId = setTimeout(fetchTools, pollInterval);
+        }
+      }
     };
 
     fetchTools();
-    const intervalId = setInterval(fetchTools, intervalMs);
 
     return () => {
-      isMounted = false;
-      clearInterval(intervalId);
+      mounted = false;
+      clearTimeout(timeoutId);
     };
-  }, [url, intervalMs]);
+  }, [url, pollInterval]);
 
   return tools;
 }

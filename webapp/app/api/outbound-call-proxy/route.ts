@@ -1,7 +1,8 @@
 import { NextRequest } from 'next/server';
-import { handleCors, createErrorResponse, createSuccessResponse, validateRequestBody, validateEnvVars } from '../api-helpers';
+import { createErrorResponse, createSuccessResponse, validateRequest, validateEnvVars } from '../api-helpers';
 import { logger } from '../../lib/logger';
 import twilio from 'twilio';
+import { OutboundCallSchema } from '@/lib/validation-schemas';
 
 const requiredEnvVars = [
   'TWILIO_ACCOUNT_SID',
@@ -11,18 +12,12 @@ const requiredEnvVars = [
 ];
 
 export async function POST(req: NextRequest) {
-  // Handle CORS
-  const corsHeaders = handleCors(req);
-  
   try {
     // Validate environment variables
     validateEnvVars(requiredEnvVars);
     
-    // Parse request body
-    const body = await req.json();
-    
-    // Validate request body
-    validateRequestBody(body, ['phoneNumber']);
+    // Validate request body using Zod schema
+    const validatedBody = await validateRequest(req, OutboundCallSchema);
     
     // Initialize Twilio client
     const client = twilio(
@@ -32,7 +27,7 @@ export async function POST(req: NextRequest) {
 
     // Make the outbound call
     const call = await client.calls.create({
-      to: body.phoneNumber,
+      to: validatedBody.phoneNumber,
       from: process.env.TWILIO_PHONE_NUMBER!,
       url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/twiml`,
       statusCallback: `${process.env.NEXT_PUBLIC_BACKEND_URL}/status-callback`,
@@ -42,7 +37,7 @@ export async function POST(req: NextRequest) {
 
     logger.info('[OutboundCallProxy] Call initiated:', { 
       callSid: call.sid,
-      to: body.phoneNumber,
+      to: validatedBody.phoneNumber,
       status: call.status 
     });
 

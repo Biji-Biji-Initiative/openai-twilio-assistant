@@ -1,7 +1,12 @@
-import React from "react";
+import React from 'react';
+import { Badge } from '@/components/ui/badge';
+import { Server } from 'lucide-react';
 
-export const BackendTag = () => (
-  <span className="ml-2 text-xs text-green-600 border border-green-600 rounded px-1 py-[1px]">
-    backend
-  </span>
-);
+export function BackendTag() {
+  return (
+    <Badge variant="secondary" className="ml-2 gap-1">
+      <Server className="h-3 w-3" />
+      <span>Backend</span>
+    </Badge>
+  );
+}

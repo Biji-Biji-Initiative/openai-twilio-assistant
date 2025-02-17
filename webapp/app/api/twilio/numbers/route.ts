@@ -1,7 +1,8 @@
 import { NextRequest } from 'next/server';
-import { handleCors, createErrorResponse, createSuccessResponse, validateEnvVars, validateRequestBody, APIError } from '../../api-helpers';
+import { handleCors, createErrorResponse, createSuccessResponse, validateRequest, validateEnvVars, APIError } from '../../api-helpers';
 import { logger } from '../../../lib/logger';
 import twilio from 'twilio';
+import { PhoneNumberUpdateSchema } from '@/lib/validation-schemas';
 
 const requiredEnvVars = [
   'TWILIO_ACCOUNT_SID',
@@ -70,27 +71,23 @@ export async function GET(req: NextRequest) {
  * Update Twilio phone number configuration
  */
 export async function POST(req: NextRequest) {
-  // Handle CORS
-  const corsHeaders = handleCors(req);
-  
   try {
     // Initialize client
     const client = initializeTwilioClient();
 
-    // Parse and validate request body
-    const body = await req.json();
-    validateRequestBody(body, ['phoneNumberSid', 'voiceUrl']);
+    // Validate request body using Zod schema
+    const validatedBody = await validateRequest(req, PhoneNumberUpdateSchema);
 
     logger.info('[TwilioAPI] Updating phone number:', { 
-      sid: body.phoneNumberSid,
-      voiceUrl: body.voiceUrl
+      sid: validatedBody.phoneNumberSid,
+      voiceUrl: validatedBody.voiceUrl
     });
 
     // Update phone number
-    const updatedNumber = await client.incomingPhoneNumbers(body.phoneNumberSid)
+    const updatedNumber = await client.incomingPhoneNumbers(validatedBody.phoneNumberSid)
       .update({
-        voiceUrl: body.voiceUrl,
-        statusCallback: `${body.voiceUrl.replace(/\/twiml$/, '')}/status-callback`
+        voiceUrl: validatedBody.voiceUrl,
+        statusCallback: `${validatedBody.voiceUrl.replace(/\/twiml$/, '')}/status-callback`
       });
 
     logger.info('[TwilioAPI] Successfully updated phone number:', {
@@ -116,13 +113,11 @@ export async function POST(req: NextRequest) {
  * Handle OPTIONS request for CORS preflight
  */
 export async function OPTIONS(req: NextRequest) {
-  const corsHeaders = handleCors(req);
-  if (corsHeaders instanceof Response) {
-    return corsHeaders;
-  }
-  
   return new Response(null, {
     status: 204,
-    headers: corsHeaders
+    headers: {
+      'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    },
   });
 }

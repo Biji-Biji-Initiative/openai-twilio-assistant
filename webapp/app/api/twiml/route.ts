@@ -1,36 +1,31 @@
 import { NextRequest } from 'next/server';
-import { handleCors, createErrorResponse, createSuccessResponse, validateRequestBody } from '../api-helpers';
+import { createErrorResponse, validateRequest } from '../api-helpers';
 import { logger } from '../../lib/logger';
 import twilio from 'twilio';
 import VoiceResponse from 'twilio/lib/twiml/VoiceResponse';
+import { TwiMLRequestSchema } from '@/lib/validation-schemas';
 
 export async function POST(req: NextRequest) {
-  // Handle CORS
-  const corsHeaders = handleCors(req);
-  
   try {
-    // Parse request body
-    const body = await req.json();
-    
-    // Validate request body
-    validateRequestBody(body, ['callType']);
+    // Validate request body using Zod schema
+    const validatedBody = await validateRequest(req, TwiMLRequestSchema);
 
     // Create TwiML response
     const twiml = new twilio.twiml.VoiceResponse();
 
-    switch (body.callType) {
+    switch (validatedBody.callType) {
       case 'stream':
-        if (!body.publicUrl) {
+        if (!validatedBody.publicUrl) {
           throw new Error('Missing publicUrl for streaming TwiML');
         }
         
-        if (body.greeting) {
-          twiml.say(body.greeting);
+        if (validatedBody.greeting) {
+          twiml.say(validatedBody.greeting);
         }
 
         twiml.connect().stream({
-          url: `${body.publicUrl}/call`,
-          statusCallback: `${body.publicUrl}/status-callback`,
+          url: `${validatedBody.publicUrl}/call`,
+          statusCallback: `${validatedBody.publicUrl}/status-callback`,
           statusCallbackMethod: 'POST'
         });
 
@@ -39,25 +34,24 @@ export async function POST(req: NextRequest) {
 
       case 'gather':
         twiml.gather({
-          input: 'speech dtmf',
+          input: ['speech', 'dtmf'],
           timeout: 3,
           numDigits: 1
         }).say('Please press any key or speak to begin.');
         break;
 
       default:
-        throw new Error(`Unsupported call type: ${body.callType}`);
+        throw new Error(`Unsupported call type: ${validatedBody.callType}`);
     }
 
     logger.info('[TwiML] Generated response:', { 
-      callType: body.callType,
+      callType: validatedBody.callType,
       twiml: twiml.toString()
     });
 
     // Return TwiML response with correct content type
     return new Response(twiml.toString(), {
       headers: {
-        ...corsHeaders,
         'Content-Type': 'text/xml'
       }
     });
@@ -68,15 +62,12 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function OPTIONS() {
-  return NextResponse.json(
-    {},
-    {
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type',
-      },
-    }
-  );
+export async function OPTIONS(req: NextRequest) {
+  return new Response(null, {
+    status: 204,
+    headers: {
+      'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    },
+  });
 } 

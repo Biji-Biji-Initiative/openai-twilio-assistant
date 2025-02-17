@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { logger } from '../lib/logger';
+import { v4 as uuidv4 } from 'uuid';
+import { z } from 'zod';
+import { ErrorResponseSchema, SuccessResponseSchema } from '@/lib/validation-schemas';
 
 type Environment = 'development' | 'production';
 type LogLevel = 'debug' | 'info' | 'warn' | 'error';
@@ -13,7 +16,8 @@ export enum APIError {
   TWILIO_ERROR = 'TWILIO_ERROR',
   OPENAI_ERROR = 'OPENAI_ERROR',
   WEBSOCKET_ERROR = 'WEBSOCKET_ERROR',
-  INTERNAL_ERROR = 'INTERNAL_ERROR'
+  INTERNAL_ERROR = 'INTERNAL_ERROR',
+  RATE_LIMIT_ERROR = 'RATE_LIMIT_ERROR'
 }
 
 /**
@@ -125,34 +129,56 @@ function formatErrorDetails(error: unknown): ErrorDetails {
 }
 
 /**
- * Create standardized error response
+ * Create standardized error response with request ID
  */
 export function createErrorResponse(error: unknown, status: number = 500) {
+  const requestId = uuidv4();
   const errorDetails = formatErrorDetails(error);
-  logger.error('[API] Error:', errorDetails);
+  
+  logger.error(`[${requestId}] API Error:`, errorDetails);
 
-  return NextResponse.json(
-    { 
-      error: errorDetails.message,
-      code: status,
-      type: errorDetails.type,
-      timestamp: new Date().toISOString()
-    }, 
-    { status }
-  );
+  const response = {
+    error: errorDetails.message,
+    code: status,
+    type: errorDetails.type || APIError.INTERNAL_ERROR,
+    requestId,
+    timestamp: new Date().toISOString()
+  };
+
+  // Validate response against schema
+  const validatedResponse = ErrorResponseSchema.parse(response);
+
+  return NextResponse.json(validatedResponse, { 
+    status,
+    headers: {
+      ...SECURITY_HEADERS,
+      'X-Request-ID': requestId
+    }
+  });
 }
 
 /**
- * Create standardized success response
+ * Create standardized success response with request ID
  */
 export function createSuccessResponse<T>(data: T, status: number = 200) {
-  return NextResponse.json(
-    {
-      data,
-      timestamp: new Date().toISOString()
-    },
-    { status }
-  );
+  const requestId = uuidv4();
+  
+  const response = {
+    data,
+    requestId,
+    timestamp: new Date().toISOString()
+  };
+
+  // Validate response against schema
+  const validatedResponse = SuccessResponseSchema.parse(response);
+
+  return NextResponse.json(validatedResponse, { 
+    status,
+    headers: {
+      ...SECURITY_HEADERS,
+      'X-Request-ID': requestId
+    }
+  });
 }
 
 /**
@@ -177,6 +203,26 @@ export function validateRequestBody(body: any, requiredFields: string[]): void {
   if (missing.length > 0) {
     const error = new Error(`Missing required fields: ${missing.join(', ')}`);
     (error as any).type = APIError.VALIDATION_ERROR;
+    throw error;
+  }
+}
+
+/**
+ * Validate request body against a Zod schema
+ */
+export async function validateRequest<T>(
+  req: NextRequest, 
+  schema: z.ZodType<T>
+): Promise<T> {
+  try {
+    const body = await req.json();
+    return schema.parse(body);
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      const validationError = new Error(error.errors.map(e => e.message).join(', '));
+      (validationError as any).type = APIError.VALIDATION_ERROR;
+      throw validationError;
+    }
     throw error;
   }
 }
