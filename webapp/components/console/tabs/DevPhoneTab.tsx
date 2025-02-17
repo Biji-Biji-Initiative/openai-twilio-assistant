@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { PhoneCall } from 'lucide-react';
-import DevPhone from '@/components/DevPhone';
 
 export function DevPhoneTab() {
   return (
