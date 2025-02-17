@@ -1,101 +1,140 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import TopBar from "@/components/top-bar";
-import ChecklistAndConfig from "@/components/checklist-and-config";
-import SessionConfigurationPanel from "@/components/session-configuration-panel";
-import Transcript from "@/components/transcript";
-import FunctionCallsPanel from "@/components/function-calls-panel";
-import { Item } from "@/components/types";
-import handleRealtimeEvent from "@/lib/handle-realtime-event";
-import PhoneNumberChecklist from "@/components/phone-number-checklist";
-import StatusPanel from "@/components/StatusPanel";
+import React, { useState, useEffect } from 'react';
+import { Card } from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { AlertCircle, Loader2 } from "lucide-react";
+import { Item } from './types';
+import { wsManager } from '@/lib/websocket-manager';
+import handleRealtimeEvent from '@/lib/handle-realtime-event';
+import { TopBar } from "@/components/console/TopBar";
+import { SetupDialog } from "@/components/console/setup/SetupDialog";
+import { SetupChecklist } from "@/components/console/setup/SetupChecklist";
+import { TranscriptPanel } from "@/components/console/transcripts/TranscriptPanel";
+import { FunctionCallsPanel } from "@/components/console/calls/FunctionCallsPanel";
+import { ChecklistState } from '@/types/setup';
 
-const CallInterface = () => {
-  const [selectedPhoneNumber, setSelectedPhoneNumber] = useState("");
-  const [allConfigsReady, setAllConfigsReady] = useState(false);
+interface CallInterfaceProps {
+  selectedPhoneNumber: string;
+  allConfigsReady: boolean;
+}
+
+const CallInterface: React.FC<CallInterfaceProps> = ({ selectedPhoneNumber, allConfigsReady }) => {
   const [items, setItems] = useState<Item[]>([]);
   const [callStatus, setCallStatus] = useState("disconnected");
-  const [ws, setWs] = useState<WebSocket | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [localWs, setLocalWs] = useState<WebSocket | null>(null);
 
   useEffect(() => {
-    if (allConfigsReady && !ws) {
-      // Use environment variable for WebSocket connection
-      const wsUrl = new URL("/logs", process.env.NEXT_PUBLIC_BACKEND_URL || "");
-      wsUrl.protocol = wsUrl.protocol.replace("http", "ws");
-      const newWs = new WebSocket(wsUrl.toString());
+    if (!allConfigsReady) return;
 
-      newWs.onopen = () => {
-        console.log("Connected to logs websocket");
-        setCallStatus("connected");
-      };
-
-      newWs.onmessage = (event) => {
-        const data = JSON.parse(event.data);
+    wsManager.connect();
+    
+    const unsubscribe = wsManager.subscribe((data) => {
+      try {
         console.log("Received logs event:", data);
         handleRealtimeEvent(data, setItems);
-      };
+      } catch (error) {
+        console.error("Error processing websocket message:", error);
+        setError("Failed to process message");
+      }
+    });
 
-      newWs.onclose = () => {
-        console.log("Logs websocket disconnected");
-        setWs(null);
-        setCallStatus("disconnected");
-      };
+    return () => {
+      unsubscribe();
+    };
+  }, [allConfigsReady]);
 
-      setWs(newWs);
-    }
-  }, [allConfigsReady, ws]);
+  useEffect(() => {
+    setLocalWs(wsManager.isConnected ? new WebSocket(process.env.NEXT_PUBLIC_BACKEND_URL || '') : null);
+  }, [wsManager.isConnected]);
+
+  const { isConnected, isReconnecting, reconnectAttempt } = wsManager.connectionState;
+
+  const checklistState: ChecklistState = {
+    hasCredentials: true,
+    phoneNumbers: [],
+    currentNumberSid: '',
+    currentVoiceUrl: '',
+    publicUrl: '',
+    localServerUp: true,
+    publicUrlAccessible: true,
+    allChecksPassed: true,
+    webhookLoading: false,
+    ngrokLoading: false,
+    isPolling: false
+  };
 
   return (
-    <div className="h-screen bg-white flex flex-col">
-      <ChecklistAndConfig
-        ready={allConfigsReady}
-        setReady={setAllConfigsReady}
-        selectedPhoneNumber={selectedPhoneNumber}
-        setSelectedPhoneNumber={setSelectedPhoneNumber}
-      />
-      <TopBar />
-      <div className="flex-grow p-4 h-full overflow-hidden flex flex-col">
-        <div className="grid grid-cols-12 gap-4 h-full">
-          {/* Left Column */}
-          <div className="col-span-3 flex flex-col h-full overflow-hidden">
-            <SessionConfigurationPanel
-              callStatus={callStatus}
-              onSave={(config) => {
-                if (ws && ws.readyState === WebSocket.OPEN) {
-                  const updateEvent = {
-                    type: "session.update",
-                    session: {
-                      ...config,
-                    },
-                  };
-                  console.log("Sending update event:", updateEvent);
-                  ws.send(JSON.stringify(updateEvent));
-                }
-              }}
-            />
-          </div>
+    <Card className="p-4">
+      {/* Connection Status */}
+      {(error || isReconnecting) && (
+        <div className="mb-4">
+          {error && (
+            <Alert variant="destructive">
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
+          {isReconnecting && (
+            <Alert>
+              <Loader2 className="h-4 w-4 animate-spin" />
+              <AlertDescription>
+                {reconnectAttempt > 0 
+                  ? `Reconnecting... (Attempt ${reconnectAttempt})`
+                  : 'Connecting...'}
+              </AlertDescription>
+            </Alert>
+          )}
+        </div>
+      )}
 
-          {/* Middle Column: Transcript and Status */}
-          <div className="col-span-6 flex flex-col gap-4 h-full overflow-hidden">
-            <PhoneNumberChecklist
-              selectedPhoneNumber={selectedPhoneNumber}
-              allConfigsReady={allConfigsReady}
-              setAllConfigsReady={setAllConfigsReady}
-            />
-            <div className="flex-grow overflow-hidden">
-              <Transcript items={items} />
+      <div className="h-screen bg-white flex flex-col">
+        <SetupDialog
+          ready={allConfigsReady}
+          setReady={(ready: boolean) => {
+            if (ready) {
+              wsManager.connect();
+            } else {
+              wsManager.disconnect();
+            }
+          }}
+          selectedPhoneNumber={selectedPhoneNumber}
+          setSelectedPhoneNumber={(phoneNumber: string) => {
+            wsManager.disconnect();
+            // Implement logic to update selectedPhoneNumber
+          }}
+        />
+        <TopBar />
+        <div className="flex-grow p-4 h-full overflow-hidden flex flex-col">
+          <div className="grid grid-cols-12 gap-4 h-full">
+            {/* Left Column */}
+            <div className="col-span-3 flex flex-col h-full overflow-hidden">
+              <SetupChecklist
+                state={checklistState}
+                onUpdateWebhook={async () => {}}
+                onCheckNgrok={async () => {}}
+                onNumberChange={() => {}}
+                setSelectedPhoneNumber={() => {}}
+              />
             </div>
-            <StatusPanel />
-          </div>
 
-          {/* Right Column: Function Calls */}
-          <div className="col-span-3 flex flex-col h-full overflow-hidden">
-            <FunctionCallsPanel items={items} ws={ws} />
+            {/* Middle Column: Transcript and Status */}
+            <div className="col-span-6 flex flex-col gap-4 h-full overflow-hidden">
+              <TranscriptPanel items={items} />
+            </div>
+
+            {/* Right Column: Function Calls */}
+            <div className="col-span-3 flex flex-col h-full overflow-hidden">
+              <FunctionCallsPanel 
+                items={items}
+                ws={localWs}
+              />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </Card>
   );
 };
 

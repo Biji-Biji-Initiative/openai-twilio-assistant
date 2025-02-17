@@ -1,5 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { logger } from '@/lib/logger';
+import { wsManager, WebSocketMessage } from '@/lib/websocket-manager';
 
 export interface LogMessage {
   type: string;
@@ -33,11 +34,7 @@ export interface SystemLogsActions {
 
 export function useSystemLogs(): [SystemLogsState, SystemLogsActions] {
   const [logs, setLogs] = useState<LogMessage[]>([]);
-  const [isConnected, setIsConnected] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [isReconnecting, setIsReconnecting] = useState(false);
-  const [reconnectAttempts, setReconnectAttempts] = useState(0);
-  const wsRef = useRef<WebSocket | null>(null);
 
   // Calculate stats whenever logs change
   const stats: LogStats = {
@@ -61,119 +58,6 @@ export function useSystemLogs(): [SystemLogsState, SystemLogsActions] {
   };
 
   useEffect(() => {
-    let isMounted = true;
-    let reconnectTimeout: NodeJS.Timeout;
-    const maxReconnectAttempts = 5;
-    let pingInterval: NodeJS.Timeout;
-
-    const connectWebSocket = () => {
-      if (!isMounted || isReconnecting) return;
-
-      if (wsRef.current) {
-        wsRef.current.close(1000, "Creating new connection");
-        wsRef.current = null;
-      }
-
-      setIsReconnecting(true);
-      
-      const wsUrl = new URL("/logs", process.env.NEXT_PUBLIC_BACKEND_URL || "");
-      wsUrl.protocol = wsUrl.protocol.replace("http", "ws");
-      
-      logger.info("[SystemLogs] Connecting to logs WebSocket:", wsUrl.toString());
-      const ws = new WebSocket(wsUrl.toString());
-      wsRef.current = ws;
-
-      ws.onopen = () => {
-        if (!isMounted) {
-          ws.close(1000, "Component unmounted");
-          return;
-        }
-
-        logger.info("[SystemLogs] WebSocket connected");
-        setIsConnected(true);
-        setReconnectAttempts(0);
-        setIsReconnecting(false);
-        setError(null);
-
-        clearInterval(pingInterval);
-        pingInterval = setInterval(() => {
-          if (ws.readyState === WebSocket.OPEN) {
-            ws.send(JSON.stringify({ type: "ping" }));
-          }
-        }, 15000);
-
-        setLogs(prev => [...prev, {
-          type: "system",
-          message: "Connected to logging service",
-          timestamp: new Date().toISOString(),
-          level: "info"
-        }]);
-      };
-
-      ws.onmessage = (event) => {
-        if (!isMounted) return;
-
-        try {
-          const data = JSON.parse(event.data);
-          if (data.type === "pong") return;
-          
-          setLogs(prev => [...prev, data]);
-        } catch (error) {
-          logger.error("[SystemLogs] Error parsing log message:", error);
-          setError("Failed to parse log message");
-        }
-      };
-
-      ws.onerror = (error) => {
-        if (!isMounted) return;
-        logger.error("[SystemLogs] WebSocket error:", error);
-        setError("WebSocket connection error");
-      };
-
-      ws.onclose = (event) => {
-        if (!isMounted) return;
-
-        logger.info("[SystemLogs] WebSocket connection closed", event.code, event.reason);
-        setIsConnected(false);
-        wsRef.current = null;
-        clearInterval(pingInterval);
-        setIsReconnecting(false);
-
-        if (event.code === 1000 && (
-          event.reason === "Component unmounted" ||
-          event.reason === "Creating new connection" ||
-          event.reason === "New connection replacing old"
-        )) {
-          return;
-        }
-
-        if (reconnectAttempts < maxReconnectAttempts) {
-          const nextAttempt = reconnectAttempts + 1;
-          setReconnectAttempts(nextAttempt);
-          const delay = Math.min(1000 * Math.pow(2, nextAttempt), 10000);
-          
-          logger.info(`[SystemLogs] Attempting to reconnect in ${delay}ms (Attempt ${nextAttempt}/${maxReconnectAttempts})`);
-          
-          setLogs(prev => [...prev, {
-            type: "system",
-            message: `Connection lost. Reconnecting in ${delay/1000}s (Attempt ${nextAttempt}/${maxReconnectAttempts})`,
-            timestamp: new Date().toISOString(),
-            level: "warn"
-          }]);
-          
-          reconnectTimeout = setTimeout(connectWebSocket, delay);
-        } else {
-          setError("Maximum reconnection attempts reached");
-          setLogs(prev => [...prev, {
-            type: "system",
-            message: "Max reconnection attempts reached. Please refresh the page.",
-            timestamp: new Date().toISOString(),
-            level: "error"
-          }]);
-        }
-      };
-    };
-
     // Load logs from localStorage on mount
     try {
       const savedLogs = localStorage.getItem('systemLogs');
@@ -184,19 +68,27 @@ export function useSystemLogs(): [SystemLogsState, SystemLogsActions] {
       logger.error('[SystemLogs] Error loading logs from localStorage:', error);
     }
 
-    connectWebSocket();
+    // Connect to WebSocket and set up message handler
+    wsManager.connect();
+    
+    const unsubscribe = wsManager.subscribe((data: WebSocketMessage) => {
+      if (data.type === "pong") return;
+      
+      setLogs(prev => [...prev, data as LogMessage]);
+    });
+
+    // Add connection established log
+    setLogs(prev => [...prev, {
+      type: "system",
+      message: "Connected to logging service",
+      timestamp: new Date().toISOString(),
+      level: "info"
+    }]);
 
     return () => {
-      isMounted = false;
-      clearTimeout(reconnectTimeout);
-      clearInterval(pingInterval);
-      
-      if (wsRef.current) {
-        wsRef.current.close(1000, "Component unmounted");
-        wsRef.current = null;
-      }
+      unsubscribe();
     };
-  }, [reconnectAttempts, isReconnecting]);
+  }, []);
 
   // Save logs to localStorage when updated
   useEffect(() => {
@@ -228,13 +120,15 @@ export function useSystemLogs(): [SystemLogsState, SystemLogsActions] {
     URL.revokeObjectURL(url);
   };
 
+  const { isConnected, isReconnecting, reconnectAttempt } = wsManager.connectionState;
+
   return [{
     logs,
     isConnected,
     stats,
     error,
     isReconnecting,
-    reconnectAttempts
+    reconnectAttempts: reconnectAttempt
   }, {
     clearLogs,
     downloadLogs

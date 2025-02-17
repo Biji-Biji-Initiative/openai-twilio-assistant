@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -14,8 +14,172 @@ import { SetupProps } from '@/types/setup';
 import { setupReducer, initialState } from '@/lib/reducers/setup-reducer';
 import { logger } from '@/lib/logger';
 
+const POLL_INTERVAL = 5000; // 5 seconds
+const MAX_RETRIES = 3;
+
 export function SetupDialog({ ready, setReady, selectedPhoneNumber, setSelectedPhoneNumber }: SetupProps) {
   const [state, dispatch] = React.useReducer(setupReducer, initialState);
+  const [retryCount, setRetryCount] = React.useState<Record<string, number>>({});
+
+  const handleError = useCallback((step: string, error: any) => {
+    logger.error(`[Setup] ${step} failed:`, error);
+    setRetryCount(prev => ({
+      ...prev,
+      [step]: (prev[step] || 0) + 1
+    }));
+    return false;
+  }, []);
+
+  const checkCredentials = useCallback(async () => {
+    try {
+      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+      if (!backendUrl) {
+        throw new Error("NEXT_PUBLIC_BACKEND_URL not set");
+      }
+
+      const res = await fetch(`${backendUrl}/api/twilio`, {
+        method: 'GET',
+        headers: {
+          'Cache-Control': 'no-cache',
+          'Accept': 'application/json'
+        }
+      });
+
+      if (!res.ok) {
+        throw new Error(await res.text());
+      }
+
+      const data = await res.json();
+      dispatch({ type: 'SET_CREDENTIALS', payload: !!data?.credentialsSet });
+      return true;
+    } catch (error) {
+      return handleError('credentials', error);
+    }
+  }, [handleError]);
+
+  const checkPhoneNumbers = useCallback(async () => {
+    if (!state.hasCredentials) return false;
+
+    try {
+      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+      if (!backendUrl) {
+        throw new Error("NEXT_PUBLIC_BACKEND_URL not set");
+      }
+
+      const res = await fetch(`${backendUrl}/api/twilio/numbers`);
+      if (!res.ok) {
+        throw new Error(await res.text());
+      }
+
+      const numbers = await res.json();
+      dispatch({ type: 'SET_PHONE_NUMBERS', payload: numbers });
+
+      if (numbers.length > 0) {
+        const defaultNumber = numbers[0];
+        dispatch({
+          type: 'SET_CURRENT_NUMBER',
+          payload: {
+            sid: defaultNumber.sid,
+            voiceUrl: defaultNumber.voiceUrl || "",
+            friendlyName: defaultNumber.friendlyName || ""
+          }
+        });
+        setSelectedPhoneNumber(defaultNumber.friendlyName || "");
+      }
+      return true;
+    } catch (error) {
+      return handleError('phone_numbers', error);
+    }
+  }, [state.hasCredentials, handleError, setSelectedPhoneNumber]);
+
+  const checkLocalServer = useCallback(async () => {
+    try {
+      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+      if (!backendUrl) {
+        throw new Error("NEXT_PUBLIC_BACKEND_URL not set");
+      }
+
+      const res = await fetch(`${backendUrl}/health`);
+      if (!res.ok) {
+        throw new Error(await res.text());
+      }
+
+      dispatch({ type: 'SET_LOCAL_SERVER', payload: true });
+      dispatch({ type: 'SET_PUBLIC_URL', payload: backendUrl });
+      return true;
+    } catch (error) {
+      return handleError('local_server', error);
+    }
+  }, [handleError]);
+
+  const checkNgrok = useCallback(async () => {
+    if (!state.localServerUp) {
+      logger.info('[Setup] Skipping ngrok check - local server not up');
+      return false;
+    }
+
+    try {
+      logger.info('[Setup] Checking ngrok tunnel...');
+      dispatch({ type: 'SET_NGROK_LOADING', payload: true });
+      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+      if (!backendUrl) {
+        throw new Error("NEXT_PUBLIC_BACKEND_URL not set");
+      }
+
+      const res = await fetch(`${backendUrl}/health`);
+      if (!res.ok) {
+        throw new Error(await res.text());
+      }
+
+      logger.info('[Setup] Ngrok tunnel is accessible');
+      dispatch({ type: 'SET_PUBLIC_URL_ACCESSIBLE', payload: true });
+      return true;
+    } catch (error) {
+      return handleError('ngrok', error);
+    } finally {
+      dispatch({ type: 'SET_NGROK_LOADING', payload: false });
+    }
+  }, [state.localServerUp, handleError]);
+
+  const updateWebhook = async (): Promise<void> => {
+    if (!state.publicUrlAccessible || !state.currentNumberSid) return;
+
+    try {
+      dispatch({ type: 'SET_WEBHOOK_LOADING', payload: true });
+      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+      if (!backendUrl) {
+        throw new Error("NEXT_PUBLIC_BACKEND_URL not set");
+      }
+
+      const res = await fetch(`${backendUrl}/api/twilio/numbers/${state.currentNumberSid}/webhook`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          url: `${backendUrl}/twiml`
+        })
+      });
+
+      if (!res.ok) {
+        throw new Error(await res.text());
+      }
+
+      const data = await res.json();
+      dispatch({
+        type: 'SET_CURRENT_NUMBER',
+        payload: {
+          sid: data.sid,
+          voiceUrl: data.voiceUrl,
+          friendlyName: data.friendlyName
+        }
+      });
+    } catch (error) {
+      handleError('webhook', error);
+    } finally {
+      dispatch({ type: 'SET_WEBHOOK_LOADING', payload: false });
+    }
+  };
 
   useEffect(() => {
     let mounted = true;
@@ -23,269 +187,50 @@ export function SetupDialog({ ready, setReady, selectedPhoneNumber, setSelectedP
 
     const pollChecks = async () => {
       if (!mounted || ready) return;
-      
+
       try {
         dispatch({ type: 'SET_POLLING', payload: true });
-        
-        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-        if (!backendUrl) {
-          logger.warn("[Setup] NEXT_PUBLIC_BACKEND_URL not set");
-          return;
-        }
-        
-        // 1. Check credentials
-        let res = await fetch(`${backendUrl}/api/twilio`, {
-          method: 'GET',
-          headers: {
-            'Cache-Control': 'no-cache',
-            'Accept': 'application/json'
-          }
-        });
-        
-        if (!mounted) return;
-        
-        if (!res.ok) {
-          const errorText = await res.text();
-          logger.warn("[Setup] Credentials check failed:", errorText);
-          dispatch({ type: 'SET_CREDENTIALS', payload: false });
-          return;
-        }
+        logger.info('[Setup] Starting setup checks...');
 
-        let credData;
-        try {
-          credData = await res.json();
-          if (mounted) {
-            dispatch({ type: 'SET_CREDENTIALS', payload: !!credData?.credentialsSet });
-          }
-        } catch (err) {
-          logger.warn("[Setup] Failed to parse credentials response:", err);
-          if (mounted) {
-            dispatch({ type: 'SET_CREDENTIALS', payload: false });
-          }
-          return;
-        }
+        // Run checks in sequence
+        const checks = [
+          { name: 'credentials', fn: checkCredentials },
+          { name: 'phone_numbers', fn: checkPhoneNumbers },
+          { name: 'local_server', fn: checkLocalServer },
+          { name: 'ngrok', fn: checkNgrok }
+        ];
 
-        // 2. Fetch numbers
-        res = await fetch(`${backendUrl}/api/twilio/numbers`, {
-          method: 'GET',
-          headers: {
-            'Cache-Control': 'no-cache',
-            'Accept': 'application/json'
-          }
-        });
-        
-        if (!res.ok) {
-          const errorText = await res.text();
-          logger.warn("[Setup] Failed to fetch phone numbers:", errorText);
-          return;
-        }
-
-        let numbersData;
-        try {
-          numbersData = await res.json();
-          if (!Array.isArray(numbersData)) {
-            logger.warn("[Setup] Invalid phone numbers response format");
-            return;
-          }
-        } catch (err) {
-          logger.warn("[Setup] Failed to parse phone numbers response:", err);
-          return;
-        }
-
-        if (mounted && numbersData.length > 0) {
-          dispatch({ type: 'SET_PHONE_NUMBERS', payload: numbersData });
-          const selected = numbersData.find(p => p.sid === state.currentNumberSid) || numbersData[0];
-          
-          if (!selected?.sid) {
-            logger.warn("[Setup] Invalid phone number data");
-            return;
+        for (const check of checks) {
+          if (retryCount[check.name] >= MAX_RETRIES) {
+            logger.error(`[Setup] ${check.name} check failed after ${MAX_RETRIES} retries`);
+            continue;
           }
 
-          dispatch({ type: 'SET_CURRENT_NUMBER', payload: { 
-            sid: selected.sid, 
-            voiceUrl: selected.voiceUrl || "", 
-            friendlyName: selected.friendlyName || "" 
-          }});
-          setSelectedPhoneNumber(selected.friendlyName || "");
+          logger.info(`[Setup] Running ${check.name} check...`);
+          const success = await check.fn();
+          if (!success) {
+            logger.warn(`[Setup] ${check.name} check failed, stopping sequence`);
+            break;
+          }
+          logger.info(`[Setup] ${check.name} check passed`);
         }
 
-        // 3. Check local server & public URL
-        try {
-          const localHealthRes = await fetch(`${backendUrl}/api/health`, {
-            method: 'GET',
-            headers: {
-              'Cache-Control': 'no-cache',
-              'Accept': 'application/json'
-            }
-          });
-          
-          if (localHealthRes.ok) {
-            const healthData = await localHealthRes.json();
-            if (mounted) {
-              dispatch({ type: 'SET_LOCAL_SERVER', payload: true });
-            }
-            
-            if (healthData?.environment?.publicUrl) {
-              const foundPublicUrl = healthData.environment.publicUrl;
-              if (mounted) {
-                dispatch({ type: 'SET_PUBLIC_URL', payload: foundPublicUrl });
-                
-                if (!state.publicUrlAccessible && !state.ngrokLoading) {
-                  await checkNgrok();
-                }
-              }
-              logger.info("[Setup] Server health check successful:", {
-                publicUrl: foundPublicUrl,
-                status: healthData.status,
-                service: healthData.service,
-                environment: healthData.environment
-              });
-            } else {
-              logger.warn("[Setup] Health check response missing publicUrl:", healthData);
-              if (mounted) {
-                dispatch({ type: 'SET_LOCAL_SERVER', payload: false });
-              }
-            }
-          } else {
-            const errorText = await localHealthRes.text();
-            logger.warn("[Setup] Health check failed:", {
-              status: localHealthRes.status,
-              error: errorText
-            });
-            if (mounted) {
-              dispatch({ type: 'SET_LOCAL_SERVER', payload: false });
-            }
-          }
-        } catch (err) {
-          logger.warn("[Setup] Error checking local server:", err);
-          if (mounted) {
-            dispatch({ type: 'SET_LOCAL_SERVER', payload: false });
-          }
-        }
-
-        if (mounted) {
-          dispatch({ type: 'UPDATE_ALL_CHECKS' });
-        }
-      } catch (err) {
-        logger.warn("[Setup] Error in pollChecks:", err);
+        dispatch({ type: 'UPDATE_ALL_CHECKS' });
       } finally {
         if (mounted) {
           dispatch({ type: 'SET_POLLING', payload: false });
-          if (!ready) {
-            timeoutId = setTimeout(pollChecks, 3000);
-          }
+          timeoutId = setTimeout(pollChecks, POLL_INTERVAL);
         }
       }
     };
 
     pollChecks();
-    
+
     return () => {
       mounted = false;
       clearTimeout(timeoutId);
-      dispatch({ type: 'SET_POLLING', payload: false });
     };
-  }, [ready, state.localServerUp, state.publicUrl, state.publicUrlAccessible, state.ngrokLoading, state.currentNumberSid]);
-
-  const updateWebhook = async () => {
-    if (!state.currentNumberSid || !state.publicUrl) return;
-    
-    const webhookUrl = `${state.publicUrl}/twiml`;
-    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-    if (!backendUrl) {
-      logger.warn("[Setup] NEXT_PUBLIC_BACKEND_URL not set");
-      return;
-    }
-
-    dispatch({ type: 'SET_WEBHOOK_LOADING', payload: true });
-    try {
-      const res = await fetch(`${backendUrl}/api/twilio/numbers`, {
-        method: "POST",
-        headers: { 
-          "Content-Type": "application/json",
-          'Cache-Control': 'no-cache'
-        },
-        body: JSON.stringify({
-          phoneNumberSid: state.currentNumberSid,
-          voiceUrl: webhookUrl,
-        }),
-      });
-      
-      if (!res.ok) {
-        const errorText = await res.text();
-        logger.warn("[Setup] Failed to update webhook:", errorText);
-        throw new Error("Failed to update webhook");
-      }
-      
-      const updatedNumber = await res.json();
-      dispatch({ type: 'SET_CURRENT_NUMBER', payload: { 
-        sid: updatedNumber.sid,
-        voiceUrl: updatedNumber.voiceUrl || "",
-        friendlyName: updatedNumber.friendlyName || ""
-      }});
-    } catch (err) {
-      logger.error("[Setup] Error updating webhook:", err);
-    } finally {
-      dispatch({ type: 'SET_WEBHOOK_LOADING', payload: false });
-    }
-  };
-
-  const checkNgrok = async () => {
-    if (!state.localServerUp || !state.publicUrl || state.ngrokLoading) return;
-    dispatch({ type: 'SET_NGROK_LOADING', payload: true });
-    let success = false;
-    
-    for (let i = 0; i < 5; i++) {
-      if (!state.localServerUp || !state.publicUrl) break;
-      
-      try {
-        const resTest = await fetch(`${state.publicUrl}/api/health`, {
-          method: 'GET',
-          headers: {
-            'Cache-Control': 'no-cache',
-            'Accept': 'application/json'
-          }
-        });
-        
-        if (resTest.ok) {
-          const healthData = await resTest.json();
-          if (healthData?.status === 'ok' && healthData?.environment?.publicUrl) {
-            logger.info("[Setup] Ngrok health check successful:", {
-              publicUrl: healthData.environment.publicUrl,
-              status: healthData.status,
-              service: healthData.service
-            });
-            dispatch({ type: 'SET_PUBLIC_URL_ACCESSIBLE', payload: true });
-            success = true;
-            break;
-          } else {
-            logger.warn("[Setup] Ngrok health check response invalid:", healthData);
-          }
-        } else {
-          const errorText = await resTest.text();
-          logger.warn("[Setup] Ngrok health check failed:", {
-            status: resTest.status,
-            statusText: resTest.statusText,
-            error: errorText
-          });
-        }
-      } catch (err) {
-        logger.warn("[Setup] Ngrok health check error:", err);
-      }
-      
-      if (i < 4) {
-        logger.info(`[Setup] Retrying ngrok check (attempt ${i + 2}/5)...`);
-        await new Promise((r) => setTimeout(r, 3000));
-      }
-    }
-    
-    if (!success) {
-      logger.warn("[Setup] All ngrok health check attempts failed");
-      dispatch({ type: 'SET_PUBLIC_URL_ACCESSIBLE', payload: false });
-    }
-    
-    dispatch({ type: 'SET_NGROK_LOADING', payload: false });
-  };
+  }, [ready, checkCredentials, checkPhoneNumbers, checkLocalServer, checkNgrok, retryCount]);
 
   const handleDone = () => {
     if (state.allChecksPassed) {
@@ -307,7 +252,9 @@ export function SetupDialog({ ready, setReady, selectedPhoneNumber, setSelectedP
           <SetupChecklist
             state={state}
             onUpdateWebhook={updateWebhook}
-            onCheckNgrok={checkNgrok}
+            onCheckNgrok={async () => {
+              await checkNgrok();
+            }}
             onNumberChange={(sid) => {
               const selected = state.phoneNumbers.find(p => p.sid === sid);
               if (selected) {

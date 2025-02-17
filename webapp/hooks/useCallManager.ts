@@ -1,9 +1,10 @@
 import { useState, useCallback, useEffect } from 'react';
 import { logger } from '@/lib/logger';
+import { wsManager } from '@/lib/websocket-manager';
 
-export type CallStatus = 'idle' | 'dialing' | 'initiating' | 'ringing' | 'in-progress' | 'completed' | 'failed' | 'busy' | 'no-answer' | 'disconnecting' | 'error';
+export type CallStatus = 'idle' | 'initiated' | 'ringing' | 'in-progress' | 'completed' | 'failed' | 'busy' | 'no-answer' | 'disconnecting';
 
-export interface UseCallManagerReturn {
+interface UseCallManagerReturn {
   isCallInProgress: boolean;
   isDisconnecting: boolean;
   error: string | null;
@@ -32,107 +33,74 @@ export function useCallManager(): UseCallManagerReturn {
   }, []);
 
   useEffect(() => {
-    const wsUrl = new URL("/logs", process.env.NEXT_PUBLIC_BACKEND_URL || "");
-    wsUrl.protocol = wsUrl.protocol.replace("http", "ws");
-    const ws = new WebSocket(wsUrl.toString());
+    wsManager.connect();
 
-    ws.onopen = () => {
-      addLogEntry("WebSocket connection established");
-    };
-
-    ws.onmessage = (event) => {
-      try {
-        const msg = JSON.parse(event.data);
-
-        if (msg.type === "call.status" && msg.callSid === currentCallSid) {
-          const details = {
-            status: msg.callStatus,
-            duration: msg.duration,
-            sequence: msg.sequence,
-            direction: msg.direction,
-            source: msg.source,
-            timestamp: msg.eventTimestamp,
-          };
-          
-          addLogEntry(`Call status update: ${msg.callStatus}`, details);
-          
-          setCallStatus(msg.callStatus as CallStatus);
-          
-          if (msg.callStatus === "initiated") {
-            setIsCallInProgress(true);
-            setIsDisconnecting(false);
-          } else if (["completed", "failed", "busy", "no-answer"].includes(msg.callStatus)) {
-            setIsCallInProgress(false);
-            setIsDisconnecting(false);
-            if (msg.errorCode) {
-              addLogEntry(`Error: ${msg.errorCode} - ${msg.errorMessage}`);
-            }
-            // Reset after a delay
-            setTimeout(() => {
-              setCallStatus('idle');
-              setCurrentCallSid(null);
-            }, 5000);
-          } else if (["ringing", "in-progress"].includes(msg.callStatus)) {
-            setIsDisconnecting(false);
+    const unsubscribe = wsManager.subscribe((msg) => {
+      if (msg.type === "call.status" && msg.callSid === currentCallSid) {
+        const details = {
+          status: msg.callStatus,
+          duration: msg.duration,
+          sequence: msg.sequence,
+          direction: msg.direction,
+          source: msg.source,
+          timestamp: msg.eventTimestamp,
+        };
+        
+        addLogEntry(`Call status update: ${msg.callStatus}`, details);
+        
+        setCallStatus(msg.callStatus as CallStatus);
+        
+        if (msg.callStatus === "initiated") {
+          setIsCallInProgress(true);
+          setIsDisconnecting(false);
+        } else if (["completed", "failed", "busy", "no-answer"].includes(msg.callStatus)) {
+          setIsCallInProgress(false);
+          setIsDisconnecting(false);
+          if (msg.errorCode) {
+            addLogEntry(`Error: ${msg.errorCode} - ${msg.errorMessage}`);
           }
+          // Reset after a delay
+          setTimeout(() => {
+            setCallStatus('idle');
+            setCurrentCallSid(null);
+          }, 5000);
+        } else if (["ringing", "in-progress"].includes(msg.callStatus)) {
+          setIsDisconnecting(false);
         }
-      } catch (e) {
-        logger.error("[CallManager] Error parsing WS message:", e);
-        addLogEntry(`Error parsing WebSocket message: ${e}`);
       }
-    };
-
-    ws.onerror = (e) => {
-      logger.error("[CallManager] WebSocket error:", e);
-      addLogEntry(`WebSocket error: ${e}`);
-    };
-
-    ws.onclose = () => {
-      addLogEntry("WebSocket connection closed");
-    };
+    });
 
     return () => {
-      ws.close();
+      unsubscribe();
     };
   }, [currentCallSid, addLogEntry]);
 
   const makeCall = useCallback(async (phoneNumber: string) => {
-    if (!phoneNumber) {
-      setError("Please enter a phone number to call");
-      return;
-    }
-
-    addLogEntry(`Initiating outbound call to: ${phoneNumber}`);
-    setIsCallInProgress(true);
-    setCallStatus('dialing');
-    setError(null);
-
     try {
       const response = await fetch("/api/outbound-call-proxy", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ to: phoneNumber }),
+        body: JSON.stringify({
+          action: "call",
+          phoneNumber,
+        }),
       });
 
       const data = await response.json();
-      addLogEntry(`Response from outbound call endpoint: ${JSON.stringify(data)}`);
       
       if (!response.ok) {
-        throw new Error(data.error || "Failed to make call");
+        throw new Error(data.error || "Failed to initiate call");
       }
 
-      addLogEntry(`Call initiated successfully. SID: ${data.sid}`);
-      setCallStatus('initiating');
-      setCurrentCallSid(data.sid);
+      setCurrentCallSid(data.callSid);
+      addLogEntry(`Call initiated to ${phoneNumber}`, data);
+      setCallStatus('initiated');
     } catch (err) {
-      logger.error("[CallManager] Error during call initiation:", err);
-      addLogEntry(`Error during call initiation: ${err}`);
-      setError(err instanceof Error ? err.message : "Failed to make call");
-      setCallStatus('error');
-      setIsCallInProgress(false);
-      setCurrentCallSid(null);
+      logger.error("[CallManager] Error initiating call:", err);
+      addLogEntry(`Error initiating call: ${err}`);
+      setError(err instanceof Error ? err.message : "Failed to initiate call");
     }
   }, [addLogEntry]);
 
