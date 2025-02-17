@@ -1,7 +1,7 @@
 type LogLevel = 'debug' | 'info' | 'warn' | 'error';
 
 interface LoggerOptions {
-  level: LogLevel;
+  level?: LogLevel;
   prefix?: string;
 }
 
@@ -9,9 +9,9 @@ class Logger {
   private level: LogLevel;
   private prefix: string;
 
-  constructor(options: LoggerOptions = { level: 'info' }) {
-    this.level = options.level;
-    this.prefix = options.prefix || '';
+  constructor(options: LoggerOptions = {}) {
+    this.level = options.level || (process.env.NODE_ENV === 'development' ? 'debug' : 'info');
+    this.prefix = options.prefix || (process.env.NODE_ENV === 'production' ? '[PROD] ' : '[DEV] ');
   }
 
   private shouldLog(level: LogLevel): boolean {
@@ -26,35 +26,37 @@ class Logger {
 
   private formatMessage(level: LogLevel, message: string, ...args: any[]): string {
     const timestamp = new Date().toISOString();
-    return `[${timestamp}] ${level.toUpperCase()} ${this.prefix} ${message}`;
+    const formattedArgs = args.map(arg => 
+      typeof arg === 'object' ? JSON.stringify(arg, null, 2) : arg
+    ).join(' ');
+    
+    return `${timestamp} ${level.toUpperCase()} ${this.prefix}${message} ${formattedArgs}`.trim();
   }
 
   debug(message: string, ...args: any[]): void {
     if (this.shouldLog('debug')) {
-      console.debug(this.formatMessage('debug', message), ...args);
+      console.debug(this.formatMessage('debug', message, ...args));
     }
   }
 
   info(message: string, ...args: any[]): void {
     if (this.shouldLog('info')) {
-      console.info(this.formatMessage('info', message), ...args);
+      console.info(this.formatMessage('info', message, ...args));
     }
   }
 
   warn(message: string, ...args: any[]): void {
     if (this.shouldLog('warn')) {
-      console.warn(this.formatMessage('warn', message), ...args);
+      console.warn(this.formatMessage('warn', message, ...args));
     }
   }
 
   error(message: string, ...args: any[]): void {
     if (this.shouldLog('error')) {
-      console.error(this.formatMessage('error', message), ...args);
+      console.error(this.formatMessage('error', message, ...args));
     }
   }
 }
 
 // Create and export a default logger instance
-export const logger = new Logger({
-  level: process.env.NODE_ENV === 'development' ? 'debug' : 'info'
-}); 
+export const logger = new Logger(); 
