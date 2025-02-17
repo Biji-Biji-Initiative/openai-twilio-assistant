@@ -64,11 +64,41 @@ const StatusPanel: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    let isMounted = true;
     let reconnectTimeout: NodeJS.Timeout;
     const maxReconnectAttempts = 5;
     let reconnectAttempts = 0;
+    let isReconnecting = false;
+    let pingInterval: NodeJS.Timeout;
+    let mountDelay: NodeJS.Timeout;
 
     const connectWebSocket = () => {
+      // Don't create a new connection if unmounted or already connecting
+      if (!isMounted || isReconnecting) {
+        return;
+      }
+
+      // Add a small delay on initial connection to handle React Strict Mode
+      if (!wsRef.current) {
+        mountDelay = setTimeout(() => {
+          if (!isMounted) return;
+          initializeWebSocket();
+        }, 100);
+        return;
+      }
+
+      initializeWebSocket();
+    };
+
+    const initializeWebSocket = () => {
+      // Close existing connection if it exists
+      if (wsRef.current) {
+        wsRef.current.close(1000, "Creating new connection");
+        wsRef.current = null;
+      }
+
+      isReconnecting = true;
+      
       // Use environment variable for WebSocket URL
       const wsUrl = new URL("/logs", process.env.NEXT_PUBLIC_BACKEND_URL || "");
       wsUrl.protocol = wsUrl.protocol.replace("http", "ws");
@@ -78,9 +108,24 @@ const StatusPanel: React.FC = () => {
       wsRef.current = ws;
 
       ws.onopen = () => {
+        if (!isMounted) {
+          ws.close(1000, "Component unmounted");
+          return;
+        }
+
         console.log("[StatusPanel] WebSocket connected");
         setIsConnected(true);
         reconnectAttempts = 0; // Reset reconnect attempts on successful connection
+        isReconnecting = false;
+
+        // Set up ping/pong to keep connection alive
+        clearInterval(pingInterval);
+        pingInterval = setInterval(() => {
+          if (ws.readyState === WebSocket.OPEN) {
+            ws.send(JSON.stringify({ type: "ping" }));
+          }
+        }, 30000);
+
         setLogs(prev => [...prev, {
           type: "system",
           message: "Connected to logging service",
@@ -90,12 +135,18 @@ const StatusPanel: React.FC = () => {
       };
 
       ws.onmessage = (event) => {
+        if (!isMounted) return;
+
         try {
           const data = JSON.parse(event.data);
           setLogs(prev => [...prev, data]);
           
           if (autoScroll && scrollRef.current) {
-            scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+            requestAnimationFrame(() => {
+              if (scrollRef.current) {
+                scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+              }
+            });
           }
         } catch (error) {
           console.error("[StatusPanel] Error parsing log message:", error);
@@ -109,18 +160,35 @@ const StatusPanel: React.FC = () => {
       };
 
       ws.onerror = (error) => {
+        if (!isMounted) return;
+
         console.error("[StatusPanel] WebSocket error:", error);
         setLogs(prev => [...prev, {
           type: "system",
-          message: `WebSocket error occurred: ${error}`,
+          message: `WebSocket error occurred`,
           timestamp: new Date().toISOString(),
           level: "error"
         }]);
       };
 
       ws.onclose = (event) => {
+        if (!isMounted) return;
+
         console.log("[StatusPanel] WebSocket connection closed", event.code, event.reason);
         setIsConnected(false);
+        wsRef.current = null;
+        clearInterval(pingInterval);
+
+        // Don't attempt to reconnect if this was an intentional closure
+        if (event.code === 1000 && (
+          event.reason === "Component unmounted" ||
+          event.reason === "Creating new connection" ||
+          event.reason === "New connection replacing old"
+        )) {
+          isReconnecting = false;
+          return;
+        }
+
         setLogs(prev => [...prev, {
           type: "system",
           message: `Disconnected from logging service (Code: ${event.code}, Reason: ${event.reason || 'No reason provided'})`,
@@ -128,13 +196,13 @@ const StatusPanel: React.FC = () => {
           level: "warn"
         }]);
 
-        // Attempt to reconnect if not at max attempts
-        if (reconnectAttempts < maxReconnectAttempts) {
+        // Attempt to reconnect if not at max attempts and component is still mounted
+        if (isMounted && reconnectAttempts < maxReconnectAttempts && !isReconnecting) {
           reconnectAttempts++;
-          const delay = Math.min(1000 * Math.pow(2, reconnectAttempts), 10000); // Exponential backoff with 10s max
+          const delay = 2000; // Fixed 2-second delay
           console.log(`[StatusPanel] Attempting to reconnect in ${delay}ms (Attempt ${reconnectAttempts}/${maxReconnectAttempts})`);
           reconnectTimeout = setTimeout(connectWebSocket, delay);
-        } else {
+        } else if (reconnectAttempts >= maxReconnectAttempts) {
           console.log("[StatusPanel] Max reconnection attempts reached");
           setLogs(prev => [...prev, {
             type: "system",
@@ -144,31 +212,25 @@ const StatusPanel: React.FC = () => {
           }]);
         }
       };
-
-      // Set up ping/pong to keep connection alive
-      const pingInterval = setInterval(() => {
-        if (ws.readyState === WebSocket.OPEN) {
-          ws.send(JSON.stringify({ type: "ping" }));
-        }
-      }, 30000); // Send ping every 30 seconds
-
-      return () => {
-        clearInterval(pingInterval);
-      };
     };
 
+    // Initial connection
     connectWebSocket();
 
     // Cleanup on unmount
     return () => {
+      isMounted = false;
+      isReconnecting = false;
+      clearTimeout(reconnectTimeout);
+      clearTimeout(mountDelay);
+      clearInterval(pingInterval);
+      
       if (wsRef.current) {
-        wsRef.current.close();
-      }
-      if (reconnectTimeout) {
-        clearTimeout(reconnectTimeout);
+        wsRef.current.close(1000, "Component unmounted");
+        wsRef.current = null;
       }
     };
-  }, [autoScroll]);
+  }, []); // Empty dependency array - only run once on mount
 
   const filteredLogs = useMemo(() => {
     const now = new Date().getTime();

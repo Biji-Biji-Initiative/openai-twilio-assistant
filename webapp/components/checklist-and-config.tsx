@@ -55,20 +55,54 @@ export default function ChecklistAndConfig({
       try {
         // 1. Check credentials
         let res = await fetch("/api/twilio");
-        if (!res.ok) throw new Error("Failed credentials check");
-        const credData = await res.json();
+        if (!res.ok) {
+          console.warn("[Checklist] Credentials check failed:", await res.text());
+          setHasCredentials(false);
+          return;
+        }
+
+        let credData;
+        try {
+          credData = await res.json();
+        } catch (err) {
+          console.warn("[Checklist] Failed to parse credentials response:", err);
+          setHasCredentials(false);
+          return;
+        }
         setHasCredentials(!!credData?.credentialsSet);
 
         // 2. Fetch numbers
         res = await fetch("/api/twilio/numbers");
-        if (!res.ok) throw new Error("Failed to fetch phone numbers");
-        const numbersData = await res.json();
-        if (Array.isArray(numbersData) && numbersData.length > 0) {
+        if (!res.ok) {
+          console.warn("[Checklist] Failed to fetch phone numbers:", await res.text());
+          return;
+        }
+
+        let numbersData;
+        try {
+          numbersData = await res.json();
+        } catch (err) {
+          console.warn("[Checklist] Failed to parse phone numbers response:", err);
+          return;
+        }
+
+        if (!Array.isArray(numbersData)) {
+          console.warn("[Checklist] Invalid phone numbers response format");
+          return;
+        }
+
+        if (numbersData.length > 0) {
           setPhoneNumbers(numbersData);
           // If currentNumberSid not set or not in the list, use first
           const selected =
             numbersData.find((p: PhoneNumber) => p.sid === currentNumberSid) ||
             numbersData[0];
+          
+          if (!selected?.sid) {
+            console.warn("[Checklist] Invalid phone number data");
+            return;
+          }
+
           setCurrentNumberSid(selected.sid);
           setCurrentVoiceUrl(selected.voiceUrl || "");
           setSelectedPhoneNumber(selected.friendlyName || "");
@@ -77,21 +111,45 @@ export default function ChecklistAndConfig({
         // 3. Check local server & public URL
         let foundPublicUrl = "";
         try {
-          const resLocal = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/public-url`);
+          const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+          if (!backendUrl) {
+            console.warn("[Checklist] NEXT_PUBLIC_BACKEND_URL not set");
+            setLocalServerUp(false);
+            return;
+          }
+
+          const resLocal = await fetch(`${backendUrl}/public-url`);
           if (resLocal.ok) {
-            const pubData = await resLocal.json();
+            let pubData;
+            try {
+              pubData = await resLocal.json();
+            } catch (err) {
+              console.warn("[Checklist] Failed to parse public URL response:", err);
+              setLocalServerUp(false);
+              return;
+            }
+
             foundPublicUrl = pubData?.publicUrl || "";
+            if (!foundPublicUrl) {
+              console.warn("[Checklist] No public URL found in response");
+              setLocalServerUp(false);
+              return;
+            }
             setLocalServerUp(true);
             setPublicUrl(foundPublicUrl);
           } else {
-            throw new Error("Local server not responding");
+            console.warn("[Checklist] Local server not responding:", await resLocal.text());
+            setLocalServerUp(false);
+            setPublicUrl("");
           }
-        } catch {
+        } catch (err) {
+          // Network error or server not running
+          console.warn("[Checklist] Error checking local server:", err);
           setLocalServerUp(false);
           setPublicUrl("");
         }
       } catch (err) {
-        console.error(err);
+        console.warn("[Checklist] Error in pollChecks:", err);
       }
     };
 
