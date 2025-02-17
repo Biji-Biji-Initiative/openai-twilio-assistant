@@ -1,18 +1,18 @@
 {
   "compilerOptions": {
-    "target": "ES6",
+    "target": "es2018",
     "module": "commonjs",
-    "moduleResolution": "node",
+    "outDir": "./dist",
+    "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "noEmitOnError": true,
-    "resolveJsonModule": true, 
-    "incremental": true 
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "declaration": true,
+    "sourceMap": true
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "dist"]
 }

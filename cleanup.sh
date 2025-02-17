@@ -12,6 +12,10 @@ kill_port() {
     fi
 }
 
+# Kill any existing ngrok processes
+echo "Killing ngrok processes..."
+pkill -f ngrok
+
 # Kill processes on all used ports
 kill_port 3000  # Frontend
 kill_port 3001  # Dev Phone

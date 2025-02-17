@@ -1,0 +1,41 @@
+---
+description: Twilio Dev Phone Configuration Rules
+globs: 
+  - "**/README.md"
+  - "**/.env"
+  - "**/components/DevPhone.tsx"
+---
+
+# Twilio Dev Phone Configuration
+
+## Setup Rules
+1. Dev Phone is a standalone tool and should be started separately from the main application
+2. Default port is 3001 (do not change)
+3. Access at `http://localhost:3001` after starting
+
+## Starting Dev Phone
+```bash
+# Start in a separate terminal
+twilio dev-phone
+```
+
+## Important Notes
+1. Dev Phone maintains its own state and connection
+2. No need to restart when restarting other services
+3. Keep running in a dedicated terminal window
+4. Uses its own Twilio credentials from `twilio login`
+
+## Common Issues
+1. If port 3001 is in use:
+   - Use cleanup script first
+   - Check for other processes: `lsof -i :3001`
+   - Kill manually if needed: `kill -9 $(lsof -ti :3001)`
+
+2. If authentication fails:
+   - Run `twilio login` again
+   - Verify credentials with `twilio profiles:list`
+
+## Security Notes
+- Dev Phone uses local credentials from Twilio CLI
+- Does not share environment variables with main application
+ 

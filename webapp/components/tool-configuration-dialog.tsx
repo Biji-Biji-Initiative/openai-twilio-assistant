@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -45,18 +45,17 @@ export const ToolConfigurationDialog: React.FC<
   onSave,
   backendTools,
 }) => {
-  // Combine local templates and backend templates
-  const localTemplateOptions = toolTemplates.map((template) => ({
-    ...template,
-    source: "local",
-  }));
+  const allTemplates = useMemo(() => {
+    const backendTemplates = Array.isArray(backendTools) ? backendTools.map((t) => ({
+      ...t,
+      source: "backend"
+    })) : [];
 
-  const backendTemplateOptions = backendTools.map((t: any) => ({
-    ...t,
-    source: "backend",
-  }));
-
-  const allTemplates = [...localTemplateOptions, ...backendTemplateOptions];
+    return [
+      ...toolTemplates.map((t) => ({ ...t, source: "local" })),
+      ...backendTemplates
+    ];
+  }, [backendTools]);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

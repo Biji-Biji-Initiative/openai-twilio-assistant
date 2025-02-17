@@ -34,11 +34,43 @@ TWILIO_PHONE_NUMBER=your_number
 ### Critical Rules
 1. Always use environment variables for URLs - never hardcode localhost or domain names
 2. Keep `NEXT_PUBLIC_BACKEND_URL` and `PUBLIC_URL` in sync between webapp and websocket-server
-3. Start services in this exact order:
-   - Run cleanup script first
-   - Start ngrok
-   - Start websocket server
-   - Start webapp
+3. Use the fixed ngrok domain `mereka.ngrok.io` - this is a paid account with a permanent domain
+4. Start services in this exact order:
+   - Run cleanup script first (`./cleanup.sh`)
+   - Start ngrok with fixed domain (`./start-ngrok.sh`)
+   - Start websocket server (`cd websocket-server && npm run dev`)
+   - Start webapp (`cd webapp && npm run dev`)
+
+### Ngrok Configuration
+This project uses a paid ngrok account with a fixed domain. This is critical for maintaining stable WebSocket connections.
+
+1. Fixed Domain: Always use `mereka.ngrok.io`
+   - Do not use random ngrok domains
+   - Do not use other domains or tunneling services
+
+2. Starting Ngrok:
+   ```bash
+   # Use the provided script
+   ./start-ngrok.sh
+
+   # Or manually with the fixed domain
+   ngrok http --domain=mereka.ngrok.io 8081
+   ```
+
+3. Important Notes:
+   - Only one ngrok connection is possible at a time
+   - Always kill existing ngrok processes before starting a new one
+   - The domain must match in both `webapp/.env` and `websocket-server/.env`
+   - Verify the tunnel is working at `http://localhost:4040`
+
+4. Environment Variables:
+   ```bash
+   # webapp/.env
+   NEXT_PUBLIC_BACKEND_URL=https://mereka.ngrok.io
+
+   # websocket-server/.env
+   PUBLIC_URL=https://mereka.ngrok.io
+   ```
 
 ### Common Issues and Solutions
 1. If you see CORS errors:

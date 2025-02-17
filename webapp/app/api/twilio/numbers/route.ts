@@ -1,113 +1,128 @@
-import twilioClient from "@/lib/twilio";
+import { NextRequest } from 'next/server';
+import { handleCors, createErrorResponse, createSuccessResponse, validateEnvVars, validateRequestBody, APIError } from '../../api-helpers';
+import { logger } from '../../../lib/logger';
+import twilio from 'twilio';
 
-export async function GET() {
+const requiredEnvVars = [
+  'TWILIO_ACCOUNT_SID',
+  'TWILIO_AUTH_TOKEN'
+];
+
+/**
+ * Initialize Twilio client with validation
+ */
+function initializeTwilioClient() {
+  validateEnvVars(requiredEnvVars);
+  
   try {
-    // Debug log to check environment variables
-    console.log("[TwilioAPI] Environment check:", {
-      hasSid: !!process.env.TWILIO_ACCOUNT_SID,
-      hasToken: !!process.env.TWILIO_AUTH_TOKEN,
-      hasClient: !!twilioClient,
-      envKeys: Object.keys(process.env).filter(key => key.includes('TWILIO'))
-    });
-
-    if (!twilioClient) {
-      console.error("[TwilioAPI] Client not initialized");
-      return Response.json(
-        { error: "Twilio client not initialized" },
-        { 
-          status: 500,
-          headers: {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-          }
-        }
-      );
-    }
-
-    console.log("[TwilioAPI] Fetching phone numbers...");
-    const incomingPhoneNumbers = await twilioClient.incomingPhoneNumbers.list({
-      limit: 20,
-    });
-    
-    console.log("[TwilioAPI] Found", incomingPhoneNumbers.length, "phone numbers");
-    return Response.json(incomingPhoneNumbers, {
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-      }
-    });
-  } catch (error) {
-    console.error("[TwilioAPI] Error fetching phone numbers:", error);
-    return Response.json(
-      { error: "Failed to fetch phone numbers" },
-      { 
-        status: 500,
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-        }
-      }
+    return twilio(
+      process.env.TWILIO_ACCOUNT_SID!,
+      process.env.TWILIO_AUTH_TOKEN!
     );
+  } catch (error) {
+    logger.error('[TwilioAPI] Failed to initialize client:', error);
+    const initError = new Error('Failed to initialize Twilio client');
+    (initError as any).type = APIError.TWILIO_ERROR;
+    throw initError;
   }
 }
 
-export async function POST(req: Request) {
+/**
+ * Get list of Twilio phone numbers
+ */
+export async function GET(req: NextRequest) {
+  // Handle CORS
+  const corsHeaders = handleCors(req);
+  
   try {
-    if (!twilioClient) {
-      console.error("[TwilioAPI] Client not initialized");
-      return Response.json(
-        { error: "Twilio client not initialized" },
-        { 
-          status: 500,
-          headers: {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-          }
-        }
-      );
-    }
-
-    const { phoneNumberSid, voiceUrl } = await req.json();
-    console.log("[TwilioAPI] Updating phone number:", { phoneNumberSid, voiceUrl });
+    // Initialize client
+    const client = initializeTwilioClient();
     
-    const incomingPhoneNumber = await twilioClient
-      .incomingPhoneNumbers(phoneNumberSid)
-      .update({ voiceUrl });
-
-    console.log("[TwilioAPI] Successfully updated phone number");
-    return Response.json(incomingPhoneNumber, {
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-      }
+    logger.info('[TwilioAPI] Fetching phone numbers...');
+    
+    // Fetch phone numbers
+    const numbers = await client.incomingPhoneNumbers.list({
+      limit: 20
     });
+    
+    logger.info('[TwilioAPI] Found phone numbers:', { 
+      count: numbers.length 
+    });
+
+    // Map response to include only necessary fields
+    const response = numbers.map(number => ({
+      sid: number.sid,
+      phoneNumber: number.phoneNumber,
+      friendlyName: number.friendlyName,
+      capabilities: number.capabilities,
+      voiceUrl: number.voiceUrl
+    }));
+
+    return createSuccessResponse(response);
+
   } catch (error) {
-    console.error("[TwilioAPI] Error updating phone number:", error);
-    return Response.json(
-      { error: "Failed to update phone number" },
-      { 
-        status: 500,
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-        }
-      }
-    );
+    logger.error('[TwilioAPI] Error fetching numbers:', error);
+    return createErrorResponse(error);
   }
 }
 
-export async function OPTIONS() {
+/**
+ * Update Twilio phone number configuration
+ */
+export async function POST(req: NextRequest) {
+  // Handle CORS
+  const corsHeaders = handleCors(req);
+  
+  try {
+    // Initialize client
+    const client = initializeTwilioClient();
+
+    // Parse and validate request body
+    const body = await req.json();
+    validateRequestBody(body, ['phoneNumberSid', 'voiceUrl']);
+
+    logger.info('[TwilioAPI] Updating phone number:', { 
+      sid: body.phoneNumberSid,
+      voiceUrl: body.voiceUrl
+    });
+
+    // Update phone number
+    const updatedNumber = await client.incomingPhoneNumbers(body.phoneNumberSid)
+      .update({
+        voiceUrl: body.voiceUrl,
+        statusCallback: `${body.voiceUrl.replace(/\/twiml$/, '')}/status-callback`
+      });
+
+    logger.info('[TwilioAPI] Successfully updated phone number:', {
+      sid: updatedNumber.sid,
+      phoneNumber: updatedNumber.phoneNumber
+    });
+
+    return createSuccessResponse({
+      sid: updatedNumber.sid,
+      phoneNumber: updatedNumber.phoneNumber,
+      friendlyName: updatedNumber.friendlyName,
+      capabilities: updatedNumber.capabilities,
+      voiceUrl: updatedNumber.voiceUrl
+    });
+
+  } catch (error) {
+    logger.error('[TwilioAPI] Error updating number:', error);
+    return createErrorResponse(error);
+  }
+}
+
+/**
+ * Handle OPTIONS request for CORS preflight
+ */
+export async function OPTIONS(req: NextRequest) {
+  const corsHeaders = handleCors(req);
+  if (corsHeaders instanceof Response) {
+    return corsHeaders;
+  }
+  
   return new Response(null, {
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-    },
+    status: 204,
+    headers: corsHeaders
   });
 }

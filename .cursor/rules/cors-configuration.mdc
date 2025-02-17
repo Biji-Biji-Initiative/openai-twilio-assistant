@@ -1,0 +1,286 @@
+---
+description:  CORS Configuration Rules
+globs: 
+---
+ ---
+CORS Configuration Rules
+globs: 
+  - "**/websocket-server/src/utils.ts"
+  - "**/webapp/app/api/cors.ts"
+  - "**/websocket-server/src/server.ts"
+  - "**/webapp/next.config.js"
+---
+
+# CORS Configuration Rules
+
+## Origin Validation
+
+### Allowed Origins
+```typescript
+const ALLOWED_ORIGINS = {
+  // Development
+  localhost: /^https?:\/\/localhost(:\d+)?$/,
+  
+  // Ngrok tunnels
+  ngrok: /^https?:\/\/[a-zA-Z0-9-]+\.(ngrok\.io|ngrok\.app|ngrok-free\.app)$/,
+  
+  // Production domains
+  production: [
+    'mereka.ngrok.io'
+  ]
+};
+```
+
+### Origin Validation Function
+```typescript
+export function isOriginAllowed(origin: string): boolean {
+  logger.debug(`[CORS] Checking origin: ${origin}`);
+
+  // No origin check (development only)
+  if (!origin && process.env.NODE_ENV === 'development') {
+    logger.warn('[CORS] Allowing request with no origin (development only)');
+    return true;
+  }
+
+  // Localhost check
+  if (ALLOWED_ORIGINS.localhost.test(origin)) {
+    logger.debug('[CORS] Allowing localhost origin');
+    return true;
+  }
+
+  // Ngrok tunnel check
+  if (ALLOWED_ORIGINS.ngrok.test(origin)) {
+    logger.debug('[CORS] Allowing ngrok origin');
+    return true;
+  }
+
+  // Production domains check
+  const isAllowed = ALLOWED_ORIGINS.production.includes(origin);
+  logger.debug(`[CORS] Origin ${origin} allowed: ${isAllowed}`);
+  return isAllowed;
+}
+```
+
+## CORS Middleware Configuration
+
+### Express Configuration
+```typescript
+const corsOptions = {
+  origin: function(origin: string | undefined, callback: Function) {
+    if (!origin && process.env.NODE_ENV === 'development') {
+      callback(null, true);
+      return;
+    }
+
+    if (isOriginAllowed(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('CORS not allowed'));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: [
+    'Content-Type',
+    'Authorization',
+    'X-Requested-With',
+    'Cache-Control',
+    'Pragma',
+    'Accept'
+  ],
+  exposedHeaders: ['Content-Length', 'Content-Type']
+};
+```
+
+### Next.js Configuration
+```typescript
+// next.config.js
+module.exports = {
+  async headers() {
+    return [
+      {
+        source: '/api/:path*',
+        headers: [
+          {
+            key: 'Access-Control-Allow-Credentials',
+            value: 'true'
+          },
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: process.env.NEXT_PUBLIC_BACKEND_URL
+          },
+          {
+            key: 'Access-Control-Allow-Methods',
+            value: 'GET,POST,PUT,DELETE,OPTIONS'
+          },
+          {
+            key: 'Access-Control-Allow-Headers',
+            value: 'Content-Type, Authorization, X-Requested-With'
+          }
+        ]
+      }
+    ];
+  }
+};
+```
+
+## WebSocket Security
+
+### WebSocket Client Verification
+```typescript
+export function verifyWebSocketClient(
+  info: { origin: string; secure: boolean; req: any }
+): boolean {
+  const origin = info.origin;
+  logger.info(`[WebSocket] Verifying client connection from origin: ${origin}`);
+
+  try {
+    if (!origin) {
+      throw new WebSocketError('Origin not provided', 1003);
+    }
+
+    if (!isOriginAllowed(origin)) {
+      throw new WebSocketError('Origin not allowed', 1008);
+    }
+
+    // Additional security checks
+    if (process.env.NODE_ENV === 'production' && !info.secure) {
+      throw new WebSocketError('Secure connection required', 1015);
+    }
+
+    logger.info(`[WebSocket] Accepted connection from origin: ${origin}`);
+    return true;
+  } catch (error) {
+    logger.error('[WebSocket] Connection verification failed:', error);
+    throw error;
+  }
+}
+```
+
+## Security Considerations
+
+### Headers Configuration
+1. Always set these security headers:
+```typescript
+app.use((req, res, next) => {
+  // Prevent clickjacking
+  res.setHeader('X-Frame-Options', 'DENY');
+  
+  // Enable XSS protection
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  
+  // Prevent MIME type sniffing
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  
+  // CORS headers
+  const origin = req.headers.origin;
+  if (origin && isOriginAllowed(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Vary', 'Origin');
+  }
+  
+  next();
+});
+```
+
+### Production Requirements
+1. HTTPS Only:
+   - Reject non-HTTPS connections in production
+   - Use secure WebSocket connections (wss://)
+   - Set Strict-Transport-Security header
+
+2. Cookie Security:
+```typescript
+app.use(session({
+  cookie: {
+    secure: process.env.NODE_ENV === 'production',
+    httpOnly: true,
+    sameSite: 'strict'
+  }
+}));
+```
+
+## Error Handling
+
+### CORS Error Types
+```typescript
+enum CORSError {
+  ORIGIN_NOT_ALLOWED = 'CORS_ORIGIN_NOT_ALLOWED',
+  MISSING_ORIGIN = 'CORS_MISSING_ORIGIN',
+  METHOD_NOT_ALLOWED = 'CORS_METHOD_NOT_ALLOWED',
+  HEADERS_NOT_ALLOWED = 'CORS_HEADERS_NOT_ALLOWED'
+}
+```
+
+### Error Response Format
+```typescript
+interface CORSErrorResponse {
+  error: CORSError;
+  message: string;
+  origin?: string;
+  allowedOrigins?: string[];
+  timestamp: string;
+}
+```
+
+## Monitoring and Logging
+
+### CORS Events to Log
+1. All CORS preflight requests
+2. Rejected origins
+3. Missing origin headers
+4. Successful cross-origin requests
+5. WebSocket connection attempts
+
+### Log Format
+```typescript
+interface CORSLogEntry {
+  timestamp: string;
+  type: 'cors' | 'websocket';
+  event: string;
+  origin?: string;
+  allowed: boolean;
+  headers?: Record<string, string>;
+  error?: string;
+}
+```
+
+## Testing Guidelines
+
+### CORS Test Cases
+1. Test all allowed origins
+2. Test rejected origins
+3. Test missing origin header
+4. Test preflight requests
+5. Test WebSocket connections
+6. Test secure/insecure connections
+7. Test with invalid headers
+
+### Test Implementation
+```typescript
+describe('CORS Configuration', () => {
+  it('should allow valid origins', async () => {
+    const validOrigins = [
+      'http://localhost:3000',
+      'https://mereka.ngrok.io'
+    ];
+    
+    for (const origin of validOrigins) {
+      const allowed = isOriginAllowed(origin);
+      expect(allowed).toBe(true);
+    }
+  });
+
+  it('should reject invalid origins', async () => {
+    const invalidOrigins = [
+      'http://malicious.com',
+      'https://fake.ngrok.io'
+    ];
+    
+    for (const origin of invalidOrigins) {
+      const allowed = isOriginAllowed(origin);
+      expect(allowed).toBe(false);
+    }
+  });
+});
+```

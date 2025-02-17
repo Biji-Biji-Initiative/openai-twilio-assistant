@@ -10,12 +10,13 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { Plus, Edit, Trash, Check, AlertCircle } from "lucide-react";
+import { Plus, Edit, Trash, Check, AlertCircle, Loader2 } from "lucide-react";
 import { toolTemplates } from "@/lib/tool-templates";
 import { ToolConfigurationDialog } from "./tool-configuration-dialog";
 import { BackendTag } from "./backend-tag";
 import { useBackendTools } from "@/lib/use-backend-tools";
 import ConfigurationPreview from "./ConfigurationPreview";
+import { toast } from "sonner";
 
 interface SessionConfigurationPanelProps {
   callStatus: string;
@@ -40,18 +41,21 @@ const SessionConfigurationPanel: React.FC<SessionConfigurationPanelProps> = ({
     "idle" | "saving" | "saved" | "error"
   >("idle");
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  const [validationError, setValidationError] = useState<string | null>(null);
 
   // Custom hook to fetch backend tools every 3 seconds
-  const backendTools = useBackendTools(`${process.env.NEXT_PUBLIC_BACKEND_URL}/tools`, 3000);
+  const backendTools = useBackendTools(`${process.env.NEXT_PUBLIC_API_URL}/tools`, 3000);
 
   // Track changes to determine if there are unsaved modifications
   useEffect(() => {
+    if (saveStatus === "saved") {
     setHasUnsavedChanges(true);
+    }
   }, [instructions, voice, tools]);
 
   // Reset save status after a delay when saved
   useEffect(() => {
-    if (saveStatus === "saved") {
+    if (saveStatus === "saved" || saveStatus === "error") {
       const timer = setTimeout(() => {
         setSaveStatus("idle");
       }, 3000);
@@ -59,7 +63,46 @@ const SessionConfigurationPanel: React.FC<SessionConfigurationPanelProps> = ({
     }
   }, [saveStatus]);
 
+  // Validate configuration before saving
+  const validateConfiguration = () => {
+    // Validate instructions
+    if (!instructions.trim()) {
+      setValidationError("Instructions cannot be empty");
+      return false;
+    }
+
+    // Validate voice selection
+    const validVoices = ["ash", "ballad", "coral", "sage", "verse"];
+    if (!validVoices.includes(voice)) {
+      setValidationError("Invalid voice selection");
+      return false;
+    }
+
+    // Validate tools
+    for (const tool of tools) {
+      try {
+        const parsed = JSON.parse(tool);
+        if (!parsed.name || !parsed.description) {
+          setValidationError("All tools must have a name and description");
+          return false;
+        }
+      } catch (error) {
+        setValidationError("Invalid tool configuration JSON");
+        return false;
+      }
+    }
+
+    setValidationError(null);
+    return true;
+  };
+
   const handleSave = async () => {
+    if (!validateConfiguration()) {
+      toast.error(validationError || "Invalid configuration");
+      setSaveStatus("error");
+      return;
+    }
+
     setSaveStatus("saving");
     try {
       const payload = {
@@ -77,6 +120,7 @@ const SessionConfigurationPanel: React.FC<SessionConfigurationPanelProps> = ({
       await onSave(payload);
       setSaveStatus("saved");
       setHasUnsavedChanges(false);
+      toast.success("Configuration saved successfully");
       
       console.log("[SessionConfig] Successfully sent configuration update");
     } catch (error) {

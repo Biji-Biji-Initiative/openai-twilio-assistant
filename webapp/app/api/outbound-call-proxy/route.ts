@@ -1,57 +1,58 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from 'next/server';
+import { handleCors, createErrorResponse, createSuccessResponse, validateRequestBody, validateEnvVars } from '../api-helpers';
+import { logger } from '../../lib/logger';
+import twilio from 'twilio';
+
+const requiredEnvVars = [
+  'TWILIO_ACCOUNT_SID',
+  'TWILIO_AUTH_TOKEN',
+  'TWILIO_PHONE_NUMBER',
+  'NEXT_PUBLIC_BACKEND_URL'
+];
 
 export async function POST(req: NextRequest) {
+  // Handle CORS
+  const corsHeaders = handleCors(req);
+  
   try {
-    const body = await req.json();
-    const { to, action } = body;
+    // Validate environment variables
+    validateEnvVars(requiredEnvVars);
     
-    if (action === "disconnect") {
-      const { callSid } = body;
-      console.log("[OutboundCallProxy] Received disconnect request for call:", callSid);
-      
-      if (!callSid) {
-        console.error("[OutboundCallProxy] Missing 'callSid' parameter for disconnect");
-        return NextResponse.json({ error: "Missing 'callSid' param." }, { status: 400 });
-      }
+    // Parse request body
+    const body = await req.json();
+    
+    // Validate request body
+    validateRequestBody(body, ['phoneNumber']);
+    
+    // Initialize Twilio client
+    const client = twilio(
+      process.env.TWILIO_ACCOUNT_SID!,
+      process.env.TWILIO_AUTH_TOKEN!
+    );
 
-      const serverUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/disconnect-call`;
-      console.log("[OutboundCallProxy] Forwarding disconnect to server URL:", serverUrl);
-
-      const response = await fetch(serverUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ callSid }),
-      });
-
-      const data = await response.json();
-      console.log("[OutboundCallProxy] Response from disconnect request:", data);
-      return NextResponse.json(data, { status: response.status });
-    }
-
-    // Handle regular outbound call
-    console.log("[OutboundCallProxy] Received call request for number:", to);
-
-    if (!to) {
-      console.error("[OutboundCallProxy] Missing 'to' parameter");
-      return NextResponse.json({ error: "Missing 'to' param." }, { status: 400 });
-    }
-
-    // Your Node bridging server runs on port 8081
-    const serverUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/outbound-call`;
-    console.log("[OutboundCallProxy] Forwarding call to server URL:", serverUrl);
-
-    const response = await fetch(serverUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ to }),
+    // Make the outbound call
+    const call = await client.calls.create({
+      to: body.phoneNumber,
+      from: process.env.TWILIO_PHONE_NUMBER!,
+      url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/twiml`,
+      statusCallback: `${process.env.NEXT_PUBLIC_BACKEND_URL}/status-callback`,
+      statusCallbackEvent: ['initiated', 'ringing', 'answered', 'completed'],
+      statusCallbackMethod: 'POST'
     });
 
-    const data = await response.json();
-    console.log("[OutboundCallProxy] Response from Twilio server:", data);
+    logger.info('[OutboundCallProxy] Call initiated:', { 
+      callSid: call.sid,
+      to: body.phoneNumber,
+      status: call.status 
+    });
 
-    return NextResponse.json(data, { status: response.status });
-  } catch (err: any) {
-    console.error("[OutboundCallProxy] Error in outbound call proxy:", err);
-    return NextResponse.json({ error: err.message }, { status: 500 });
+    return createSuccessResponse({ 
+      callSid: call.sid,
+      status: call.status
+    }, 201);
+
+  } catch (error) {
+    logger.error('[OutboundCallProxy] Error:', error);
+    return createErrorResponse(error);
   }
 } 

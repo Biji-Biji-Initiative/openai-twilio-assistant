@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useMemo, useReducer, useCallback } from "react";
+import React, { useEffect, useState, useMemo, useReducer } from "react";
 import {
   Dialog,
   DialogContent,
@@ -20,29 +20,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-// Helper functions for API calls
-const fetchJSON = async (url: string, options: RequestInit = {}) => {
-  const response = await fetch(url, {
-    method: 'GET',
-    headers: {
-      'Cache-Control': 'no-cache',
-      'Pragma': 'no-cache',
-      'Accept': 'application/json',
-      ...options.headers,
-    },
-    credentials: 'include',
-    mode: 'cors',
-    ...options,
-  });
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`Request failed: ${response.status} - ${errorText}`);
-  }
-
-  return response.json();
-};
-
 type ChecklistState = {
   hasCredentials: boolean;
   phoneNumbers: PhoneNumber[];
@@ -55,8 +32,15 @@ type ChecklistState = {
   webhookLoading: boolean;
   ngrokLoading: boolean;
   isPolling: boolean;
-  error: string | null; // Added error state
-  lastCheckTime: number | null; // Added to track last check time
+};
+
+type ChecklistItem = {
+  label: string;
+  done: boolean;
+  description: string;
+  field: React.ReactNode | null;
+  loading?: boolean;
+  error?: string;
 };
 
 type ChecklistAction = 
@@ -69,8 +53,6 @@ type ChecklistAction =
   | { type: 'SET_WEBHOOK_LOADING', payload: boolean }
   | { type: 'SET_NGROK_LOADING', payload: boolean }
   | { type: 'SET_POLLING', payload: boolean }
-  | { type: 'SET_ERROR', payload: string | null }
-  | { type: 'UPDATE_LAST_CHECK_TIME' }
   | { type: 'UPDATE_ALL_CHECKS' };
 
 const initialState: ChecklistState = {
@@ -85,53 +67,41 @@ const initialState: ChecklistState = {
   webhookLoading: false,
   ngrokLoading: false,
   isPolling: false,
-  error: null,
-  lastCheckTime: null,
 };
 
 function checklistReducer(state: ChecklistState, action: ChecklistAction): ChecklistState {
   switch (action.type) {
     case 'SET_CREDENTIALS':
-      return { ...state, hasCredentials: action.payload, error: null };
+      return { ...state, hasCredentials: action.payload };
     case 'SET_PHONE_NUMBERS':
-      return { ...state, phoneNumbers: action.payload, error: null };
+      return { ...state, phoneNumbers: action.payload };
     case 'SET_CURRENT_NUMBER':
       return {
         ...state,
         currentNumberSid: action.payload.sid,
         currentVoiceUrl: action.payload.voiceUrl,
-        error: null,
       };
     case 'SET_PUBLIC_URL':
-      return { ...state, publicUrl: action.payload, error: null };
+      return { ...state, publicUrl: action.payload };
     case 'SET_LOCAL_SERVER':
-      return { ...state, localServerUp: action.payload, error: null };
+      return { ...state, localServerUp: action.payload };
     case 'SET_PUBLIC_URL_ACCESSIBLE':
-      return { ...state, publicUrlAccessible: action.payload, error: null };
+      return { ...state, publicUrlAccessible: action.payload };
     case 'SET_WEBHOOK_LOADING':
       return { ...state, webhookLoading: action.payload };
     case 'SET_NGROK_LOADING':
       return { ...state, ngrokLoading: action.payload };
     case 'SET_POLLING':
       return { ...state, isPolling: action.payload };
-    case 'SET_ERROR':
-      return { ...state, error: action.payload };
-    case 'UPDATE_LAST_CHECK_TIME':
-      return { ...state, lastCheckTime: Date.now() };
     case 'UPDATE_ALL_CHECKS':
-      // Simplified webhook check logic
-      const webhookUpdated = state.publicUrl ? 
-        `${state.publicUrl}/twiml` === state.currentVoiceUrl : 
-        false;
-      
+      const webhookUrl = state.publicUrl ? `${state.publicUrl}/twiml` : "";
       const allDone = [
         state.hasCredentials,
         state.phoneNumbers.length > 0,
         state.localServerUp,
         state.publicUrlAccessible,
-        webhookUpdated
+        !!state.publicUrl && webhookUrl === state.currentVoiceUrl
       ].every(Boolean);
-      
       return { ...state, allChecksPassed: allDone };
     default:
       return state;
@@ -155,37 +125,267 @@ export default function ChecklistAndConfig({
   const isWebhookMismatch =
     appendedTwimlUrl && state.currentVoiceUrl && appendedTwimlUrl !== state.currentVoiceUrl;
 
-  // Memoized function for checking ngrok
-  const checkNgrok = useCallback(async () => {
+  useEffect(() => {
+    let mounted = true;
+    let timeoutId: NodeJS.Timeout;
+
+    const pollChecks = async () => {
+      if (!mounted || ready) return;
+      
+      try {
+        dispatch({ type: 'SET_POLLING', payload: true });
+        
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+        if (!backendUrl) {
+          console.warn("[Checklist] NEXT_PUBLIC_BACKEND_URL not set");
+          return;
+        }
+        
+        // 1. Check credentials
+        let res = await fetch(`${backendUrl}/api/twilio`, {
+          method: 'GET',
+          headers: {
+            'Cache-Control': 'no-cache',
+            'Accept': 'application/json'
+          }
+        });
+        
+        if (!mounted) return;
+        
+        if (!res.ok) {
+          const errorText = await res.text();
+          console.warn("[Checklist] Credentials check failed:", errorText);
+          dispatch({ type: 'SET_CREDENTIALS', payload: false });
+          return;
+        }
+
+        let credData;
+        try {
+          credData = await res.json();
+          if (mounted) {
+            dispatch({ type: 'SET_CREDENTIALS', payload: !!credData?.credentialsSet });
+          }
+        } catch (err) {
+          console.warn("[Checklist] Failed to parse credentials response:", err);
+          if (mounted) {
+            dispatch({ type: 'SET_CREDENTIALS', payload: false });
+          }
+          return;
+        }
+
+        // 2. Fetch numbers
+        res = await fetch(`${backendUrl}/api/twilio/numbers`, {
+          method: 'GET',
+          headers: {
+            'Cache-Control': 'no-cache',
+            'Accept': 'application/json'
+          }
+        });
+        
+        if (!res.ok) {
+          const errorText = await res.text();
+          console.warn("[Checklist] Failed to fetch phone numbers:", errorText);
+          return;
+        }
+
+        let numbersData;
+        try {
+          numbersData = await res.json();
+          // The response is already the array of numbers
+          if (!Array.isArray(numbersData)) {
+            console.warn("[Checklist] Invalid phone numbers response format");
+            return;
+          }
+        } catch (err) {
+          console.warn("[Checklist] Failed to parse phone numbers response:", err);
+          return;
+        }
+
+        if (mounted && numbersData.length > 0) {
+          dispatch({ type: 'SET_PHONE_NUMBERS', payload: numbersData });
+          // If currentNumberSid not set or not in the list, use first
+          const selected =
+            numbersData.find((p: PhoneNumber) => p.sid === state.currentNumberSid) ||
+            numbersData[0];
+          
+          if (!selected?.sid) {
+            console.warn("[Checklist] Invalid phone number data");
+            return;
+          }
+
+          dispatch({ type: 'SET_CURRENT_NUMBER', payload: { 
+            sid: selected.sid, 
+            voiceUrl: selected.voiceUrl || "", 
+            friendlyName: selected.friendlyName || "" 
+          }});
+          setSelectedPhoneNumber(selected.friendlyName || "");
+        }
+
+        // 3. Check local server & public URL
+        try {
+          // First check if the local server is up using the backend URL
+          const localHealthRes = await fetch(`${backendUrl}/api/health`, {
+            method: 'GET',
+            headers: {
+              'Cache-Control': 'no-cache',
+              'Accept': 'application/json'
+            }
+          });
+          
+          if (localHealthRes.ok) {
+            const healthData = await localHealthRes.json();
+            if (mounted) {
+              dispatch({ type: 'SET_LOCAL_SERVER', payload: true });
+            }
+            
+            // Get public URL from the health check response
+            if (healthData?.environment?.publicUrl) {
+              const foundPublicUrl = healthData.environment.publicUrl;
+              if (mounted) {
+                dispatch({ type: 'SET_PUBLIC_URL', payload: foundPublicUrl });
+                
+                // If we have a public URL, check ngrok immediately
+                if (!state.publicUrlAccessible && !state.ngrokLoading) {
+                  await checkNgrok();
+                }
+              }
+              console.log("[Checklist] Server health check successful:", {
+                publicUrl: foundPublicUrl,
+                status: healthData.status,
+                service: healthData.service,
+                environment: healthData.environment
+              });
+            } else {
+              console.warn("[Checklist] Health check response missing publicUrl:", healthData);
+              if (mounted) {
+                dispatch({ type: 'SET_LOCAL_SERVER', payload: false });
+              }
+            }
+          } else {
+            const errorText = await localHealthRes.text();
+            console.warn("[Checklist] Health check failed:", {
+              status: localHealthRes.status,
+              error: errorText
+            });
+            if (mounted) {
+              dispatch({ type: 'SET_LOCAL_SERVER', payload: false });
+            }
+          }
+        } catch (err) {
+          console.warn("[Checklist] Error checking local server:", err);
+          if (mounted) {
+            dispatch({ type: 'SET_LOCAL_SERVER', payload: false });
+          }
+        }
+
+        // After all checks are complete, update allChecksPassed
+        if (mounted) {
+          dispatch({ type: 'UPDATE_ALL_CHECKS' });
+        }
+      } catch (err) {
+        console.warn("[Checklist] Error in pollChecks:", err);
+      } finally {
+        if (mounted) {
+          dispatch({ type: 'SET_POLLING', payload: false });
+          if (!ready) {
+            timeoutId = setTimeout(pollChecks, 3000);
+          }
+        }
+      }
+    };
+
+    pollChecks();
+    
+    return () => {
+      mounted = false;
+      clearTimeout(timeoutId);
+      dispatch({ type: 'SET_POLLING', payload: false });
+    };
+  }, [ready, state.localServerUp, state.publicUrl, state.publicUrlAccessible, state.ngrokLoading, state.currentNumberSid]);
+
+  const updateWebhook = async () => {
+    if (!state.currentNumberSid || !appendedTwimlUrl) return;
+    
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    if (!backendUrl) {
+      console.warn("[Checklist] NEXT_PUBLIC_BACKEND_URL not set");
+      return;
+    }
+
+    dispatch({ type: 'SET_WEBHOOK_LOADING', payload: true });
+    try {
+      const res = await fetch(`${backendUrl}/api/twilio/numbers`, {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          'Cache-Control': 'no-cache'
+        },
+        body: JSON.stringify({
+          phoneNumberSid: state.currentNumberSid,
+          voiceUrl: appendedTwimlUrl,
+        }),
+      });
+      
+      if (!res.ok) {
+        const errorText = await res.text();
+        console.warn("[Checklist] Failed to update webhook:", errorText);
+        throw new Error("Failed to update webhook");
+      }
+      
+      const updatedNumber = await res.json();
+      dispatch({ type: 'SET_CURRENT_NUMBER', payload: { 
+        sid: updatedNumber.sid,
+        voiceUrl: updatedNumber.voiceUrl || "",
+        friendlyName: updatedNumber.friendlyName || ""
+      }});
+    } catch (err) {
+      console.error("[Checklist] Error updating webhook:", err);
+    } finally {
+      dispatch({ type: 'SET_WEBHOOK_LOADING', payload: false });
+    }
+  };
+
+  const checkNgrok = async () => {
     if (!state.localServerUp || !state.publicUrl || state.ngrokLoading) return;
-    
     dispatch({ type: 'SET_NGROK_LOADING', payload: true });
-    dispatch({ type: 'SET_ERROR', payload: null });
-    
     let success = false;
     
     for (let i = 0; i < 5; i++) {
       if (!state.localServerUp || !state.publicUrl) break;
       
       try {
-        const healthData = await fetchJSON(`${state.publicUrl}/health`);
+        const resTest = await fetch(`${state.publicUrl}/api/health`, {
+          method: 'GET',
+          headers: {
+            'Cache-Control': 'no-cache',
+            'Accept': 'application/json'
+          }
+        });
         
-        if (healthData?.status === 'ok' && healthData?.environment?.publicUrl) {
-          console.log("[Checklist] Ngrok health check successful:", {
-            publicUrl: healthData.environment.publicUrl,
-            status: healthData.status,
-            service: healthData.service
-          });
-          dispatch({ type: 'SET_PUBLIC_URL_ACCESSIBLE', payload: true });
-          success = true;
-          break;
+        if (resTest.ok) {
+          const healthData = await resTest.json();
+          if (healthData?.status === 'ok' && healthData?.environment?.publicUrl) {
+            console.log("[Checklist] Ngrok health check successful:", {
+              publicUrl: healthData.environment.publicUrl,
+              status: healthData.status,
+              service: healthData.service
+            });
+            dispatch({ type: 'SET_PUBLIC_URL_ACCESSIBLE', payload: true });
+            success = true;
+            break;
+          } else {
+            console.warn("[Checklist] Ngrok health check response invalid:", healthData);
+          }
         } else {
-          console.warn("[Checklist] Ngrok health check response invalid:", healthData);
-          dispatch({ type: 'SET_ERROR', payload: 'Invalid ngrok health check response' });
+          const errorText = await resTest.text();
+          console.warn("[Checklist] Ngrok health check failed:", {
+            status: resTest.status,
+            statusText: resTest.statusText,
+            error: errorText
+          });
         }
       } catch (err) {
         console.warn("[Checklist] Ngrok health check error:", err);
-        dispatch({ type: 'SET_ERROR', payload: err instanceof Error ? err.message : 'Failed to check ngrok' });
       }
       
       if (i < 4) {
@@ -197,186 +397,9 @@ export default function ChecklistAndConfig({
     if (!success) {
       console.warn("[Checklist] All ngrok health check attempts failed");
       dispatch({ type: 'SET_PUBLIC_URL_ACCESSIBLE', payload: false });
-      dispatch({ type: 'SET_ERROR', payload: 'Failed to verify ngrok tunnel' });
     }
     
     dispatch({ type: 'SET_NGROK_LOADING', payload: false });
-  }, [state.localServerUp, state.publicUrl, state.ngrokLoading]);
-
-  // Polling effect with proper dependencies
-  useEffect(() => {
-    let mounted = true;
-    let timeoutId: NodeJS.Timeout;
-
-    const pollChecks = async () => {
-      if (!mounted || state.isPolling || ready) return;
-      
-      try {
-        dispatch({ type: 'SET_POLLING', payload: true });
-        dispatch({ type: 'SET_ERROR', payload: null });
-        
-        // 1. Check credentials
-        try {
-          const credData = await fetchJSON("/api/twilio");
-          if (mounted) {
-            dispatch({ type: 'SET_CREDENTIALS', payload: !!credData?.credentialsSet });
-          }
-        } catch (err) {
-          console.warn("[Checklist] Credentials check failed:", err);
-          if (mounted) {
-            dispatch({ type: 'SET_CREDENTIALS', payload: false });
-            dispatch({ type: 'SET_ERROR', payload: 'Failed to verify Twilio credentials' });
-          }
-          return;
-        }
-
-        // 2. Fetch numbers
-        try {
-          const numbersData = await fetchJSON("/api/twilio/numbers");
-          
-          if (!Array.isArray(numbersData)) {
-            throw new Error("Invalid phone numbers response format");
-          }
-
-          if (mounted && numbersData.length > 0) {
-            dispatch({ type: 'SET_PHONE_NUMBERS', payload: numbersData });
-            
-            const selected =
-              numbersData.find((p: PhoneNumber) => p.sid === state.currentNumberSid) ||
-              numbersData[0];
-            
-            if (!selected?.sid) {
-              throw new Error("Invalid phone number data");
-            }
-
-            dispatch({ type: 'SET_CURRENT_NUMBER', payload: { 
-              sid: selected.sid, 
-              voiceUrl: selected.voiceUrl || "", 
-              friendlyName: selected.friendlyName || "" 
-            }});
-            setSelectedPhoneNumber(selected.friendlyName || "");
-          }
-        } catch (err) {
-          console.warn("[Checklist] Failed to fetch phone numbers:", err);
-          if (mounted) {
-            dispatch({ type: 'SET_ERROR', payload: 'Failed to fetch Twilio phone numbers' });
-          }
-          return;
-        }
-
-        // 3. Check local server & public URL
-        try {
-          const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-          if (!backendUrl) {
-            throw new Error("NEXT_PUBLIC_BACKEND_URL not set");
-          }
-
-          try {
-            const healthData = await fetchJSON(`${backendUrl}/health`);
-            
-            if (mounted) {
-              dispatch({ type: 'SET_LOCAL_SERVER', payload: true });
-              
-              if (healthData?.environment?.publicUrl) {
-                dispatch({ type: 'SET_PUBLIC_URL', payload: healthData.environment.publicUrl });
-                console.log("[Checklist] Server health check successful:", {
-                  publicUrl: healthData.environment.publicUrl,
-                  status: healthData.status,
-                  service: healthData.service,
-                  environment: healthData.environment
-                });
-              } else if (healthData?.environment?.mode === 'development') {
-                dispatch({ type: 'SET_PUBLIC_URL', payload: 'http://localhost:8081' });
-                console.log("[Checklist] Using default development URL");
-              }
-            }
-          } catch (healthErr) {
-            console.warn("[Checklist] Health check failed:", healthErr);
-            
-            // Fallback to public-url endpoint
-            try {
-              const pubData = await fetchJSON(`${backendUrl}/public-url`);
-              const foundPublicUrl = pubData?.publicUrl || "";
-              
-              if (foundPublicUrl && mounted) {
-                dispatch({ type: 'SET_LOCAL_SERVER', payload: true });
-                dispatch({ type: 'SET_PUBLIC_URL', payload: foundPublicUrl });
-                console.log("[Checklist] Public URL check successful:", foundPublicUrl);
-              } else {
-                throw new Error("No public URL found in response");
-              }
-            } catch (pubErr) {
-              throw new Error(`Failed to get public URL: ${pubErr instanceof Error ? pubErr.message : 'Unknown error'}`);
-            }
-          }
-        } catch (err) {
-          console.warn("[Checklist] Error checking local server:", err);
-          if (mounted) {
-            dispatch({ type: 'SET_LOCAL_SERVER', payload: false });
-            dispatch({ type: 'SET_PUBLIC_URL', payload: "" });
-            dispatch({ type: 'SET_ERROR', payload: err instanceof Error ? err.message : 'Failed to check local server' });
-          }
-        }
-
-        if (mounted) {
-          dispatch({ type: 'UPDATE_ALL_CHECKS' });
-          dispatch({ type: 'UPDATE_LAST_CHECK_TIME' });
-          
-          // Trigger ngrok check if needed
-          if (state.localServerUp && state.publicUrl && !state.publicUrlAccessible && !state.ngrokLoading) {
-            await checkNgrok();
-          }
-        }
-      } catch (err) {
-        console.warn("[Checklist] Error in pollChecks:", err);
-        if (mounted) {
-          dispatch({ type: 'SET_ERROR', payload: 'Failed to complete checklist verification' });
-        }
-      } finally {
-        if (mounted && !ready) {
-          dispatch({ type: 'SET_POLLING', payload: false });
-          timeoutId = setTimeout(pollChecks, 2000);
-        }
-      }
-    };
-
-    if (!ready) {
-      pollChecks();
-    }
-    
-    return () => {
-      mounted = false;
-      clearTimeout(timeoutId);
-      dispatch({ type: 'SET_POLLING', payload: false });
-    };
-  }, [ready, setSelectedPhoneNumber, checkNgrok]);
-
-  // Separate effect for handling ngrok checks
-  useEffect(() => {
-    if (state.localServerUp && state.publicUrl && !state.publicUrlAccessible && !state.ngrokLoading && !ready) {
-      checkNgrok();
-    }
-  }, [state.localServerUp, state.publicUrl, state.publicUrlAccessible, state.ngrokLoading, ready, checkNgrok]);
-
-  const updateWebhook = async () => {
-    if (!state.currentNumberSid || !appendedTwimlUrl) return;
-    dispatch({ type: 'SET_WEBHOOK_LOADING', payload: true });
-    try {
-      const res = await fetch("/api/twilio/numbers", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          phoneNumberSid: state.currentNumberSid,
-          voiceUrl: appendedTwimlUrl,
-        }),
-      });
-      if (!res.ok) throw new Error("Failed to update webhook");
-      dispatch({ type: 'SET_CURRENT_NUMBER', payload: { sid: state.currentNumberSid, voiceUrl: appendedTwimlUrl, friendlyName: "" } });
-    } catch (err) {
-      console.error(err);
-    } finally {
-      dispatch({ type: 'SET_WEBHOOK_LOADING', payload: false });
-    }
   };
 
   const checklist = useMemo(() => {
@@ -385,6 +408,8 @@ export default function ChecklistAndConfig({
         label: "Set up Twilio account",
         done: state.hasCredentials,
         description: "Then update account details in webapp/.env",
+        loading: false,
+        error: undefined,
         field: (
           <Button
             className="w-full"
@@ -393,11 +418,13 @@ export default function ChecklistAndConfig({
             Open Twilio Console
           </Button>
         ),
-      },
+      } as ChecklistItem,
       {
         label: "Set up Twilio phone number",
         done: state.phoneNumbers.length > 0,
         description: "Costs around $1.15/month",
+        loading: false,
+        error: undefined,
         field:
           state.phoneNumbers.length > 0 ? (
             state.phoneNumbers.length === 1 ? (
@@ -445,17 +472,21 @@ export default function ChecklistAndConfig({
               Set up Twilio phone number
             </Button>
           ),
-      },
+      } as ChecklistItem,
       {
         label: "Start local WebSocket server",
         done: state.localServerUp,
         description: "cd websocket-server && npm run dev",
+        loading: false,
+        error: undefined,
         field: null,
-      },
+      } as ChecklistItem,
       {
         label: "Start ngrok",
         done: state.publicUrlAccessible,
         description: "Then set ngrok URL in websocket-server/.env",
+        loading: state.ngrokLoading,
+        error: undefined,
         field: (
           <div className="flex items-center gap-2 w-full">
             <div className="flex-1">
@@ -477,11 +508,13 @@ export default function ChecklistAndConfig({
             </div>
           </div>
         ),
-      },
+      } as ChecklistItem,
       {
         label: "Update Twilio webhook URL",
         done: !!state.publicUrl && !isWebhookMismatch,
         description: "Can also be done manually in Twilio console",
+        loading: state.webhookLoading,
+        error: undefined,
         field: (
           <div className="flex items-center gap-2 w-full">
             <div className="flex-1">
@@ -502,7 +535,7 @@ export default function ChecklistAndConfig({
             </div>
           </div>
         ),
-      },
+      } as ChecklistItem,
     ];
   }, [
     state.hasCredentials,
@@ -527,7 +560,7 @@ export default function ChecklistAndConfig({
 
   return (
     <Dialog open={!ready}>
-      <DialogContent className="w-full max-w-[800px]">
+      <DialogContent className="w-full max-w-[800px] overflow-y-auto max-h-[90vh]">
         <DialogHeader>
           <DialogTitle>Setup Checklist</DialogTitle>
           <DialogDescription>
@@ -535,53 +568,61 @@ export default function ChecklistAndConfig({
           </DialogDescription>
         </DialogHeader>
 
-        {state.error && (
-          <div className="mb-4 p-4 bg-red-50 text-red-700 rounded-md">
-            {state.error}
-          </div>
-        )}
-
-        <div className="mt-4 space-y-0">
+        <div className="mt-4 space-y-4">
           {checklist.map((item, i) => (
             <div
               key={i}
-              className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 py-2"
+              className="flex flex-col sm:flex-row items-start sm:items-center gap-4 py-3 border-b last:border-b-0"
             >
-              <div className="flex flex-col">
-                <div className="flex items-center gap-2 mb-1">
-                  {item.done ? (
-                    <CheckCircle className="text-green-500" />
+              <div className="flex items-start gap-4 flex-1 min-w-0">
+                <div className="flex-none pt-1">
+                  {item.loading ? (
+                    <Loader2 className="h-4 w-4 animate-spin text-blue-500" />
+                  ) : item.done ? (
+                    <CheckCircle className="h-4 w-4 text-green-500" />
                   ) : (
-                    <Circle className="text-gray-400" />
+                    <Circle className="h-4 w-4 text-muted-foreground" />
                   )}
-                  <span className="font-medium">{item.label}</span>
                 </div>
-                {item.description && (
-                  <p className="text-sm text-gray-500 ml-8">
-                    {item.description}
-                  </p>
-                )}
+                <div className="flex-1 min-w-0">
+                  <div className="text-sm font-medium leading-none mb-1">
+                    {item.label}
+                  </div>
+                  <div className="text-sm text-muted-foreground break-words">
+                    {item.error ? (
+                      <span className="text-red-500">{item.error}</span>
+                    ) : (
+                      item.description
+                    )}
+                  </div>
+                </div>
               </div>
-              <div className="flex items-center mt-2 sm:mt-0">{item.field}</div>
+              {item.field && (
+                <div className="w-full sm:w-auto flex-none sm:min-w-[200px]">
+                  {item.field}
+                </div>
+              )}
             </div>
           ))}
         </div>
 
-        <div className="mt-6 flex flex-col sm:flex-row sm:justify-end">
+        <div className="mt-6 flex flex-col sm:flex-row sm:justify-between items-center gap-4">
+          <div className="text-sm text-muted-foreground">
+            {state.allChecksPassed ? (
+              <span className="text-green-500">✓ All checks passed</span>
+            ) : (
+              <span>Complete all steps to continue</span>
+            )}
+          </div>
           <Button
-            variant="outline"
+            variant="default"
             onClick={handleDone}
             disabled={!state.allChecksPassed}
+            className="w-full sm:w-auto"
           >
-            Let's go!
+            {state.allChecksPassed ? "Let's go!" : "Complete all steps"}
           </Button>
         </div>
-
-        {state.lastCheckTime && (
-          <div className="mt-2 text-xs text-gray-500 text-right">
-            Last checked: {new Date(state.lastCheckTime).toLocaleTimeString()}
-          </div>
-        )}
       </DialogContent>
     </Dialog>
   );

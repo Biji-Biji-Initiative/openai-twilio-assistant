@@ -1,0 +1,87 @@
+---
+description: Ngrok Configuration Rules globs: 
+globs: 
+---
+ - "**/.env"
+  - "**/start-ngrok.sh"
+  - "**/cleanup.sh"
+  - "**/websocket-server/src/server.ts"
+  - "**/webapp/components/checklist-and-config.tsx"
+---
+
+# Ngrok Configuration
+
+## Domain Rules
+- This project uses a paid ngrok account with a fixed domain: `mereka.ngrok.io`
+- Never use random/temporary ngrok domains
+- Never use alternative tunneling services
+- The domain must be consistent across all configuration files and environments
+
+## Connection Management
+- Only one ngrok connection is possible at a time
+- Each new connection attempt must be preceded by killing existing ngrok processes
+- The connection must be established before starting the websocket server
+- Monitor connection status at `http://localhost:4040`
+
+## Environment Configuration
+1. Webapp (.env):
+```bash
+NEXT_PUBLIC_BACKEND_URL=https://mereka.ngrok.io
+```
+
+2. Websocket Server (.env):
+```bash
+PUBLIC_URL=https://mereka.ngrok.io
+```
+
+## Service Start Order
+1. Kill existing processes:
+   ```bash
+   ./cleanup.sh
+   ```
+
+2. Start ngrok:
+   ```bash
+   ./start-ngrok.sh
+   # or manually:
+   ngrok http --domain=mereka.ngrok.io 8081
+   ```
+
+3. Start websocket server:
+   ```bash
+   cd websocket-server && npm run dev
+   ```
+
+4. Start webapp:
+   ```bash
+   cd webapp && npm run dev
+   ```
+
+## Health Checks
+- Verify ngrok tunnel: `http://localhost:4040`
+- Check websocket server health: `https://mereka.ngrok.io/health`
+- Confirm CORS headers in ngrok inspector
+- Monitor websocket connections in browser dev tools
+
+## Troubleshooting
+1. If ngrok fails to start:
+   - Run `pkill -f ngrok` to kill existing processes
+   - Check port 8081 is free
+   - Verify ngrok auth token
+
+2. If websocket connection fails:
+   - Confirm ngrok tunnel is active
+   - Verify CORS configuration
+   - Check environment variables match
+   - Restart services in correct order
+
+3. If CORS errors occur:
+   - Verify ngrok domain matches in both .env files
+   - Check websocket server CORS configuration
+   - Clear browser cache and try incognito mode
+
+## Security Notes
+- Keep ngrok auth token secure
+- Monitor ngrok dashboard for unauthorized tunnel usage
+- Regularly verify webhook endpoints in Twilio console
+- Use HTTPS for all connections

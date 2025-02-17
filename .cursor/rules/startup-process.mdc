@@ -1,0 +1,129 @@
+---
+description: Application Startup Process Rules
+globs: 
+---
+ ---
+globs: 
+  - "**/cleanup.sh"
+  - "**/start-ngrok.sh"
+  - "**/README.md"
+  - "**/.env"
+---
+
+# Application Startup Process
+
+## Critical Order of Operations
+
+1. **Cleanup Phase**
+   ```bash
+   ./cleanup.sh
+   ```
+   - Kills all existing ngrok processes
+   - Terminates processes on ports:
+     - 3000 (Frontend)
+     - 3001 (Dev Phone)
+     - 8081 (WebSocket Server)
+     - 4040 (Ngrok Interface)
+   - Verifies all ports are free before proceeding
+
+2. **Ngrok Setup**
+   ```bash
+   ./start-ngrok.sh
+   ```
+   - Starts ngrok with fixed domain: mereka.ngrok.io
+   - Verify tunnel is active at http://localhost:4040
+   - Wait for tunnel to be established before proceeding
+
+3. **WebSocket Server**
+   ```bash
+   cd websocket-server && npm run dev
+   ```
+   - Starts after ngrok is confirmed running
+   - Verify server is up at https://mereka.ngrok.io/health
+   - Check logs for successful startup message
+
+4. **Frontend (Webapp)**
+   ```bash
+   cd webapp && PORT=3000 npm run dev
+   ```
+   - Must start after websocket server is running
+   - Explicitly use port 3000
+   - Verify access at http://localhost:3000
+
+5. **Dev Phone (Optional)**
+   ```bash
+   twilio dev-phone
+   ```
+   - Start in separate terminal
+   - Runs independently on port 1337
+   - Access at http://localhost:1337
+
+## Environment Verification
+
+Before starting each service, verify:
+
+1. **Ngrok**
+   - No existing tunnels running
+   - Port 4040 is free
+   - Auth token is valid
+
+2. **WebSocket Server**
+   - Port 8081 is free
+   - Environment variables are set:
+     ```
+     PUBLIC_URL=https://mereka.ngrok.io
+     PORT=8081
+     TWILIO_ACCOUNT_SID=[valid]
+     TWILIO_AUTH_TOKEN=[valid]
+     OPENAI_API_KEY=[valid]
+     ```
+
+3. **Frontend**
+   - Port 3000 is free
+   - Environment variables are set:
+     ```
+     NEXT_PUBLIC_BACKEND_URL=https://mereka.ngrok.io
+     TWILIO_ACCOUNT_SID=[matches websocket server]
+     TWILIO_AUTH_TOKEN=[matches websocket server]
+     OPENAI_API_KEY=[valid]
+     ```
+
+## Troubleshooting Steps
+
+1. **If localhost:3000 not loading:**
+   - Check frontend logs for compilation errors
+   - Verify NEXT_PUBLIC_BACKEND_URL matches ngrok URL
+   - Ensure no other process is using port 3000
+   - Try accessing the page in incognito mode
+
+2. **If WebSocket connection fails:**
+   - Verify ngrok tunnel is active
+   - Check CORS settings in websocket server
+   - Ensure environment variables match between services
+   - Check browser console for connection errors
+
+3. **If Twilio authentication fails:**
+   - Verify credentials match in both .env files
+   - Check Twilio console for account status
+   - Try re-running `twilio login`
+   - Verify webhook URLs in Twilio console
+
+## Common Issues
+
+1. **Port Conflicts**
+   - Always run cleanup.sh first
+   - Check for zombie processes
+   - Use `lsof -i :[port]` to identify conflicts
+   - Kill processes manually if needed
+
+2. **Environment Sync**
+   - Keep .env files synchronized
+   - Don't change existing variables
+   - Restart all services after env changes
+   - Verify changes with health checks
+
+3. **Service Dependencies**
+   - Follow startup order strictly
+   - Verify each service before starting next
+   - Keep services in separate terminals
+   - Monitor all terminal outputs
