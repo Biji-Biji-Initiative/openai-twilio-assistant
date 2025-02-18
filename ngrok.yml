@@ -1,0 +1,7 @@
+version: "2"
+authtoken: ""  # You'll need to add your ngrok authtoken here
+tunnels:
+  websocket:
+    proto: http
+    addr: 8081
+    hostname: mereka.ngrok.io 

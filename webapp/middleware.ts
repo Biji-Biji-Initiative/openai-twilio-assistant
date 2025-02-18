@@ -1,6 +1,6 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
-import { logger } from './app/lib/logger';
+import { NextResponse, NextRequest } from 'next/server';
+import { corsOptions, allowedMethods, allowedHeaders, exposedHeaders } from 'shared/lib/cors-config';
+import { logger } from './lib/logger';
 
 type Environment = 'development' | 'production';
 
@@ -58,43 +58,41 @@ function isOriginAllowed(origin: string | null, env: Environment): boolean {
 /**
  * Middleware configuration
  */
-export function middleware(request: NextRequest) {
+export function middleware(req: NextRequest) {
   const env = (process.env.NODE_ENV || 'development') as Environment;
-  const origin = request.headers.get('origin');
-  
-  // Create base response or get the response to modify
-  const response = NextResponse.next();
-  
-  // Add security headers
-  Object.entries(SECURITY_HEADERS).forEach(([key, value]) => {
-    response.headers.set(key, value);
-  });
+  const origin = req.headers.get('origin');
+  const headers = new Headers();
 
-  // Handle CORS
   if (isOriginAllowed(origin, env)) {
-    // Set CORS headers
-    Object.entries(CORS_HEADERS).forEach(([key, value]) => {
-      response.headers.set(key, value);
-    });
-    
-    // Set allowed origin
-    if (origin) {
-      response.headers.set('Access-Control-Allow-Origin', origin);
-      logger.debug(`[CORS] Allowing origin: ${origin}`);
-    }
+    headers.set('Access-Control-Allow-Origin', origin!);
+    headers.set('Vary', 'Origin');
+    logger.debug(`[CORS] Allowing origin: ${origin}`);
   } else {
     logger.warn(`[CORS] Rejected origin: ${origin}`);
   }
 
-  // Handle preflight requests
-  if (request.method === 'OPTIONS') {
-    return new NextResponse(null, { 
-      status: 204,
-      headers: response.headers
-    });
+  // Security headers
+  Object.entries(SECURITY_HEADERS).forEach(([key, value]) => {
+    headers.set(key, value);
+  });
+
+  // CORS headers
+  headers.set('Access-Control-Allow-Credentials', 'true');
+  headers.set('Access-Control-Allow-Methods', allowedMethods.join(','));
+  headers.set('Access-Control-Allow-Headers', allowedHeaders.join(','));
+  headers.set('Access-Control-Expose-Headers', exposedHeaders.join(','));
+
+  // Add HSTS in production
+  if (process.env.NODE_ENV === 'production') {
+    headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
   }
 
-  return response;
+  // For preflight requests
+  if (req.method === 'OPTIONS') {
+    return new NextResponse(null, { status: 204, headers });
+  }
+
+  return NextResponse.next({ headers });
 }
 
 /**

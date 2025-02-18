@@ -1,62 +1,47 @@
-type LogLevel = 'debug' | 'info' | 'warn' | 'error';
-
 interface LoggerOptions {
-  level?: LogLevel;
-  prefix?: string;
+  level?: 'debug' | 'info' | 'warn' | 'error';
+  timestamp?: boolean;
 }
 
 class Logger {
-  private level: LogLevel;
-  private prefix: string;
+  private level: string;
+  private showTimestamp: boolean;
 
   constructor(options: LoggerOptions = {}) {
     this.level = options.level || (process.env.NODE_ENV === 'development' ? 'debug' : 'info');
-    this.prefix = options.prefix || (process.env.NODE_ENV === 'production' ? '[PROD] ' : '[DEV] ');
+    this.showTimestamp = options.timestamp ?? true;
   }
 
-  private shouldLog(level: LogLevel): boolean {
-    const levels: Record<LogLevel, number> = {
-      debug: 0,
-      info: 1,
-      warn: 2,
-      error: 3
-    };
-    return levels[level] >= levels[this.level];
+  private formatMessage(level: string, message: string, data?: any): string {
+    const timestamp = this.showTimestamp ? `[${new Date().toISOString()}] ` : '';
+    const dataStr = data ? ` ${JSON.stringify(data)}` : '';
+    return `${timestamp}[${level.toUpperCase()}] ${message}${dataStr}`;
   }
 
-  private formatMessage(level: LogLevel, message: string, ...args: any[]): string {
-    const timestamp = new Date().toISOString();
-    const formattedArgs = args.map(arg => 
-      typeof arg === 'object' ? JSON.stringify(arg, null, 2) : arg
-    ).join(' ');
-    
-    return `${timestamp} ${level.toUpperCase()} ${this.prefix}${message} ${formattedArgs}`.trim();
-  }
-
-  debug(message: string, ...args: any[]): void {
-    if (this.shouldLog('debug')) {
-      console.debug(this.formatMessage('debug', message, ...args));
+  debug(message: string, data?: any) {
+    if (this.level === 'debug') {
+      console.debug(this.formatMessage('debug', message, data));
     }
   }
 
-  info(message: string, ...args: any[]): void {
-    if (this.shouldLog('info')) {
-      console.info(this.formatMessage('info', message, ...args));
+  info(message: string, data?: any) {
+    if (['debug', 'info'].includes(this.level)) {
+      console.info(this.formatMessage('info', message, data));
     }
   }
 
-  warn(message: string, ...args: any[]): void {
-    if (this.shouldLog('warn')) {
-      console.warn(this.formatMessage('warn', message, ...args));
+  warn(message: string, data?: any) {
+    if (['debug', 'info', 'warn'].includes(this.level)) {
+      console.warn(this.formatMessage('warn', message, data));
     }
   }
 
-  error(message: string, ...args: any[]): void {
-    if (this.shouldLog('error')) {
-      console.error(this.formatMessage('error', message, ...args));
-    }
+  error(message: string, data?: any) {
+    console.error(this.formatMessage('error', message, data));
   }
 }
 
-// Create and export a default logger instance
-export const logger = new Logger(); 
+export const logger = new Logger({
+  level: process.env.NODE_ENV === 'development' ? 'debug' : 'info',
+  timestamp: true
+}); 

@@ -1,4 +1,4 @@
-export { default as logger } from './logger';
+export { logger } from './logger';
 
 // CORS utilities
 export function isOriginAllowed(origin: string): boolean {

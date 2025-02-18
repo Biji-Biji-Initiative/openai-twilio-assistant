@@ -1,0 +1,14 @@
+{
+  "name": "twilio-monorepo",
+  "private": true,
+  "workspaces": [
+    "shared",
+    "websocket-server",
+    "webapp"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "clean": "npm run clean --workspaces",
+    "dev": "npm run dev --workspace=websocket-server"
+  }
+}

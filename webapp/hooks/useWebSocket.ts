@@ -1,9 +1,11 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Item } from '@/components/types';
 import handleRealtimeEvent from '@/lib/handle-realtime-event';
+import { logger } from '@/lib/logger';
 
 const RECONNECT_DELAY = 3000; // 3 seconds
 const MAX_RECONNECT_ATTEMPTS = 5;
+const PING_INTERVAL = 30000; // 30 seconds
 
 interface WebSocketState {
   items: Item[];
@@ -20,68 +22,122 @@ export function useWebSocket(ready: boolean): WebSocketState {
   const [callStatus, setCallStatus] = useState("disconnected");
   const [error, setError] = useState<string | null>(null);
   const [reconnectAttempts, setReconnectAttempts] = useState(0);
+  
+  // Use refs for values that shouldn't trigger re-renders
+  const wsRef = useRef<WebSocket | null>(null);
+  const pingIntervalRef = useRef<NodeJS.Timeout>();
+  const reconnectTimeoutRef = useRef<NodeJS.Timeout>();
+  const isCleaningUpRef = useRef(false);
+
+  const cleanup = useCallback(() => {
+    isCleaningUpRef.current = true;
+    
+    // Clear intervals and timeouts
+    if (pingIntervalRef.current) {
+      clearInterval(pingIntervalRef.current);
+      pingIntervalRef.current = undefined;
+    }
+    
+    if (reconnectTimeoutRef.current) {
+      clearTimeout(reconnectTimeoutRef.current);
+      reconnectTimeoutRef.current = undefined;
+    }
+    
+    // Close WebSocket connection
+    if (wsRef.current) {
+      wsRef.current.close();
+      wsRef.current = null;
+      setWs(null);
+    }
+    
+    isCleaningUpRef.current = false;
+  }, []);
 
   const connect = useCallback(() => {
-    if (!ready || ws || reconnectAttempts >= MAX_RECONNECT_ATTEMPTS) return;
+    if (!ready || wsRef.current || reconnectAttempts >= MAX_RECONNECT_ATTEMPTS || isCleaningUpRef.current) {
+      return;
+    }
 
     try {
       const wsUrl = new URL("/logs", process.env.NEXT_PUBLIC_BACKEND_URL || "");
       wsUrl.protocol = wsUrl.protocol.replace("http", "ws");
       const newWs = new WebSocket(wsUrl.toString());
+      wsRef.current = newWs;
 
       newWs.onopen = () => {
-        console.log("Connected to logs websocket");
+        logger.info("Connected to logs websocket");
         setCallStatus("connected");
         setError(null);
         setReconnectAttempts(0);
+        setWs(newWs);
+
+        // Set up ping interval
+        pingIntervalRef.current = setInterval(() => {
+          if (newWs.readyState === WebSocket.OPEN) {
+            newWs.send(JSON.stringify({ type: 'ping' }));
+          }
+        }, PING_INTERVAL);
       };
 
       newWs.onmessage = (event) => {
         try {
           const data = JSON.parse(event.data);
-          console.log("Received logs event:", data);
+          if (data.type === 'pong') {
+            logger.debug("Received pong from server");
+            return;
+          }
+          
+          logger.debug("Received logs event:", data);
           handleRealtimeEvent(data, setItems);
         } catch (err) {
-          console.error("Failed to parse WebSocket message:", err);
+          logger.error("Failed to parse WebSocket message:", err);
           setError("Failed to parse WebSocket message");
         }
       };
 
-      newWs.onclose = () => {
-        console.log("Logs websocket disconnected");
+      newWs.onclose = (event) => {
+        logger.info("Logs websocket disconnected", {
+          code: event.code,
+          reason: event.reason,
+          wasClean: event.wasClean
+        });
+        
+        // Clear ping interval
+        if (pingIntervalRef.current) {
+          clearInterval(pingIntervalRef.current);
+          pingIntervalRef.current = undefined;
+        }
+        
+        wsRef.current = null;
         setWs(null);
         setCallStatus("disconnected");
         
-        // Attempt to reconnect
-        if (reconnectAttempts < MAX_RECONNECT_ATTEMPTS) {
+        // Attempt to reconnect if not cleaning up
+        if (!isCleaningUpRef.current && reconnectAttempts < MAX_RECONNECT_ATTEMPTS) {
           setReconnectAttempts(prev => prev + 1);
-          setTimeout(connect, RECONNECT_DELAY);
-        } else {
+          reconnectTimeoutRef.current = setTimeout(connect, RECONNECT_DELAY);
+        } else if (reconnectAttempts >= MAX_RECONNECT_ATTEMPTS) {
           setError("Maximum reconnection attempts reached");
         }
       };
 
       newWs.onerror = (event) => {
-        console.error("WebSocket error:", event);
+        logger.error("WebSocket error:", event);
         setError("WebSocket connection error");
       };
 
-      setWs(newWs);
     } catch (err) {
-      console.error("Failed to create WebSocket:", err);
+      logger.error("Failed to create WebSocket:", err);
       setError("Failed to create WebSocket connection");
+      wsRef.current = null;
+      setWs(null);
     }
-  }, [ready, ws, reconnectAttempts]);
+  }, [ready, reconnectAttempts]);
 
   useEffect(() => {
     connect();
-
-    return () => {
-      if (ws) {
-        ws.close();
-      }
-    };
-  }, [connect, ws]);
+    return cleanup;
+  }, [connect, cleanup]);
 
   return { 
     items, 

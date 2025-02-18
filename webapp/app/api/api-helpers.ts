@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { logger } from '../lib/logger';
+import { loggers } from '@twilio/shared/logger';
 import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 import { ErrorResponseSchema, SuccessResponseSchema } from '@/lib/validation-schemas';
@@ -80,13 +80,13 @@ export function handleCors(req: NextRequest) {
     });
 
     if (isAllowed) {
-      logger.debug(`[CORS] Allowing origin: ${origin}`);
+      loggers.debug(`[CORS] Allowing origin: ${origin}`);
       headers.set('Access-Control-Allow-Origin', origin);
     } else {
-      logger.warn(`[CORS] Rejected origin: ${origin}`);
+      loggers.warn(`[CORS] Rejected origin: ${origin}`);
     }
   } else if (env === 'development') {
-    logger.warn('[CORS] No origin provided (allowed in development)');
+    loggers.warn('[CORS] No origin provided (allowed in development)');
     headers.set('Access-Control-Allow-Origin', '*');
   }
 
@@ -135,7 +135,7 @@ export function createErrorResponse(error: unknown, status: number = 500) {
   const requestId = uuidv4();
   const errorDetails = formatErrorDetails(error);
   
-  logger.error(`[${requestId}] API Error:`, errorDetails);
+  loggers.error(`[${requestId}] API Error:`, errorDetails);
 
   const response = {
     error: errorDetails.message,

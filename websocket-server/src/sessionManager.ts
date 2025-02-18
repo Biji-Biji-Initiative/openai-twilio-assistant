@@ -438,7 +438,7 @@ function jsonSend(ws: WebSocket | undefined, obj: unknown) {
 }
 
 function isOpen(ws?: WebSocket): ws is WebSocket {
-  return !!ws && ws.readyState === WebSocket.OPEN;
+  return !!ws && ws.readyState === ws.OPEN;
 }
 
 export default session;
