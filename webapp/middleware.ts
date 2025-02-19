@@ -1,98 +1,89 @@
 import { NextResponse, NextRequest } from 'next/server';
-import { corsOptions, allowedMethods, allowedHeaders, exposedHeaders } from 'shared/lib/cors-config';
-import { logger } from './lib/logger';
+import { logger } from '@/app/lib/logger';
 
 type Environment = 'development' | 'production';
 
-/**
- * CORS configuration based on environment
- */
-const ALLOWED_ORIGINS: Record<Environment, (string | RegExp)[]> = {
-  development: [
-    'http://localhost:3000',
-    'http://localhost:8081',
-    /^https?:\/\/[a-zA-Z0-9-]+\.ngrok\.io$/,
-    /^https?:\/\/[a-zA-Z0-9-]+\.ngrok-free\.app$/
-  ],
-  production: [
-    'https://mereka.ngrok.io'
-  ]
+// CORS configuration
+const allowedOrigins = [
+  'http://localhost:3000',  // Frontend
+  'http://localhost:8081',  // WebSocket Server
+  'https://localhost:3000',
+  'https://localhost:8081',
+  // Add your production domains here
+];
+
+const allowedMethods = [
+  'GET', 
+  'POST', 
+  'PUT', 
+  'DELETE', 
+  'OPTIONS', 
+  'PATCH'
+];
+
+const allowedHeaders = [
+  'Content-Type',
+  'Authorization',
+  'X-Requested-With',
+  'Accept',
+  'Origin',
+  'Cache-Control',
+  'Pragma'
+];
+
+const exposedHeaders = [
+  'Content-Length',
+  'Content-Type'
+];
+
+// Helper to check if origin is allowed
+const isOriginAllowed = (origin: string | null, env: Environment): boolean => {
+  if (env === 'development') return true;
+  if (!origin) return true; // Allow requests with no origin
+  return allowedOrigins.includes(origin);
 };
 
-/**
- * Security headers for all responses
- */
-const SECURITY_HEADERS = {
-  'X-Frame-Options': 'DENY',
-  'X-XSS-Protection': '1; mode=block',
-  'X-Content-Type-Options': 'nosniff',
-  'Strict-Transport-Security': 'max-age=31536000; includeSubDomains'
-};
-
-/**
- * CORS headers configuration
- */
-const CORS_HEADERS = {
-  'Access-Control-Allow-Credentials': 'true',
-  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Requested-With, Cache-Control, Pragma, Accept',
-  'Access-Control-Expose-Headers': 'Content-Length, Content-Type, X-Request-ID'
-};
-
-/**
- * Check if origin is allowed
- */
-function isOriginAllowed(origin: string | null, env: Environment): boolean {
-  if (!origin) {
-    return env === 'development';
-  }
-
-  return ALLOWED_ORIGINS[env].some(allowed => {
-    if (allowed instanceof RegExp) {
-      return allowed.test(origin);
-    }
-    return allowed === origin;
-  });
-}
-
-/**
- * Middleware configuration
- */
-export function middleware(req: NextRequest) {
+export function middleware(request: NextRequest) {
+  const origin = request.headers.get('origin');
   const env = (process.env.NODE_ENV || 'development') as Environment;
-  const origin = req.headers.get('origin');
-  const headers = new Headers();
 
-  if (isOriginAllowed(origin, env)) {
-    headers.set('Access-Control-Allow-Origin', origin!);
-    headers.set('Vary', 'Origin');
-    logger.debug(`[CORS] Allowing origin: ${origin}`);
-  } else {
-    logger.warn(`[CORS] Rejected origin: ${origin}`);
+  // Handle preflight requests
+  if (request.method === 'OPTIONS') {
+    const response = new NextResponse(null, {
+      status: 200,
+      headers: {
+        'Access-Control-Allow-Origin': origin || '*',
+        'Access-Control-Allow-Methods': allowedMethods.join(', '),
+        'Access-Control-Allow-Headers': allowedHeaders.join(', '),
+        'Access-Control-Allow-Credentials': 'true',
+        'Access-Control-Expose-Headers': exposedHeaders.join(', ')
+      }
+    });
+    return response;
   }
 
-  // Security headers
-  Object.entries(SECURITY_HEADERS).forEach(([key, value]) => {
-    headers.set(key, value);
+  // Handle actual requests
+  if (isOriginAllowed(origin, env)) {
+    const response = NextResponse.next();
+    response.headers.set('Access-Control-Allow-Origin', origin || '*');
+    response.headers.set('Access-Control-Allow-Methods', allowedMethods.join(', '));
+    response.headers.set('Access-Control-Allow-Headers', allowedHeaders.join(', '));
+    response.headers.set('Access-Control-Allow-Credentials', 'true');
+    response.headers.set('Access-Control-Expose-Headers', exposedHeaders.join(', '));
+    return response;
+  }
+
+  // Log and reject unauthorized requests
+  logger.warn('Rejected CORS request:', { 
+    origin,
+    method: request.method,
+    url: request.url
   });
 
-  // CORS headers
-  headers.set('Access-Control-Allow-Credentials', 'true');
-  headers.set('Access-Control-Allow-Methods', allowedMethods.join(','));
-  headers.set('Access-Control-Allow-Headers', allowedHeaders.join(','));
-  headers.set('Access-Control-Expose-Headers', exposedHeaders.join(','));
-
-  // Add HSTS in production
-  if (process.env.NODE_ENV === 'production') {
-    headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
-  }
-
-  // For preflight requests
-  if (req.method === 'OPTIONS') {
-    return new NextResponse(null, { status: 204, headers });
-  }
-
-  return NextResponse.next({ headers });
+  return new NextResponse(null, {
+    status: 403,
+    statusText: 'Forbidden'
+  });
 }
 
 /**

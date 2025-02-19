@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server';
 import { createErrorResponse, createSuccessResponse, validateRequest, validateEnvVars } from '../api-helpers';
-import { logger } from '../../lib/logger';
+import { logger } from '@/app/lib/logger';
 import twilio from 'twilio';
 import { OutboundCallSchema } from '@/lib/validation-schemas';
 

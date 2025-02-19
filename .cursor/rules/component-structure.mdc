@@ -1,7 +1,5 @@
----
-description: Component Structure and Behavior Rules
-globs: 
----
+# Component Structure and Behavior Rules
+
 ## File Organization
 ```
 webapp/components/
@@ -350,4 +348,4 @@ globs:
   - "webapp/components/**/*.tsx"
   - "webapp/components/**/*.ts"
   - "webapp/app/**/*.tsx"
-  - "webapp/app/**/*.ts"
+  - "webapp/app/**/*.ts" 

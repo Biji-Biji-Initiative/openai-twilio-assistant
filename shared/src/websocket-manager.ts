@@ -1,229 +1,118 @@
 import WebSocket from 'ws';
-import { EventEmitter } from 'events';
-import { loggers } from './logger';
+import { v4 as uuidv4 } from 'uuid';
+import { log } from './logger';
 
-export interface WebSocketManagerOptions {
-  url: string;
-  pingInterval?: number;
-  reconnectInterval?: number;
-  maxReconnectAttempts?: number;
-  debug?: boolean;
+export interface WebSocketSession {
+  id: string;
+  ws: WebSocket;
+  lastActivity: Date;
 }
 
-export interface ConnectionState {
-  isConnected: boolean;
-  isReconnecting: boolean;
-  reconnectAttempt: number;
-  lastPing?: Date;
-  lastPong?: Date;
-}
+export class WebSocketManager {
+  private sessions: Map<string, WebSocketSession> = new Map();
+  private heartbeatInterval: NodeJS.Timeout = setInterval(() => {}, 0);
+  private readonly HEARTBEAT_INTERVAL = 30000;
+  private readonly CONNECTION_TIMEOUT = 5000;
 
-export class WebSocketManager extends EventEmitter {
-  private ws: WebSocket | null = null;
-  private pingInterval: NodeJS.Timeout | null = null;
-  private reconnectTimeout: NodeJS.Timeout | null = null;
-  private reconnectAttempts = 0;
-  private isCleaningUp = false;
-  private readonly sessionId: string;
-  private readonly options: Required<WebSocketManagerOptions>;
-  private _connectionState: ConnectionState = {
-    isConnected: false,
-    isReconnecting: false,
-    reconnectAttempt: 0
-  };
-
-  constructor(options: WebSocketManagerOptions) {
-    super();
-    this.sessionId = `ws-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
-    this.options = {
-      pingInterval: 30000,
-      reconnectInterval: 5000,
-      maxReconnectAttempts: 5,
-      debug: false,
-      ...options
-    };
+  constructor() {
+    clearInterval(this.heartbeatInterval);
+    this.startHeartbeat();
   }
 
-  get connectionState(): ConnectionState {
-    return { ...this._connectionState };
-  }
-
-  get isConnected(): boolean {
-    return this._connectionState.isConnected;
-  }
-
-  connect(): void {
-    if (
-      this.ws ||
-      this.isCleaningUp ||
-      this.reconnectAttempts >= this.options.maxReconnectAttempts
-    ) {
-      return;
-    }
-
-    try {
-      this.ws = new WebSocket(this.options.url);
-      this.setupWebSocket();
-    } catch (error) {
-      this.handleError('Failed to create WebSocket connection', error);
-      this.scheduleReconnect();
-    }
-  }
-
-  disconnect(): void {
-    this.cleanup();
-  }
-
-  send(data: unknown): void {
-    if (!this.ws || this.ws.readyState !== WebSocket.OPEN) {
-      this.handleError('Cannot send message - connection not open');
-      return;
-    }
-
-    try {
-      this.ws.send(JSON.stringify(data));
-    } catch (error) {
-      this.handleError('Failed to send message', error);
-    }
-  }
-
-  private setupWebSocket(): void {
-    if (!this.ws) return;
-
-    this.ws.onopen = () => {
-      this.log('info', 'WebSocket connection established');
-      this._connectionState = {
-        isConnected: true,
-        isReconnecting: false,
-        reconnectAttempt: 0
-      };
-      this.reconnectAttempts = 0;
-      this.startPingInterval();
-      this.emit('connected');
-    };
-
-    this.ws.onclose = (event) => {
-      this.log('info', 'WebSocket connection closed', {
-        code: event.code,
-        reason: event.reason,
-        wasClean: event.wasClean
-      });
-      
-      this.clearPingInterval();
-      this._connectionState.isConnected = false;
-      
-      if (!this.isCleaningUp) {
-        this.scheduleReconnect();
-      }
-      
-      this.emit('disconnected', event);
-    };
-
-    this.ws.onerror = (error) => {
-      this.handleError('WebSocket error', error);
-    };
-
-    this.ws.onmessage = (event) => {
-      try {
-        const data = JSON.parse(event.data.toString());
-        if (data.type === 'pong') {
-          this._connectionState.lastPong = new Date();
-          this.emit('pong');
-          return;
+  private startHeartbeat() {
+    this.heartbeatInterval = setInterval(() => {
+      const now = Date.now();
+      this.sessions.forEach((session, id) => {
+        const inactiveTime = now - session.lastActivity.getTime();
+        if (inactiveTime > this.CONNECTION_TIMEOUT) {
+          log.warn('Connection timeout', {
+            sessionId: id,
+            inactiveTime,
+            sessionCount: this.sessions.size
+          });
+          this.removeSession(id);
         }
-        this.emit('message', data);
+      });
+    }, this.HEARTBEAT_INTERVAL);
+  }
+
+  createSession(ws: WebSocket): string {
+    const id = uuidv4();
+    const session: WebSocketSession = {
+      id,
+      ws,
+      lastActivity: new Date()
+    };
+
+    this.sessions.set(id, session);
+    log.info('Created new session', {
+      sessionId: id,
+      sessionCount: this.sessions.size
+    });
+
+    return id;
+  }
+
+  getSession(id: string): WebSocketSession | undefined {
+    const session = this.sessions.get(id);
+    if (session) {
+      session.lastActivity = new Date();
+    }
+    return session;
+  }
+
+  removeSession(id: string): void {
+    const session = this.sessions.get(id);
+    if (session) {
+      try {
+        session.ws.close();
       } catch (error) {
-        this.handleError('Failed to parse message', error);
+        log.error('Error closing WebSocket session', error instanceof Error ? error : new Error(String(error)), {
+          sessionId: id,
+          sessionCount: this.sessions.size
+        });
       }
-    };
-  }
-
-  private startPingInterval(): void {
-    this.clearPingInterval();
-    this.pingInterval = setInterval(() => {
-      if (this.ws?.readyState === WebSocket.OPEN) {
-        this._connectionState.lastPing = new Date();
-        this.send({ type: 'ping' });
-        this.emit('ping');
-      }
-    }, this.options.pingInterval);
-  }
-
-  private clearPingInterval(): void {
-    if (this.pingInterval) {
-      clearInterval(this.pingInterval);
-      this.pingInterval = null;
     }
+    this.sessions.delete(id);
+    log.info('Removed session', {
+      sessionId: id,
+      sessionCount: this.sessions.size
+    });
   }
 
-  private scheduleReconnect(): void {
-    if (
-      this.isCleaningUp ||
-      this.reconnectAttempts >= this.options.maxReconnectAttempts ||
-      this.reconnectTimeout
-    ) {
-      return;
+  async closeAllSessions(): Promise<void> {
+    const closePromises: Promise<void>[] = [];
+
+    for (const [id, session] of this.sessions.entries()) {
+      closePromises.push(
+        new Promise<void>((resolve) => {
+          try {
+            session.ws.close();
+            this.sessions.delete(id);
+            log.info('Closed WebSocket session', {
+              sessionId: id,
+              sessionCount: this.sessions.size
+            });
+          } catch (error) {
+            log.error('Error closing WebSocket session', error instanceof Error ? error : new Error(String(error)), {
+              sessionId: id,
+              sessionCount: this.sessions.size
+            });
+          }
+          resolve();
+        })
+      );
     }
 
-    this.reconnectAttempts++;
-    this._connectionState = {
-      ...this._connectionState,
-      isConnected: false,
-      isReconnecting: true,
-      reconnectAttempt: this.reconnectAttempts
-    };
-
-    this.emit('reconnecting', this.reconnectAttempts);
-    this.reconnectTimeout = setTimeout(() => {
-      this.reconnectTimeout = null;
-      this.connect();
-    }, this.options.reconnectInterval);
+    await Promise.all(closePromises);
+    clearInterval(this.heartbeatInterval);
+    log.info('All WebSocket sessions closed', {
+      sessionCount: this.sessions.size
+    });
   }
 
-  private cleanup(): void {
-    this.isCleaningUp = true;
-    
-    this.clearPingInterval();
-    
-    if (this.reconnectTimeout) {
-      clearTimeout(this.reconnectTimeout);
-      this.reconnectTimeout = null;
-    }
-    
-    if (this.ws) {
-      if (this.ws.readyState === WebSocket.OPEN) {
-        this.ws.close();
-      }
-      this.ws = null;
-    }
-    
-    this._connectionState = {
-      isConnected: false,
-      isReconnecting: false,
-      reconnectAttempt: 0
-    };
-    
-    this.reconnectAttempts = 0;
-    this.isCleaningUp = false;
-  }
-
-  private handleError(message: string, error?: unknown): void {
-    const errorDetails = error instanceof Error
-      ? { message: error.message, stack: error.stack }
-      : { error };
-    
-    this.log('error', message, errorDetails);
-    this.emit('error', { message, ...errorDetails });
-  }
-
-  private log(level: 'debug' | 'info' | 'warn' | 'error', message: string, data?: unknown) {
-    const context = {
-      sessionId: this.sessionId,
-      connectionState: this._connectionState,
-      reconnectAttempts: this.reconnectAttempts,
-      ...(data ? { data } : {})
-    };
-
-    loggers.websocketServer[level](message, context);
+  dispose() {
+    clearInterval(this.heartbeatInterval);
+    this.closeAllSessions();
   }
 } 

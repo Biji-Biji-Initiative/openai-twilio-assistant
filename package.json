@@ -1,5 +1,6 @@
 {
-  "name": "twilio-monorepo",
+  "name": "@twilio/monorepo",
+  "version": "1.0.0",
   "private": true,
   "workspaces": [
     "shared",
@@ -7,8 +8,57 @@
     "webapp"
   ],
   "scripts": {
-    "build": "npm run build --workspaces",
-    "clean": "npm run clean --workspaces",
-    "dev": "npm run dev --workspace=websocket-server"
+    "dev": "npm run build:shared && concurrently \"npm run dev:server\" \"npm run dev:webapp\"",
+    "dev:server": "npm run dev -w websocket-server",
+    "dev:webapp": "npm run dev -w webapp",
+    
+    "build": "npm run clean && npm run build:deps && npm run build:apps",
+    "build:deps": "npm run build:shared",
+    "build:apps": "concurrently \"npm run build:server\" \"npm run build:webapp\"",
+    "build:shared": "npm run build -w shared",
+    "build:server": "npm run build -w websocket-server",
+    "build:webapp": "npm run build -w webapp",
+    
+    "clean": "node scripts/clean.js",
+    "clean:all": "node scripts/clean-artifacts.sh",
+    "clean:logs": "scripts/log-cleanup.sh",
+    
+    "test": "npm run test --workspaces --if-present",
+    "test:watch": "npm run test:watch --workspaces --if-present",
+    
+    "lint": "npm run lint --workspaces --if-present",
+    "lint:fix": "npm run lint:fix --workspaces --if-present",
+    "type-check": "tsc --noEmit --project config/tsconfig.build.json",
+    "type-check:watch": "tsc --noEmit --watch --project config/tsconfig.build.json",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    
+    "start": "node scripts/start.sh",
+    "start:dev": "node scripts/clean-and-start.sh",
+    "start:ngrok": "node scripts/start-ngrok.sh",
+    
+    "postinstall": "npm run build:shared"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "concurrently": "^8.2.2",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "prettier": "^3.2.5",
+    "rimraf": "^5.0.5",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "caniuse-lite": "1.0.30001700"
+  },
+  "resolutions": {
+    "@next/env": "14.0.4",
+    "next": "14.0.4",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "14.0.4",
+    "@types/react": "18.0.21",
+    "@types/react-dom": "18.0.6"
   }
 }

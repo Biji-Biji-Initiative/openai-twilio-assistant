@@ -107,7 +107,10 @@ class WebSocketManager {
   }
 
   private handleClose(event: CloseEvent) {
-    logger.info("[WebSocketManager] Connection closed:", event.code, event.reason);
+    logger.info("[WebSocketManager] Connection closed:", { 
+      code: event.code, 
+      reason: event.reason 
+    });
     this.cleanup();
     
     if (this.config.reconnectOnClose && (event.code !== 1000 || event.reason !== "Closed by client")) {

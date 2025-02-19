@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { logger } from '../utils/logger';
+import { log, LogContext } from '@twilio/shared';
 import { twilioService } from '../services/twilio-service';
 import { sessionService } from '../services/session-service';
 import WebSocket from 'ws';
@@ -13,10 +13,19 @@ export async function handleOutboundCall(req: Request, res: Response) {
     }
 
     const call = await twilioService.makeOutboundCall(to);
-    logger.info('Outbound call initiated:', { to, callSid: call.sid });
+    const logContext: LogContext = {
+      type: 'call.outbound',
+      phoneNumber: to,
+      callSid: call.sid
+    };
+    log.info('Outbound call initiated', logContext);
     res.json({ sid: call.sid });
   } catch (error) {
-    logger.error('Error making outbound call:', error);
+    const errorContext: LogContext = {
+      type: 'call.error',
+      phoneNumber: req.body.to
+    };
+    log.error('Error making outbound call', error instanceof Error ? error : new Error(String(error)), errorContext);
     throw error;
   }
 }
@@ -24,23 +33,43 @@ export async function handleOutboundCall(req: Request, res: Response) {
 export async function handleCallStatus(req: Request, res: Response) {
   try {
     const { CallSid, CallStatus, Duration } = req.body;
-    logger.info('Call status update:', { CallSid, CallStatus, Duration });
+    const logContext: LogContext = {
+      type: 'call.status',
+      callSid: CallSid,
+      callStatus: CallStatus,
+      callDuration: Duration
+    };
+    log.info('Call status update', logContext);
 
     // Broadcast call status to all connected clients
-    for (const session of sessionService.getAllSessions()) {
-      if (session.ws.readyState === WebSocket.OPEN) {
-        session.ws.send(JSON.stringify({
-          type: 'call.status',
-          callSid: CallSid,
-          status: CallStatus,
-          duration: Duration
-        }));
+    const sessions = sessionService.getAllSessions();
+    for (const [sessionId, ws] of sessions.entries()) {
+      if (ws.readyState === WebSocket.OPEN) {
+        try {
+          ws.send(JSON.stringify({
+            type: 'call.status',
+            callSid: CallSid,
+            status: CallStatus,
+            duration: Duration
+          }));
+        } catch (error) {
+          const errorContext: LogContext = {
+            type: 'call.error',
+            sessionId,
+            callSid: CallSid,
+            callStatus: CallStatus
+          };
+          log.error('Error sending call status to client', error instanceof Error ? error : new Error(String(error)), errorContext);
+        }
       }
     }
 
     res.sendStatus(200);
   } catch (error) {
-    logger.error('Error handling call status:', error);
+    const errorContext: LogContext = {
+      type: 'call.error'
+    };
+    log.error('Error handling call status', error instanceof Error ? error : new Error(String(error)), errorContext);
     throw error;
   }
 }
@@ -56,7 +85,9 @@ export async function handleTwiML(req: Request, res: Response) {
     res.set('Content-Type', 'text/xml');
     res.send(twiml);
   } catch (error) {
-    logger.error('Error generating TwiML:', error);
+    log.error('Error generating TwiML', error instanceof Error ? error : new Error(String(error)), {
+      type: 'twiml.error'
+    });
     throw error;
   }
 }
@@ -66,7 +97,9 @@ export async function handleTwilioCredentials(req: Request, res: Response) {
     const credentialsSet = await twilioService.verifyCredentials();
     res.json({ credentialsSet });
   } catch (error) {
-    logger.error('Error checking Twilio credentials:', error);
+    log.error('Error checking Twilio credentials', error instanceof Error ? error : new Error(String(error)), {
+      type: 'twilio.error'
+    });
     throw error;
   }
 }
@@ -76,7 +109,9 @@ export async function handleTwilioNumbers(req: Request, res: Response) {
     const numbers = await twilioService.getPhoneNumbers();
     res.json(numbers);
   } catch (error) {
-    logger.error('Error fetching Twilio numbers:', error);
+    log.error('Error fetching Twilio numbers', error instanceof Error ? error : new Error(String(error)), {
+      type: 'twilio.error'
+    });
     throw error;
   }
 }
@@ -91,7 +126,9 @@ export async function handleUpdateWebhook(req: Request, res: Response) {
     const updatedNumber = await twilioService.updateWebhook(phoneNumberSid, voiceUrl);
     res.json(updatedNumber);
   } catch (error) {
-    logger.error('Error updating webhook:', error);
+    log.error('Error updating webhook', error instanceof Error ? error : new Error(String(error)), {
+      type: 'twilio.error'
+    });
     throw error;
   }
 } 

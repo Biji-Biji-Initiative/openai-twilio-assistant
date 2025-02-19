@@ -1,14 +1,12 @@
 ---
-description: Application Startup Process Rules
-globs: 
+description: Startup Process Rules
+globs: **/start-ngrok.sh, **/cleanup.sh, /package.json, **/pm2.config.json
 ---
- ---
 globs: 
-  - "**/cleanup.sh"
   - "**/start-ngrok.sh"
-  - "**/README.md"
-  - "**/.env"
----
+  - "**/cleanup.sh"
+  - "**/package.json"
+  - "**/pm2.config.json"
 
 # Application Startup Process
 
@@ -25,6 +23,8 @@ globs:
      - 8081 (WebSocket Server)
      - 4040 (Ngrok Interface)
    - Verifies all ports are free before proceeding
+   - Handles process cleanup with multiple retries
+   - Provides detailed status feedback
 
 2. **Ngrok Setup**
    ```bash
@@ -33,6 +33,7 @@ globs:
    - Starts ngrok with fixed domain: mereka.ngrok.io
    - Verify tunnel is active at http://localhost:4040
    - Wait for tunnel to be established before proceeding
+   - Check ngrok logs for successful connection
 
 3. **WebSocket Server**
    ```bash
@@ -41,6 +42,9 @@ globs:
    - Starts after ngrok is confirmed running
    - Verify server is up at https://mereka.ngrok.io/health
    - Check logs for successful startup message
+   - Verify CORS configuration is active
+   - Confirm WebSocket heartbeat is running
+   - Check status endpoint at https://mereka.ngrok.io/status
 
 4. **Frontend (Webapp)**
    ```bash
@@ -49,6 +53,8 @@ globs:
    - Must start after websocket server is running
    - Explicitly use port 3000
    - Verify access at http://localhost:3000
+   - Check browser console for connection status
+   - Verify WebSocket connection is established
 
 5. **Dev Phone (Optional)**
    ```bash
@@ -58,72 +64,44 @@ globs:
    - Runs independently on port 1337
    - Access at http://localhost:1337
 
-## Environment Verification
+## Health Verification
 
-Before starting each service, verify:
+Before considering the system ready, verify:
 
-1. **Ngrok**
-   - No existing tunnels running
-   - Port 4040 is free
-   - Auth token is valid
+1. **WebSocket Server Health**
+   ```bash
+   curl https://mereka.ngrok.io/health
+   ```
+   Expected response:
+   ```json
+   {
+     "status": "ok",
+     "timestamp": "2025-02-17T22:50:27.484Z",
+     "services": {
+       "websocket": true,
+       "ngrok": true
+     }
+   }
+   ```
 
-2. **WebSocket Server**
-   - Port 8081 is free
-   - Environment variables are set:
-     ```
-     PUBLIC_URL=https://mereka.ngrok.io
-     PORT=8081
-     TWILIO_ACCOUNT_SID=[valid]
-     TWILIO_AUTH_TOKEN=[valid]
-     OPENAI_API_KEY=[valid]
-     ```
+2. **Connection Status**
+   ```bash
+   curl https://mereka.ngrok.io/status
+   ```
+   Expected response:
+   ```json
+   {
+     "status": "ok",
+     "uptime": 123.45,
+     "connections": 1,
+     "timestamp": "2025-02-17T22:50:27.484Z"
+   }
+   ```
 
-3. **Frontend**
-   - Port 3000 is free
-   - Environment variables are set:
-     ```
-     NEXT_PUBLIC_BACKEND_URL=https://mereka.ngrok.io
-     TWILIO_ACCOUNT_SID=[matches websocket server]
-     TWILIO_AUTH_TOKEN=[matches websocket server]
-     OPENAI_API_KEY=[valid]
-     ```
+3. **Frontend Connectivity**
+   - Check browser console for WebSocket connection
+   - Verify no CORS errors in console
+   - Confirm health checks are passing
+   - Check setup checklist completion
 
-## Troubleshooting Steps
-
-1. **If localhost:3000 not loading:**
-   - Check frontend logs for compilation errors
-   - Verify NEXT_PUBLIC_BACKEND_URL matches ngrok URL
-   - Ensure no other process is using port 3000
-   - Try accessing the page in incognito mode
-
-2. **If WebSocket connection fails:**
-   - Verify ngrok tunnel is active
-   - Check CORS settings in websocket server
-   - Ensure environment variables match between services
-   - Check browser console for connection errors
-
-3. **If Twilio authentication fails:**
-   - Verify credentials match in both .env files
-   - Check Twilio console for account status
-   - Try re-running `twilio login`
-   - Verify webhook URLs in Twilio console
-
-## Common Issues
-
-1. **Port Conflicts**
-   - Always run cleanup.sh first
-   - Check for zombie processes
-   - Use `lsof -i :[port]` to identify conflicts
-   - Kill processes manually if needed
-
-2. **Environment Sync**
-   - Keep .env files synchronized
-   - Don't change existing variables
-   - Restart all services after env changes
-   - Verify changes with health checks
-
-3. **Service Dependencies**
-   - Follow startup order strictly
-   - Verify each service before starting next
-   - Keep services in separate terminals
-   - Monitor all terminal outputs
+// ... rest of the existing content ...

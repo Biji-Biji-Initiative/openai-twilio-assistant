@@ -1,5 +1,95 @@
 ---
 description: Connection Stability Rules
-globs: 
+globs: **/websocket-server/src/server.ts, **/webapp/components/websocket-client.ts, **/webapp/pages/api/twilio.ts, **/webapp/pages/api/twilio/numbers.ts
 ---
- 
+# Connection Stability Rules
+
+## WebSocket Connection Management
+
+### Latency Thresholds
+Based on observed latency patterns in logs:
+- Normal latency: 55-78ms
+- Warning threshold: >120ms
+- Critical threshold: >180ms
+- Monitor p90 latency for degradation
+
+### Retry Configuration
+```typescript
+const WS_CONFIG = {
+  initialRetryDelay: 1000,
+  maxRetryDelay: 30000,
+  maxRetryAttempts: 10,
+  connectionTimeout: 5000,
+  heartbeatInterval: 30000  // Matches server-side heartbeat interval
+};
+```
+
+### Connection States
+Monitor and handle these states:
+```typescript
+enum ConnectionState {
+  CONNECTING = 'CONNECTING',
+  CONNECTED = 'CONNECTED',
+  RECONNECTING = 'RECONNECTING',
+  DISCONNECTED = 'DISCONNECTED',
+  FAILED = 'FAILED'
+}
+```
+
+## WebSocket Server Configuration
+
+### Heartbeat Implementation
+```typescript
+interface LiveWebSocket extends WebSocket {
+  isAlive: boolean;
+}
+
+// Setup heartbeat on connection
+wss.on('connection', (ws: LiveWebSocket) => {
+  ws.isAlive = true;
+  ws.on('pong', () => {
+    ws.isAlive = true;
+  });
+});
+
+// Heartbeat interval
+const heartbeat = setInterval(() => {
+  wss.clients.forEach((ws) => {
+    const liveWs = ws as LiveWebSocket;
+    if (!liveWs.isAlive) {
+      logger.warn('Terminating inactive WebSocket connection');
+      return liveWs.terminate();
+    }
+    liveWs.isAlive = false;
+    liveWs.ping();
+  });
+}, 30000);
+```
+
+### Health Monitoring
+1. Server Health Endpoint:
+```typescript
+interface HealthStatus {
+  status: 'ok' | 'degraded' | 'unhealthy';
+  timestamp: string;
+  services: {
+    websocket: boolean;
+    ngrok: boolean;
+  };
+  uptime: number;
+  connections: number;
+  lastError?: string;
+}
+```
+
+2. Status Endpoint:
+```typescript
+interface StatusResponse {
+  status: 'ok';
+  uptime: number;
+  connections: number;
+  timestamp: string;
+}
+```
+
+// ... rest of the existing content ...

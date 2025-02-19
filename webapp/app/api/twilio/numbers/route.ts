@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server';
 import { handleCors, createErrorResponse, createSuccessResponse, validateRequest, validateEnvVars, APIError } from '../../api-helpers';
-import { logger } from '../../../lib/logger';
+import { logger } from '@/app/lib/logger';
 import twilio from 'twilio';
 import { PhoneNumberUpdateSchema } from '@/lib/validation-schemas';
 

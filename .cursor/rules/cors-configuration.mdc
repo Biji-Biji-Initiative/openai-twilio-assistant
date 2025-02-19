@@ -1,9 +1,5 @@
 ---
-description:  CORS Configuration Rules
-globs: 
----
- ---
-CORS Configuration Rules
+description: CORS Configuration Rules
 globs: 
   - "**/websocket-server/src/utils.ts"
   - "**/webapp/app/api/cors.ts"
@@ -61,67 +57,55 @@ export function isOriginAllowed(origin: string): boolean {
 }
 ```
 
-## CORS Middleware Configuration
+## Express Server Configuration
 
-### Express Configuration
+### CORS Options
 ```typescript
 const corsOptions = {
-  origin: function(origin: string | undefined, callback: Function) {
-    if (!origin && process.env.NODE_ENV === 'development') {
+  origin: function (origin: string | undefined, callback: (error: Error | null, allow?: boolean) => void) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) {
+      logger.info('[CORS] Allowing request with no origin');
+      callback(null, true);
+      return;
+    }
+
+    // In development, be more permissive with CORS
+    if (process.env.NODE_ENV === 'development') {
+      logger.info(`[CORS] Development mode - allowing origin: ${origin}`);
       callback(null, true);
       return;
     }
 
     if (isOriginAllowed(origin)) {
+      logger.info(`[CORS] Allowing origin: ${origin}`);
       callback(null, true);
     } else {
+      logger.warn(`[CORS] Rejected origin: ${origin}`);
       callback(new Error('CORS not allowed'));
     }
   },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: [
-    'Content-Type',
-    'Authorization',
-    'X-Requested-With',
-    'Cache-Control',
-    'Pragma',
-    'Accept'
-  ],
-  exposedHeaders: ['Content-Length', 'Content-Type']
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Cache-Control', 'Pragma', 'Accept', 'Origin'],
+  exposedHeaders: ['Content-Length', 'Content-Type'],
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+  maxAge: 86400 // Cache preflight requests for 24 hours
 };
 ```
 
-### Next.js Configuration
+### Endpoint-Specific CORS
 ```typescript
-// next.config.js
-module.exports = {
-  async headers() {
-    return [
-      {
-        source: '/api/:path*',
-        headers: [
-          {
-            key: 'Access-Control-Allow-Credentials',
-            value: 'true'
-          },
-          {
-            key: 'Access-Control-Allow-Origin',
-            value: process.env.NEXT_PUBLIC_BACKEND_URL
-          },
-          {
-            key: 'Access-Control-Allow-Methods',
-            value: 'GET,POST,PUT,DELETE,OPTIONS'
-          },
-          {
-            key: 'Access-Control-Allow-Headers',
-            value: 'Content-Type, Authorization, X-Requested-With'
-          }
-        ]
-      }
-    ];
-  }
-};
+// Health check endpoint with CORS handling
+app.options('/health', cors(corsOptions)); // Enable preflight for health endpoint
+app.get('/health', cors(corsOptions), (req, res) => {
+  // Handler implementation
+});
+
+// API routes with CORS handling
+app.options('/api/*', cors(corsOptions)); // Enable preflight for all API routes
+app.use('/api', cors(corsOptions), apiRouter);
 ```
 
 ## WebSocket Security

@@ -10,7 +10,7 @@ const labelVariants = cva(
   {
     variants: {
       variant: {
-        default: "text-foreground",
+        default: "",
         error: "text-destructive",
         success: "text-green-500",
         muted: "text-muted-foreground",
@@ -43,6 +43,10 @@ export interface LabelProps
   optional?: boolean;
   optionalText?: string;
   tooltip?: string;
+  children?: React.ReactNode
+  variant?: "default" | "error"
+  size?: "default" | "sm" | "lg"
+  weight?: "default" | "normal" | "semibold" | "bold"
 }
 
 const Label = React.forwardRef<

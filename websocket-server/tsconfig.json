@@ -4,12 +4,28 @@
     "rootDir": "./src",
     "outDir": "./dist",
     "baseUrl": ".",
+    "composite": true,
+    "declaration": true,
     "paths": {
       "@twilio/shared": ["../shared/dist"],
       "@twilio/shared/*": ["../shared/dist/*"]
-    }
+    },
+    "types": [
+      "node",
+      "express",
+      "jest",
+      "ws"
+    ],
+    "skipLibCheck": true
   },
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/*.test.ts"
+  ],
   "references": [
     { "path": "../shared" }
   ]

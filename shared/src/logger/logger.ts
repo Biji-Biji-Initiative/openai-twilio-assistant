@@ -1,44 +1,10 @@
 import winston from 'winston';
 import { z } from 'zod';
+import { logContextSchema, LogContext } from './types';
 
 // Log level schema
 const logLevelSchema = z.enum(['error', 'warn', 'info', 'http', 'verbose', 'debug', 'silly']);
 type LogLevel = z.infer<typeof logLevelSchema>;
-
-// Log context schema
-export const logContextSchema = z.object({
-  service: z.string().optional(),
-  sessionId: z.string().optional(),
-  userId: z.string().optional(),
-  requestId: z.string().optional(),
-  signal: z.string().optional(),
-  type: z.string().optional(),
-  origin: z.string().optional(),
-  port: z.number().optional(),
-  publicUrl: z.string().optional(),
-  environment: z.string().optional(),
-  ip: z.string().optional(),
-  userAgent: z.string().optional(),
-  duration: z.number().optional(),
-  method: z.string().optional(),
-  url: z.string().optional(),
-  status: z.number().optional(),
-  sessionCount: z.number().optional(),
-  state: z.string().optional(),
-  lastActivity: z.string().optional(),
-  inactiveTime: z.number().optional(),
-  totalConnections: z.number().optional(),
-  stats: z.object({
-    total: z.number(),
-    connected: z.number(),
-    connecting: z.number(),
-    reconnecting: z.number(),
-    disconnected: z.number(),
-    failed: z.number()
-  }).optional()
-});
-
-export type LogContext = z.infer<typeof logContextSchema>;
 
 // Configure log format
 const logFormat = winston.format.combine(
@@ -147,6 +113,4 @@ export const wsLogger = (sessionId: string) => ({
   debug: (message: string, context?: Omit<LogContext, 'sessionId'>) => {
     logger.debug(message, { ...context, sessionId });
   }
-});
-
-export default log; 
+}); 

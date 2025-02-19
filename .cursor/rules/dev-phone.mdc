@@ -1,9 +1,9 @@
 ---
 description: Twilio Dev Phone Configuration Rules
-globs: 
-  - "**/README.md"
-  - "**/.env"
-  - "**/components/DevPhone.tsx"
+globs:
+  - "**/dev-phone/**"
+  - "**/components/dev-phone/**"
+  - "**/app/dev-phone/**"
 ---
 
 # Twilio Dev Phone Configuration

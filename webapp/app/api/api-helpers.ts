@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { loggers } from '@twilio/shared/logger';
+import { logger } from '@/app/lib/logger';
 import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 import { ErrorResponseSchema, SuccessResponseSchema } from '@/lib/validation-schemas';
@@ -80,13 +80,13 @@ export function handleCors(req: NextRequest) {
     });
 
     if (isAllowed) {
-      loggers.debug(`[CORS] Allowing origin: ${origin}`);
+      logger.info(`[CORS] Allowing origin: ${origin}`);
       headers.set('Access-Control-Allow-Origin', origin);
     } else {
-      loggers.warn(`[CORS] Rejected origin: ${origin}`);
+      logger.warn(`[CORS] Rejected origin: ${origin}`);
     }
   } else if (env === 'development') {
-    loggers.warn('[CORS] No origin provided (allowed in development)');
+    logger.warn('[CORS] No origin provided (allowed in development)');
     headers.set('Access-Control-Allow-Origin', '*');
   }
 
@@ -135,7 +135,7 @@ export function createErrorResponse(error: unknown, status: number = 500) {
   const requestId = uuidv4();
   const errorDetails = formatErrorDetails(error);
   
-  loggers.error(`[${requestId}] API Error:`, errorDetails);
+  logger.error(`[${requestId}] API Error:`, errorDetails);
 
   const response = {
     error: errorDetails.message,
@@ -185,12 +185,11 @@ export function createSuccessResponse<T>(data: T, status: number = 200) {
  * Validate required environment variables
  */
 export function validateEnvVars(requiredVars: string[]): void {
-  const missing = requiredVars.filter(varName => !process.env[varName]);
+  const missingVars = requiredVars.filter(varName => !process.env[varName]);
   
-  if (missing.length > 0) {
-    const error = new Error(`Missing required environment variables: ${missing.join(', ')}`);
-    (error as any).type = APIError.VALIDATION_ERROR;
-    throw error;
+  if (missingVars.length > 0) {
+    logger.error('Missing required environment variables:', { missingVars });
+    throw new Error(`Missing required environment variables: ${missingVars.join(', ')}`);
   }
 }
 
@@ -219,9 +218,10 @@ export async function validateRequest<T>(
     return schema.parse(body);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      const validationError = new Error(error.errors.map(e => e.message).join(', '));
-      (validationError as any).type = APIError.VALIDATION_ERROR;
-      throw validationError;
+      logger.warn('Request validation failed:', { 
+        errors: error.errors 
+      });
+      throw new Error(error.errors.map(e => e.message).join(', '));
     }
     throw error;
   }

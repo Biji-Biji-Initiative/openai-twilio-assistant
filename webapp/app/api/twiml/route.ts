@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server';
 import { createErrorResponse, validateRequest } from '../api-helpers';
-import { logger } from '../../lib/logger';
+import { logger } from '@/app/lib/logger';
 import twilio from 'twilio';
 import VoiceResponse from 'twilio/lib/twiml/VoiceResponse';
 import { TwiMLRequestSchema } from '@/lib/validation-schemas';
@@ -70,4 +70,25 @@ export async function OPTIONS(req: NextRequest) {
       'Access-Control-Allow-Headers': 'Content-Type',
     },
   });
+}
+
+export async function GET(req: NextRequest) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const callSid = searchParams.get('callSid');
+
+    logger.info('[TwiML] Generating TwiML for call:', { callSid });
+
+    const twiml = new twilio.twiml.VoiceResponse();
+    twiml.say('Hello! This is a test call from your Twilio application.');
+
+    return new Response(twiml.toString(), {
+      headers: {
+        'Content-Type': 'text/xml',
+      },
+    });
+  } catch (error) {
+    logger.error('[TwiML] Error:', error);
+    return createErrorResponse(error);
+  }
 } 

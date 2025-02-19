@@ -1,51 +1,27 @@
 import { Request, Response, NextFunction } from 'express';
-import { loggers } from '../logger';
+import { log } from '../logger';
 
-export const createRequestLogger = (serviceName: 'webapp' | 'devPhone' | 'websocketServer') => {
-  const logger = loggers[serviceName];
-
+export function requestLogger() {
   return (req: Request, res: Response, next: NextFunction) => {
-    const startTime = Date.now();
-    const requestId = Math.random().toString(36).substring(2, 15);
-
-    // Log request start
-    logger.info('Request started', {
-      requestId,
-      method: req.method,
-      url: req.url,
-      query: req.query,
-      headers: req.headers
-    });
-
-    // Log response using response events
+    const start = Date.now();
+    const requestId = req.headers['x-request-id'] as string;
+    
     res.on('finish', () => {
-      const responseTime = Date.now() - startTime;
-      logger.info('Request completed', {
+      const duration = Date.now() - start;
+      log.http('HTTP Request', {
         requestId,
         method: req.method,
         url: req.url,
-        statusCode: res.statusCode,
-        responseTime
+        status: res.statusCode,
+        duration,
+        ip: req.ip,
+        userAgent: req.get('user-agent')
       });
     });
-
+    
     next();
   };
-};
+}
 
-export const createErrorLogger = (serviceName: 'webapp' | 'devPhone' | 'websocketServer') => {
-  const logger = loggers[serviceName];
-
-  return (err: Error, req: Request, res: Response, next: NextFunction) => {
-    logger.error('Request error', {
-      method: req.method,
-      url: req.url,
-      error: {
-        message: err.message,
-        stack: err.stack
-      }
-    });
-
-    next(err);
-  };
-}; 
+// Export the request logger as the default middleware
+export default requestLogger; 

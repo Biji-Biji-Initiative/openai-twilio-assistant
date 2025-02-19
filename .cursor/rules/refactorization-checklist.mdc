@@ -1,0 +1,73 @@
+---
+description: Rules for refactoring code
+globs:
+  - "**/components/**/*.tsx"
+  - "**/hooks/**/*.ts"
+  - "**/app/**/*.tsx"
+  - "**/lib/**/*.ts"
+---
+
+Here's a comprehensive checklist for your component refactoring
+
+I. General Component Refactoring:
+
+[ ] Single Responsibility Principle: Have all components been broken down into smaller, more focused components with a single, well-defined purpose? No large components handling multiple unrelated tasks.
+[ ] Composition over Inheritance: Are components composed together rather than using inheritance? Favor composition for flexibility.
+[ ] Clear Prop Types (TypeScript Interfaces): Are all components using TypeScript interfaces to define their props? No any types for props.
+[ ] Consistent Naming: Are component, prop, and variable names clear, descriptive, and consistent across the codebase?
+[ ] Consistent Styling: Is a consistent styling approach used (Tailwind CSS in your case) across all components? No inline styles unless absolutely necessary.
+[ ] Accessibility: Have accessibility considerations been addressed for all components (ARIA attributes, keyboard navigation, alternative text for images)?
+[ ] Testing: Are unit tests written for all components? Aim for high test coverage.
+[ ] Documentation: Are components documented using JSDoc or a similar tool? Clear explanations of props and usage.
+[ ] No Unnecessary State: Do components only manage the state they absolutely need? Avoid storing derived state.
+[ ] Controlled Components: Are form elements (inputs, selects, textareas) controlled components, with their values managed by React state?
+[ ] No Direct DOM Manipulation: Are components avoiding direct DOM manipulation (e.g., using document.getElementById) unless absolutely necessary? Use refs if needed.
+II. Specific Component Refactoring:
+
+[ ] ConsoleTabs:
+[ ] Is ConsoleTabs primarily a tab manager, only handling tab switching and rendering?
+[ ] Are CallInterfaceTab, ConfigurationTab, and TranscriptsTab separate components?
+[ ] Is state management within the tabs handled effectively (custom hooks or state management library)?
+[ ] CallInterface:
+[ ] Is CallInterface primarily a UI component?
+[ ] Is call management logic handled by a CallManager (or a dedicated library)?
+[ ] Is call state management clear and well-defined?
+[ ] ChecklistAndConfig:
+[ ] Are Checklist and ConfigurationPanel separate components?
+[ ] Is data flow between these components and their parent clear (props or state management)?
+[ ] PhoneNumberChecklist:
+[ ] Is PhoneNumberChecklist a presentational component?
+[ ] Does it use the usePhoneNumbers hook for data fetching?
+[ ] StatusPanel:
+[ ] Is StatusPanel a presentational component?
+[ ] Does it receive status data via props (from useServerStatus and useTwilioCredentials)?
+[ ] TranscriptsPanel:
+[ ] Is TranscriptsPanel a presentational component?
+[ ] Is transcript data fetching and management handled by the useTranscripts hook (or a state management solution)?
+[ ] UI Components (Alert, Badge, Button, Card, Checkbox, Dialog, Input, Label, ScrollArea, Select, Tabs, Textarea):
+[ ] Do all UI components have TypeScript interfaces for their props?
+[ ] Are they styled consistently?
+[ ] Are they accessible?
+[ ] Are they well-tested?
+[ ] Complex Components (DevPhone, FunctionCallsPanel, SessionConfigurationPanel, Transcript, TopBar, ToolConfigurationDialog):
+[ ] Have these components been broken down further if they have multiple responsibilities?
+[ ] Are they primarily presentational?
+[ ] Is complex logic or data handling extracted into custom hooks or managed by a library?
+[ ] Are they well-tested?
+III. Hooks:
+
+[ ] Testing: Are all custom hooks (usePhoneNumbers, useServerStatus, useTwilioCredentials, useWebhook, useTranscripts, etc.) thoroughly unit tested?
+[ ] Error Handling: Do hooks handle errors gracefully and return appropriate error states or throw errors?
+[ ] Clear Return Values: Do hooks return clear and well-defined values and functions?
+IV. API Routes:
+
+[ ] Zod Validation: Are all API routes using Zod (or a similar library) for schema validation of incoming data?
+[ ] Error Handling: Are API routes using try-catch blocks and returning appropriate error responses with specific messages and status codes?
+[ ] CORS: Is the CORS configuration secure and specific about allowed origins (especially in production)? Is middleware used for CORS?
+[ ] Rate Limiting: Is rate limiting implemented to protect API routes?
+[ ] Secrets Management: Are sensitive API keys and credentials stored securely using a secrets management solution (not environment variables)?
+V. General Code Quality:
+
+[ ] Linting: Is a linter (ESLint) used and are there no linting errors?
+[ ] Formatting: Is a formatter (Prettier) used and is the code consistently formatted?
+[ ] Code Reviews: Has the refactored code been reviewed by other developers?

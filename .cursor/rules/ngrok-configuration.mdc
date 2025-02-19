@@ -1,8 +1,7 @@
 ---
-description: Ngrok Configuration Rules globs: 
+description: Ngrok Configuration Rules
 globs: 
----
- - "**/.env"
+  - "**/.env"
   - "**/start-ngrok.sh"
   - "**/cleanup.sh"
   - "**/websocket-server/src/server.ts"
@@ -23,6 +22,15 @@ globs:
 - The connection must be established before starting the websocket server
 - Monitor connection status at `http://localhost:4040`
 
+## Process Management
+- Always run ngrok in the background using `nohup`:
+  ```bash
+  nohup ngrok http --domain=mereka.ngrok.io 8081 > ngrok.log 2>&1 &
+  ```
+- Redirect output to a log file for debugging
+- Use proper process management to prevent termination
+- Verify process is running with `ps aux | grep ngrok`
+
 ## Environment Configuration
 1. Webapp (.env):
 ```bash
@@ -42,9 +50,11 @@ PUBLIC_URL=https://mereka.ngrok.io
 
 2. Start ngrok:
    ```bash
-   ./start-ngrok.sh
-   # or manually:
-   ngrok http --domain=mereka.ngrok.io 8081
+   # Use nohup for stable background process
+   nohup ngrok http --domain=mereka.ngrok.io 8081 > ngrok.log 2>&1 &
+   
+   # Wait for ngrok to initialize (check logs)
+   tail -f ngrok.log
    ```
 
 3. Start websocket server:
@@ -62,20 +72,29 @@ PUBLIC_URL=https://mereka.ngrok.io
 - Check websocket server health: `https://mereka.ngrok.io/health`
 - Confirm CORS headers in ngrok inspector
 - Monitor websocket connections in browser dev tools
+- Check ngrok process status: `ps aux | grep ngrok`
+- Monitor ngrok logs: `tail -f ngrok.log`
 
 ## Troubleshooting
 1. If ngrok fails to start:
    - Run `pkill -f ngrok` to kill existing processes
    - Check port 8081 is free
    - Verify ngrok auth token
+   - Check ngrok.log for error messages
 
-2. If websocket connection fails:
+2. If ngrok terminates unexpectedly:
+   - Check ngrok.log for error messages
+   - Ensure proper nohup usage
+   - Verify system resources
+   - Restart with proper background configuration
+
+3. If websocket connection fails:
    - Confirm ngrok tunnel is active
    - Verify CORS configuration
    - Check environment variables match
    - Restart services in correct order
 
-3. If CORS errors occur:
+4. If CORS errors occur:
    - Verify ngrok domain matches in both .env files
    - Check websocket server CORS configuration
    - Clear browser cache and try incognito mode
@@ -85,3 +104,4 @@ PUBLIC_URL=https://mereka.ngrok.io
 - Monitor ngrok dashboard for unauthorized tunnel usage
 - Regularly verify webhook endpoints in Twilio console
 - Use HTTPS for all connections
+- Monitor ngrok logs for suspicious activity

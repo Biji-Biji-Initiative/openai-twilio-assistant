@@ -1,61 +1,117 @@
 import express, { Application } from "express";
-import { createServer } from "http";
+import { createServer, Server } from "http";
 import WebSocket from "ws";
 import cors from "cors";
-import { loggers } from '@twilio/shared/logger';
+import { log, wsLogger, ShutdownHandler, createShutdownResource, middleware } from "@twilio/shared";
 import { isOriginAllowed } from "./utils";
 import { WebSocketEventHandler } from './handlers/event-handler';
 import { env } from './config/environment';
-import { errorHandler, notFoundHandler } from './middleware/error-handler';
 import { sessionService } from './services/session-service';
 import apiRouter from './routes/api';
-import { corsOptions, verifyWebSocketClient } from '@twilio/shared/cors-config';
-import { middleware } from '@twilio/shared';
 
-export async function startServer(): Promise<ReturnType<typeof createServer>> {
+// CORS configuration
+const corsOptions = {
+  origin: function (origin: string | undefined, callback: (error: Error | null, allow?: boolean) => void) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) {
+      log.info('Allowing request with no origin', { type: 'cors' });
+      callback(null, true);
+      return;
+    }
+
+    // In development, be more permissive with CORS
+    if (env.NODE_ENV === 'development') {
+      log.info('Development mode - allowing origin', { type: 'cors', origin });
+      callback(null, true);
+      return;
+    }
+
+    if (isOriginAllowed(origin)) {
+      log.info('Allowing origin', { type: 'cors', origin });
+      callback(null, true);
+    } else {
+      log.warn('Rejected origin', { type: 'cors', origin });
+      callback(new Error('CORS not allowed'));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Cache-Control', 'Pragma', 'Accept', 'Origin'],
+  exposedHeaders: ['Content-Length', 'Content-Type']
+};
+
+// WebSocket verification
+function verifyWebSocketClient(info: { origin: string; secure: boolean; req: any }) {
+  const origin = info.origin;
+  if (env.NODE_ENV === 'development') {
+    log.info('Development mode - allowing origin', { type: 'websocket', origin });
+    return true;
+  }
+  
+  if (isOriginAllowed(origin)) {
+    log.info('Allowing origin', { type: 'websocket', origin });
+    return true;
+  }
+  
+  log.warn('Rejected origin', { type: 'websocket', origin });
+  return false;
+}
+
+export async function startServer(): Promise<Server> {
   const app: Application = express();
   
-  // Trust proxy - required for rate limiting behind ngrok
+  // Trust proxy for requests behind ngrok
   app.set('trust proxy', 1);
   
   const server = createServer(app);
-  const wss = new WebSocket.Server({ server });
+  const wss = new WebSocket.Server({ server, verifyClient: verifyWebSocketClient });
 
-  // Global CORS middleware configuration
-  const corsOptions = {
-    origin: function (origin: string | undefined, callback: (error: Error | null, allow?: boolean) => void) {
-      // Allow requests with no origin (like mobile apps or curl requests)
-      if (!origin) {
-        loggers.info('[CORS] Allowing request with no origin');
-        callback(null, true);
-        return;
-      }
+  // Initialize shutdown handler
+  const shutdownHandler = ShutdownHandler.init({
+    timeout: 10000,
+    beforeShutdown: async () => {
+      log.info('Starting server shutdown');
+      // Close all WebSocket connections gracefully
+      await sessionService.closeAllSessions();
+    }
+  });
 
-      // In development, be more permissive with CORS
-      if (env.NODE_ENV === 'development') {
-        loggers.info(`[CORS] Development mode - allowing origin: ${origin}`);
-        callback(null, true);
-        return;
-      }
+  // Register server for shutdown
+  shutdownHandler.registerResource(
+    'http-server',
+    createShutdownResource('http-server', () => {
+      return new Promise((resolve, reject) => {
+        server.close((err) => {
+          if (err) {
+            log.error('Error closing HTTP server', err);
+            reject(err);
+          } else {
+            log.info('HTTP server closed successfully');
+            resolve();
+          }
+        });
+      });
+    })
+  );
 
-      if (isOriginAllowed(origin)) {
-        loggers.info(`[CORS] Allowing origin: ${origin}`);
-        callback(null, true);
-      } else {
-        loggers.warn(`[CORS] Rejected origin: ${origin}`);
-        callback(new Error('CORS not allowed'));
-      }
-    },
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Cache-Control', 'Pragma', 'Accept', 'Origin'],
-    exposedHeaders: ['Content-Length', 'Content-Type']
-  };
+  // Register WebSocket server for shutdown
+  shutdownHandler.registerResource(
+    'websocket-server',
+    createShutdownResource('websocket-server', () => {
+      return new Promise((resolve) => {
+        wss.close(() => {
+          log.info('WebSocket server closed successfully');
+          resolve();
+        });
+      });
+    })
+  );
 
   // Middleware
   app.use(cors(corsOptions));
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
+  app.use(middleware.requestLogger());
 
   // Add CORS headers for WebSocket upgrade requests
   app.use((req, res, next) => {
@@ -75,35 +131,47 @@ export async function startServer(): Promise<ReturnType<typeof createServer>> {
   app.use('/api', apiRouter);
 
   // WebSocket connection handling
-  wss.on('connection', (ws: WebSocket) => {
+  wss.on('connection', (ws: WebSocket, req: any) => {
     const sessionId = sessionService.createSession(ws);
     const handler = new WebSocketEventHandler(ws);
+    const logger = wsLogger(sessionId);
+    
+    logger.info('Client connected', {
+      ip: req.socket.remoteAddress,
+      origin: req.headers.origin
+    });
     
     ws.on('message', async (message: string) => {
-      await handler.handleMessage(message);
+      try {
+        await handler.handleMessage(message);
+      } catch (error) {
+        logger.error('Error handling message', error instanceof Error ? error : new Error(String(error)));
+      }
     });
 
     ws.on('error', (error: Error) => {
-      loggers.error('WebSocket error:', error);
+      logger.error('WebSocket error', error);
     });
 
     ws.on('close', () => {
       sessionService.removeSession(sessionId);
-      loggers.info('Client disconnected:', { sessionId });
+      logger.info('Client disconnected');
     });
   });
 
   // Error handling
-  app.use('*', notFoundHandler);
-  app.use(errorHandler);
+  app.use(middleware.errorBoundary());
 
   // Start server
-  server.listen(env.PORT, () => {
-    loggers.info(`Server is running on port ${env.PORT}`);
-    loggers.info(`Public URL: ${env.PUBLIC_URL || `http://localhost:${env.PORT}`}`);
-    loggers.info('WebSocket endpoints:');
-    loggers.info(`- Call: ${env.PUBLIC_URL || `http://localhost:${env.PORT}`}/call`);
-    loggers.info(`- Logs: ${env.PUBLIC_URL || `http://localhost:${env.PORT}`}/logs`);
+  await new Promise<void>((resolve) => {
+    server.listen(env.PORT, () => {
+      log.info('Server started', {
+        port: env.PORT,
+        publicUrl: env.PUBLIC_URL || `http://localhost:${env.PORT}`,
+        environment: env.NODE_ENV
+      });
+      resolve();
+    });
   });
 
   return server;

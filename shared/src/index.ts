@@ -16,8 +16,9 @@ export * from './websocket-manager';
 // Middleware
 export * as middleware from './middleware';
 
-// Logger
-export * from './logger';
+// Logging
+export { log, wsLogger, requestLogger, setLogLevel } from './logger/logger';
+export type { LogContext } from './logger/types';
 
-// Rate Limiting
-export * from './rate-limiting'; 
+// Shutdown Handler
+export * from './shutdown-handler'; 

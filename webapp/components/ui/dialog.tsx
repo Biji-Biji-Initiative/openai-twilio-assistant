@@ -6,7 +6,7 @@ import { X } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
-export interface DialogProps extends DialogPrimitive.DialogProps {
+export interface DialogProps extends React.ComponentPropsWithoutRef<typeof DialogPrimitive.Root> {
   onOpenAutoFocus?: (event: Event) => void;
   onCloseAutoFocus?: (event: Event) => void;
   onEscapeKeyDown?: (event: KeyboardEvent) => void;
