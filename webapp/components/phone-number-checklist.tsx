@@ -1,4 +1,3 @@
-// PhoneNumberChecklist.tsx
 "use client";
 
 import React, { useState } from "react";
@@ -52,13 +51,6 @@ const PhoneNumberChecklist: React.FC<PhoneNumberChecklistProps> = ({
             {allConfigsReady ? "Setup Ready" : "Setup Not Ready"}
           </span>
         </div>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => setAllConfigsReady(false)}
-        >
-          Checklist
-        </Button>
       </div>
     </Card>
   );

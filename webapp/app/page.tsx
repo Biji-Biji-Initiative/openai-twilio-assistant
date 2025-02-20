@@ -1,5 +1,5 @@
-import CallInterface from "@/components/call-interface";
+import MainTabs from "@/components/main-tabs";
 
 export default function Page() {
-  return <CallInterface />;
+  return <MainTabs />;
 }

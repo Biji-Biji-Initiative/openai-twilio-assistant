@@ -14,7 +14,7 @@ import functions from "./functionHandlers";
 
 dotenv.config();
 
-const PORT = parseInt(process.env.PORT || "8081", 10);
+const PORT = 8081; // Fixed port for consistency
 const PUBLIC_URL = process.env.PUBLIC_URL || "";
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY || "";
 

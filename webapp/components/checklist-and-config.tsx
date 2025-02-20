@@ -20,17 +20,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export default function ChecklistAndConfig({
-  ready,
-  setReady,
-  selectedPhoneNumber,
-  setSelectedPhoneNumber,
-}: {
-  ready: boolean;
-  setReady: (val: boolean) => void;
-  selectedPhoneNumber: string;
-  setSelectedPhoneNumber: (val: string) => void;
-}) {
+type ChecklistAndConfigProps = {
+  setSelectedPhoneNumber: (number: string) => void;
+};
+
+export default function ChecklistAndConfig({ setSelectedPhoneNumber }: ChecklistAndConfigProps) {
+  const [ready, setReady] = useState(false);
   const [hasCredentials, setHasCredentials] = useState(false);
   const [phoneNumbers, setPhoneNumbers] = useState<PhoneNumber[]>([]);
   const [currentNumberSid, setCurrentNumberSid] = useState("");
@@ -47,6 +42,50 @@ export default function ChecklistAndConfig({
   const appendedTwimlUrl = publicUrl ? `${publicUrl}/twiml` : "";
   const isWebhookMismatch =
     appendedTwimlUrl && currentVoiceUrl && appendedTwimlUrl !== currentVoiceUrl;
+
+  async function checkNgrok() {
+    try {
+      const res = await fetch('http://localhost:4040/api/tunnels');
+      const data = await res.json();
+      console.log('Ngrok tunnels:', data.tunnels);
+    } catch (error) {
+      console.error('checkNgrok error (logging):', error);
+    }
+    if (!localServerUp || !publicUrl) return;
+    setNgrokLoading(true);
+    let success = false;
+    for (let i = 0; i < 5; i++) {
+      try {
+        const resTest = await fetch(publicUrl + "/public-url");
+        if (resTest.ok) {
+          setPublicUrlAccessible(true);
+          success = true;
+          break;
+        }
+      } catch {
+        // retry
+      }
+      if (i < 4) {
+        await new Promise((r) => setTimeout(r, 3000));
+      }
+    }
+    if (!success) {
+      setPublicUrlAccessible(false);
+    }
+    setNgrokLoading(false);
+  }
+
+  useEffect(() => {
+    if (!ready && localServerUp) {
+      checkNgrok();
+    }
+  }, [localServerUp, ready]);
+
+  useEffect(() => {
+    if (!allChecksPassed) {
+      setReady(false);
+    }
+  }, [allChecksPassed]);
 
   useEffect(() => {
     let polling = true;
@@ -122,31 +161,6 @@ export default function ChecklistAndConfig({
     } finally {
       setWebhookLoading(false);
     }
-  };
-
-  const checkNgrok = async () => {
-    if (!localServerUp || !publicUrl) return;
-    setNgrokLoading(true);
-    let success = false;
-    for (let i = 0; i < 5; i++) {
-      try {
-        const resTest = await fetch(publicUrl + "/public-url");
-        if (resTest.ok) {
-          setPublicUrlAccessible(true);
-          success = true;
-          break;
-        }
-      } catch {
-        // retry
-      }
-      if (i < 4) {
-        await new Promise((r) => setTimeout(r, 3000));
-      }
-    }
-    if (!success) {
-      setPublicUrlAccessible(false);
-    }
-    setNgrokLoading(false);
   };
 
   const checklist = useMemo(() => {
@@ -297,8 +311,15 @@ export default function ChecklistAndConfig({
     if (!allChecksPassed) {
       setReady(false);
     }
-  }, [allChecksPassed, setReady]);
+  }, [allChecksPassed]);
 
+  /**
+   * Marks the checklist as completed.
+   *
+   * This is called when the user has completed all the steps in the checklist.
+   * It sets the `ready` state to `true`, which allows the app to render the
+   * call interface.
+   */
   const handleDone = () => setReady(true);
 
   return (
