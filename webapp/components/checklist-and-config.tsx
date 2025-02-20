@@ -22,9 +22,10 @@ import {
 
 type ChecklistAndConfigProps = {
   setSelectedPhoneNumber: (number: string) => void;
+  setAllConfigsReady: (ready: boolean) => void;
 };
 
-export default function ChecklistAndConfig({ setSelectedPhoneNumber }: ChecklistAndConfigProps) {
+export default function ChecklistAndConfig({ setSelectedPhoneNumber, setAllConfigsReady }: ChecklistAndConfigProps) {
   const [ready, setReady] = useState(false);
   const [hasCredentials, setHasCredentials] = useState(false);
   const [phoneNumbers, setPhoneNumbers] = useState<PhoneNumber[]>([]);
@@ -44,13 +45,9 @@ export default function ChecklistAndConfig({ setSelectedPhoneNumber }: Checklist
     appendedTwimlUrl && currentVoiceUrl && appendedTwimlUrl !== currentVoiceUrl;
 
   async function checkNgrok() {
-    try {
-      const res = await fetch('http://localhost:4040/api/tunnels');
-      const data = await res.json();
-      console.log('Ngrok tunnels:', data.tunnels);
-    } catch (error) {
-      console.error('checkNgrok error (logging):', error);
-    }
+    // Skip ngrok tunnel check since we're using a permanent domain
+    if (!localServerUp || !publicUrl) return;
+
     if (!localServerUp || !publicUrl) return;
     setNgrokLoading(true);
     let success = false;
@@ -320,7 +317,16 @@ export default function ChecklistAndConfig({ setSelectedPhoneNumber }: Checklist
    * It sets the `ready` state to `true`, which allows the app to render the
    * call interface.
    */
-  const handleDone = () => setReady(true);
+  const handleDone = () => {
+    // First mark as ready to close dialog
+    setReady(true);
+    
+    // Then signal completion to parent
+    requestAnimationFrame(() => {
+      setAllConfigsReady(true);
+      console.log('Checklist completed, signaling ready state');
+    });
+  };
 
   return (
     <Dialog open={!ready}>

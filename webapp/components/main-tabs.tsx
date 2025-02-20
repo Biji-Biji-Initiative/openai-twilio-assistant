@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import CallInterface from "./call-interface";
 import ConversationHistory from "./conversation-history";
@@ -7,6 +8,7 @@ import PromptsManager from "./prompts-manager";
 import { Phone, MessageSquare, ListPlus } from "lucide-react";
 
 export default function MainTabs() {
+  const [allConfigsReady, setAllConfigsReady] = useState(false);
   return (
     <div className="flex flex-col h-screen bg-gray-50">
       <div className="flex items-center justify-between px-4 py-3 bg-white border-b">
@@ -28,7 +30,7 @@ export default function MainTabs() {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="calls" className="outline-none">
-          <CallInterface />
+          <CallInterface allConfigsReady={allConfigsReady} setAllConfigsReady={setAllConfigsReady} />
         </TabsContent>
         <TabsContent value="history" className="outline-none">
           <ConversationHistory />

@@ -15,7 +15,12 @@ import { Phone, PhoneCall, PhoneOff } from "lucide-react";
 import { toast } from "sonner";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-const CallInterface = () => {
+interface CallInterfaceProps {
+  allConfigsReady: boolean;
+  setAllConfigsReady: (ready: boolean) => void;
+}
+
+const CallInterface = ({ allConfigsReady, setAllConfigsReady }: CallInterfaceProps) => {
   const [items, setItems] = useState<Item[]>([]);
   const [callStatus, setCallStatus] = useState("disconnected");
   const [ws, setWs] = useState<WebSocket | null>(null);
@@ -24,24 +29,44 @@ const CallInterface = () => {
   const [wsStatus, setWsStatus] = useState<'connecting' | 'connected' | 'disconnected'>('disconnected');
   const [error, setError] = useState<string | null>(null);
   const [selectedPhoneNumber, setSelectedPhoneNumber] = useState("");
-  const [allConfigsReady, setAllConfigsReady] = useState(false);
+  // allConfigsReady is now passed as a prop
+  const [checklistComplete, setChecklistComplete] = useState(false);
   
-  // The number we're calling from (your Twilio number)
-  const fromNumber = "+60393880542";
+  // The number we're calling from (Twilio outbound number)
+  const fromNumber = process.env.TWILIO_OUTBOUND_NUMBER || "+60393880542";
+  
+  // The number users call to reach the AI (Twilio inbound number)
+  const inboundNumber = process.env.TWILIO_INBOUND_NUMBER || "60393880467";
 
+  // Initialize WebSocket when configs are ready
   useEffect(() => {
-    connectWebSocket();
-  }, []);
+    if (allConfigsReady) {
+      // Force reconnect when configs are ready
+      if (ws) {
+        ws.close();
+        setWs(null);
+      }
+      connectWebSocket();
+    }
+  }, [allConfigsReady]);
+
+  // Remove redundant effect
 
   const connectWebSocket = () => {
+    console.log('Attempting WebSocket connection...');
+    setWsStatus('connecting');
+    setError(null);
     try {
       setWsStatus('connecting');
-      const newWs = new WebSocket("ws://localhost:8081/logs");
+      const wsHost = process.env.NEXT_PUBLIC_WS_HOST || 'localhost';
+const wsPort = process.env.NEXT_PUBLIC_WS_PORT || '8081';
+const newWs = new WebSocket(`ws://${wsHost}:${wsPort}/logs`);
 
       newWs.onopen = () => {
         console.log("Connected to logs websocket");
         setWsStatus('connected');
         setError(null);
+        setWs(newWs);
       };
 
       newWs.onmessage = (event) => {
@@ -58,8 +83,14 @@ const CallInterface = () => {
         console.log("Logs websocket disconnected");
         setWs(null);
         setWsStatus('disconnected');
-        // Try to reconnect after 3 seconds
-        setTimeout(connectWebSocket, 3000);
+        // Auto reconnect if checklist is complete
+        if (checklistComplete) {
+          setTimeout(() => {
+            if (checklistComplete && !ws) {
+              connectWebSocket();
+            }
+          }, 1000);
+        }
       };
 
       newWs.onerror = (err) => {
@@ -67,7 +98,7 @@ const CallInterface = () => {
         setError('Failed to connect to server. Retrying...');
       };
 
-      setWs(newWs);
+      // setWs moved to onopen handler
     } catch (err) {
       console.error('Error creating WebSocket:', err);
       setError('Failed to create WebSocket connection');
@@ -246,7 +277,10 @@ const CallInterface = () => {
         )}
       </div>
       
-      <ChecklistAndConfig setSelectedPhoneNumber={setSelectedPhoneNumber} />
+      <ChecklistAndConfig 
+        setSelectedPhoneNumber={setSelectedPhoneNumber}
+        setAllConfigsReady={setAllConfigsReady}
+      />
       <TopBar />
       <div className="flex-grow p-4 h-full overflow-hidden flex flex-col">
         <div className="grid grid-cols-12 gap-4 h-full">
