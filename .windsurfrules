@@ -1,0 +1,60 @@
+# Windsurf Rules and Memories
+
+## Environment Configuration
+1. Environment File Locations:
+   - webapp/.env: ONLY Twilio credentials and phone numbers
+   - websocket-server/.env: ONLY OpenAI key and ngrok URL
+   - NO .env files in root directory
+
+2. Environment Values:
+   - Twilio Account SID: ACab6a3b51e6078865e1e39e8005dc2bcd
+   - Twilio Auth Token: eb6c2c6ed99fec1d5190fc95b4815c37
+   - OpenAI API Key: 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
+   - Ngrok Domain: mereka.ngrok.io
+   - Ngrok Auth Token: 2sy7rzIlzrNhrpsYw151gKDIXcy_3aPfJJCdxwkyJ19KF9XnF
+
+3. Phone Numbers:
+   - Inbound (users call this): 60393880467
+   - Outbound (AI uses this): +60393880542
+
+## Git Rules
+1. Environment Files:
+   - Never gitignore .env files in this project
+   - Keep all API keys and credentials in the repository
+   - Each .env file must be in its correct location
+
+## Startup Process
+1. Service Management:
+   - Always use start.sh for starting services
+   - Never start services manually or in a different order
+   - The script handles proper cleanup and environment setup
+
+## WebSocket Behavior
+1. Connection Management:
+   - Must match original repo's behavior
+   - Single connection to /logs endpoint
+   - Clean disconnection without auto-reconnect
+   - Separate WebSocket connections for inbound vs outbound calls
+
+2. Component Hierarchy:
+   - MainTabs owns the allConfigsReady state
+   - Passes setAllConfigsReady to CallInterface
+   - CallInterface passes it to ChecklistAndConfig
+   - ChecklistAndConfig triggers connection on completion
+
+3. Connection States:
+   - Disconnected: Initial state and after manual disconnect
+   - Connecting: During connection attempt
+   - Connected: After successful connection
+   - No automatic reconnection after manual disconnect
+
+4. State Management:
+   - Single source of truth for connection state
+   - Clean state transitions without race conditions
+   - Proper cleanup of old connections before new ones
+
+## Ngrok Configuration
+1. Domain Settings:
+   - Always use the permanent domain: mereka.ngrok.io
+   - Never use temporary ngrok URLs
+   - Webhooks for both numbers must point to this domain
