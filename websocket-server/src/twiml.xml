@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Response>
-  <Say>Connected</Say>
+  <Say>Connected to AI assistant</Say>
   <Connect>
-    <Stream url="{{WS_URL}}" />
+    <Stream url="{{WS_URL}}" track="inbound_track">
+      <Parameter name="statusCallback" value="{{PUBLIC_URL}}/api/call/status"/>
+      <Parameter name="statusCallbackEvent" value="initiated ringing answered completed"/>
+      <Parameter name="statusCallbackMethod" value="POST"/>
+    </Stream>
   </Connect>
   <Say>Disconnected</Say>
 </Response>

@@ -25,10 +25,13 @@ if (!OPENAI_API_KEY) {
 
 const app = express();
 app.use(cors());
+
+// Add proper request parsing
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 const server = http.createServer(app);
 const wss = new WebSocketServer({ server });
-
-app.use(express.urlencoded({ extended: false }));
 
 const twimlPath = join(__dirname, "twiml.xml");
 const twimlTemplate = readFileSync(twimlPath, "utf-8");
@@ -37,12 +40,31 @@ app.get("/public-url", (req, res) => {
   res.json({ publicUrl: PUBLIC_URL });
 });
 
-app.all("/twiml", (req, res) => {
+// Function to generate TwiML response
+function generateTwiML(req: express.Request) {
   const wsUrl = new URL(PUBLIC_URL);
   wsUrl.protocol = "wss:";
-  wsUrl.pathname = `/call`;
+  
+  // Remove trailing slashes and ensure clean path
+  wsUrl.pathname = "/media".replace(/\/+/g, "/").replace(/\/$/, "");
+  
+  // Log the generated URLs for debugging
+  console.log('📝 Generating TwiML with URLs:', {
+    wsUrl: wsUrl.toString(),
+    publicUrl: PUBLIC_URL
+  });
 
-  const twimlContent = twimlTemplate.replace("{{WS_URL}}", wsUrl.toString());
+  let twimlContent = twimlTemplate
+    .replace("{{WS_URL}}", wsUrl.toString())
+    .replace("{{PUBLIC_URL}}", PUBLIC_URL);
+    
+  return twimlContent;
+}
+
+// Handle both /twiml and /api/twiml paths
+app.all(["/twiml", "/api/twiml"], (req, res) => {
+  console.log(`TwiML endpoint called via ${req.method} at ${req.path}`);
+  const twimlContent = generateTwiML(req);
   res.type("text/xml").send(twimlContent);
 });
 
@@ -54,26 +76,75 @@ app.get("/tools", (req, res) => {
 let currentCall: WebSocket | null = null;
 let currentLogs: WebSocket | null = null;
 
+// Handle status callbacks from Twilio
+app.post("/api/call/status", (req, res) => {
+  const status = {
+    callSid: req.body.CallSid,
+    status: req.body.CallStatus,
+    timestamp: new Date().toISOString()
+  };
+  
+  console.log('📞 Call status update:', status);
+
+  // Forward to frontend if connected
+  if (currentLogs?.readyState === WebSocket.OPEN) {
+    currentLogs.send(JSON.stringify({
+      type: 'twilio_event',
+      data: {
+        event: 'status',
+        ...status
+      }
+    }));
+  }
+
+  res.sendStatus(200);
+});
+
 wss.on("connection", (ws: WebSocket, req: IncomingMessage) => {
   const url = new URL(req.url || "", `http://${req.headers.host}`);
   const parts = url.pathname.split("/").filter(Boolean);
 
+  console.log('🔌 New WebSocket connection:', {
+    url: req.url,
+    path: url.pathname,
+    parts,
+    headers: req.headers
+  });
+
   if (parts.length < 1) {
+    console.warn('❌ Invalid WebSocket path, closing connection');
     ws.close();
     return;
   }
 
-  const type = parts[0];
-
-  if (type === "call") {
-    if (currentCall) currentCall.close();
+  // Normalize path by removing duplicate slashes and trailing slash
+  const normalizedPath = "/" + parts.join("/").replace(/\/+/g, "/").replace(/\/$/, "");
+  console.log('🛠️ Normalized path:', normalizedPath);
+  
+  if (normalizedPath === "/media") {
+    console.log('🎤 Handling media connection');
+    if (currentCall) {
+      console.log('🔄 Closing existing media connection');
+      currentCall.close();
+    }
     currentCall = ws;
     handleCallConnection(currentCall, OPENAI_API_KEY);
-  } else if (type === "logs") {
-    if (currentLogs) currentLogs.close();
+  } else if (normalizedPath === "/logs") {
+    console.log('📝 Handling logs connection');
+    if (currentLogs) {
+      console.log('🔄 Closing existing logs connection');
+      currentLogs.close();
+    }
     currentLogs = ws;
     handleFrontendConnection(currentLogs);
+    
+    // Send initial connected message
+    ws.send(JSON.stringify({
+      type: "status",
+      message: "WebSocket connection established"
+    }));
   } else {
+    console.error("❌ Unknown connection type. Path:", normalizedPath);
     ws.close();
   }
 });
