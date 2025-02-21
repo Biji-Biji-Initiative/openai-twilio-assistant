@@ -8,9 +8,11 @@ import { writeFileSync } from 'fs';
 dotenv.config({ path: path.join(__dirname, '../webapp/.env') });
 dotenv.config({ path: path.join(__dirname, '../websocket-server/.env') });
 
+const DEBUG = process.env.DEBUG === '*';
+
 interface CallLog {
   timestamp: string;
-  type: 'call' | 'websocket' | 'model' | 'error';
+  type: 'call' | 'websocket' | 'model' | 'error' | 'debug';
   message: string;
   data?: any;
 }
@@ -19,6 +21,9 @@ class CallFlowTester {
   private wsLogs: WebSocket | null = null;
   private wsCall: WebSocket | null = null;
   private callSid: string | null = null;
+  private openAiResponses: string[] = [];
+  private mediaStarted = false;
+  private openAiConnected = false;
   private logs: CallLog[] = [];
   private twilioClient: any;
 
@@ -42,7 +47,8 @@ class CallFlowTester {
       call: '📞',
       websocket: '🔌',
       model: '🤖',
-      error: '❌'
+      error: '❌',
+      debug: '🔍'
     };
     console.log(`${emoji[type]} ${message}`);
     if (data) {
@@ -131,23 +137,40 @@ class CallFlowTester {
       });
       
       // Set up event monitoring
-      let mediaStarted = false;
-      let openAiConnected = false;
-      let transcriptReceived = false;
-
       logsWs.on('message', (data) => {
         const msg = JSON.parse(data.toString());
-        if (msg.type === 'twilio_event' && msg.data?.event === 'media') {
-          if (!mediaStarted) {
-            mediaStarted = true;
-            this.log('call', 'Media streaming started');
-          }
-        } else if (msg.type === 'model_event' && msg.data?.type === 'connected') {
-          openAiConnected = true;
-          this.log('model', 'OpenAI connected and ready');
-        } else if (msg.type === 'transcript') {
-          transcriptReceived = true;
-          this.log('model', 'Received transcript:', msg.data);
+        this.log('debug', 'Received WebSocket message:', msg);
+
+        switch (msg.type) {
+          case 'twilio_event':
+            if (msg.data?.event === 'media' && !this.mediaStarted) {
+              this.mediaStarted = true;
+              this.log('call', 'Media streaming started');
+            }
+            break;
+
+          case 'model_event':
+            if (msg.data?.type === 'connected') {
+              this.openAiConnected = true;
+              this.log('model', 'OpenAI connected and ready');
+            }
+            break;
+
+          case 'openai_response':
+            if (msg.data?.content) {
+              this.openAiResponses.push(msg.data.content);
+              this.log('model', 'OpenAI Response:', msg.data.content);
+            }
+            break;
+
+          case 'transcript':
+            this.log('model', 'Speech transcript:', msg.data);
+            break;
+
+          default:
+            if (DEBUG) {
+              this.log('debug', 'Unhandled message type:', msg);
+            }
         }
       });
 

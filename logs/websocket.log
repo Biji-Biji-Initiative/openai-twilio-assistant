@@ -8839,3 +8839,1573 @@ Fri, 21 Feb 2025 13:08:47 GMT express:router jsonParser  : /tools
 Fri, 21 Feb 2025 13:08:47 GMT body-parser:json skip empty body
 Fri, 21 Feb 2025 13:08:47 GMT express:router urlencodedParser  : /tools
 Fri, 21 Feb 2025 13:08:47 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:08:50 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:08:50 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:08:50 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:08:50 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:08:50 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:08:50 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:08:50 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:08:50 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:08:53 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:08:53 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:08:53 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:08:53 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:08:53 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:08:53 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:08:53 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:08:53 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:08:56 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:08:56 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:08:56 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:08:56 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:08:56 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:08:56 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:08:56 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:08:56 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:08:59 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:08:59 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:08:59 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:08:59 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:08:59 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:08:59 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:08:59 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:08:59 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:09:02 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:09:02 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:09:02 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:09:02 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:09:02 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:09:02 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:09:02 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:09:02 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:09:05 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:09:05 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:09:05 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:09:05 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:09:05 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:09:05 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:09:05 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:09:05 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:09:08 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:09:08 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:09:08 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:09:08 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:09:08 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:09:08 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:09:08 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:09:08 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:09:11 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:09:11 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:09:11 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:09:11 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:09:11 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:09:11 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:09:11 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:09:11 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:09:14 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:09:14 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:09:14 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:09:14 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:09:14 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:09:14 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:09:14 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:09:14 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:09:17 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:09:17 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:09:17 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:09:17 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:09:17 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:09:17 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:09:17 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:09:17 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:09:20 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:09:20 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:09:20 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:09:20 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:09:20 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:09:20 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:09:20 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:09:20 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:09:23 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:09:23 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:09:23 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:09:23 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:09:23 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:09:23 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:09:23 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:09:23 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:09:26 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:09:26 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:09:26 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:09:26 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:09:26 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:09:26 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:09:26 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:09:26 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:09:29 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:09:29 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:09:29 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:09:29 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:09:29 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:09:29 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:09:29 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:09:29 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:09:32 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:09:32 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:09:32 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:09:32 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:09:32 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:09:32 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:09:32 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:09:32 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:09:35 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:09:35 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:09:35 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:09:35 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:09:35 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:09:35 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:09:35 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:09:35 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:09:38 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:09:38 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:09:38 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:09:38 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:09:38 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:09:38 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:09:38 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:09:38 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:09:41 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:09:41 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:09:41 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:09:41 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:09:41 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:09:41 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:09:41 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:09:41 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:09:44 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:09:44 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:09:44 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:09:44 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:09:44 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:09:44 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:09:44 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:09:44 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:09:47 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:09:47 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:09:47 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:09:47 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:09:47 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:09:47 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:09:47 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:09:47 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:09:50 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:09:50 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:09:50 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:09:50 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:09:50 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:09:50 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:09:50 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:09:50 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:09:53 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:09:53 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:09:53 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:09:53 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:09:53 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:09:53 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:09:53 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:09:53 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:09:56 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:09:56 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:09:56 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:09:56 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:09:56 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:09:56 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:09:56 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:09:56 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:09:59 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:09:59 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:09:59 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:09:59 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:09:59 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:09:59 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:09:59 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:09:59 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:10:02 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:10:02 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:10:02 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:10:02 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:10:02 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:10:02 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:10:02 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:10:02 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:10:05 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:10:05 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:10:05 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:10:05 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:10:05 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:10:05 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:10:05 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:10:05 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:10:08 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:10:08 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:10:08 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:10:08 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:10:08 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:10:08 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:10:08 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:10:08 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:10:11 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:10:11 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:10:11 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:10:11 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:10:11 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:10:11 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:10:11 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:10:11 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:10:14 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:10:14 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:10:14 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:10:14 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:10:14 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:10:14 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:10:14 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:10:14 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:10:17 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:10:17 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:10:17 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:10:17 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:10:17 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:10:17 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:10:17 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:10:17 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:10:20 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:10:20 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:10:20 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:10:20 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:10:20 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:10:20 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:10:20 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:10:20 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:10:23 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:10:23 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:10:23 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:10:23 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:10:23 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:10:23 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:10:23 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:10:23 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:10:26 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:10:26 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:10:26 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:10:26 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:10:26 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:10:26 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:10:26 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:10:26 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:10:29 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:10:29 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:10:29 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:10:29 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:10:29 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:10:29 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:10:29 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:10:29 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:10:32 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:10:32 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:10:32 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:10:32 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:10:32 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:10:32 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:10:32 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:10:32 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:10:35 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:10:35 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:10:35 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:10:35 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:10:35 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:10:35 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:10:35 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:10:35 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:10:38 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:10:38 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:10:38 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:10:38 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:10:38 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:10:38 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:10:38 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:10:38 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:10:41 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:10:41 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:10:41 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:10:41 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:10:41 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:10:41 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:10:41 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:10:41 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:10:44 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:10:44 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:10:44 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:10:44 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:10:44 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:10:44 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:10:44 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:10:44 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:10:47 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:10:47 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:10:47 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:10:47 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:10:47 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:10:47 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:10:47 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:10:47 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:10:50 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:10:50 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:10:50 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:10:50 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:10:50 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:10:50 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:10:50 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:10:50 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:10:53 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:10:53 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:10:53 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:10:53 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:10:53 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:10:53 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:10:53 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:10:53 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:10:56 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:10:56 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:10:56 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:10:56 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:10:56 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:10:56 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:10:56 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:10:56 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:10:59 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:10:59 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:10:59 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:10:59 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:10:59 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:10:59 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:10:59 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:10:59 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:11:02 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:11:02 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:11:02 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:11:02 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:11:02 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:11:02 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:11:02 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:11:02 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:11:05 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:11:05 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:11:05 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:11:05 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:11:05 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:11:05 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:11:05 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:11:05 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:11:08 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:11:08 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:11:08 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:11:08 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:11:08 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:11:08 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:11:08 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:11:08 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:11:11 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:11:11 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:11:11 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:11:11 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:11:11 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:11:11 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:11:11 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:11:11 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:11:14 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:11:14 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:11:14 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:11:14 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:11:14 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:11:14 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:11:14 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:11:14 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:11:17 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:11:17 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:11:17 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:11:17 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:11:17 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:11:17 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:11:17 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:11:17 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:11:20 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:11:20 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:11:20 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:11:20 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:11:20 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:11:20 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:11:20 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:11:20 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:11:23 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:11:23 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:11:23 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:11:23 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:11:23 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:11:23 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:11:23 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:11:23 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:11:26 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:11:26 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:11:26 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:11:26 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:11:26 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:11:26 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:11:26 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:11:26 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:11:29 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:11:29 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:11:29 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:11:29 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:11:29 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:11:29 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:11:29 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:11:29 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:11:32 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:11:32 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:11:32 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:11:32 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:11:32 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:11:32 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:11:32 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:11:32 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:11:35 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:11:35 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:11:35 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:11:35 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:11:35 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:11:35 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:11:35 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:11:35 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:11:38 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:11:38 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:11:38 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:11:38 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:11:38 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:11:38 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:11:38 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:11:38 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:11:41 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:11:41 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:11:41 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:11:41 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:11:41 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:11:41 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:11:41 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:11:41 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:11:44 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:11:44 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:11:44 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:11:44 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:11:44 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:11:44 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:11:44 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:11:44 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:11:47 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:11:47 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:11:47 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:11:47 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:11:47 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:11:47 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:11:47 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:11:47 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:11:50 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:11:50 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:11:50 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:11:50 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:11:50 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:11:50 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:11:50 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:11:50 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:11:53 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:11:53 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:11:53 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:11:53 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:11:53 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:11:53 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:11:53 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:11:53 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:11:56 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:11:56 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:11:56 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:11:56 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:11:56 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:11:56 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:11:56 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:11:56 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:11:59 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:11:59 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:11:59 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:11:59 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:11:59 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:11:59 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:11:59 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:11:59 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:12:02 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:12:02 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:12:02 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:12:02 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:12:02 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:12:02 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:12:02 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:12:02 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:12:05 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:12:05 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:12:05 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:12:05 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:12:05 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:12:05 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:12:05 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:12:05 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:12:08 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:12:08 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:12:08 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:12:08 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:12:08 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:12:08 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:12:08 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:12:08 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:12:11 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:12:11 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:12:11 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:12:11 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:12:11 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:12:11 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:12:11 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:12:11 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:12:14 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:12:14 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:12:14 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:12:14 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:12:14 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:12:14 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:12:14 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:12:14 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:12:17 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:12:17 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:12:17 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:12:17 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:12:17 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:12:17 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:12:17 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:12:17 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:12:20 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:12:20 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:12:20 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:12:20 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:12:20 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:12:20 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:12:20 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:12:20 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:12:23 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:12:23 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:12:23 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:12:23 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:12:23 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:12:23 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:12:23 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:12:23 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:12:26 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:12:26 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:12:26 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:12:26 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:12:26 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:12:26 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:12:26 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:12:26 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:12:29 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:12:29 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:12:29 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:12:29 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:12:29 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:12:29 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:12:29 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:12:29 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:12:32 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:12:32 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:12:32 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:12:32 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:12:32 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:12:32 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:12:32 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:12:32 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:12:35 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:12:35 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:12:35 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:12:35 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:12:35 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:12:35 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:12:35 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:12:35 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:12:38 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:12:38 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:12:38 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:12:38 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:12:38 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:12:38 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:12:38 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:12:38 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:12:41 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:12:41 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:12:41 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:12:41 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:12:41 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:12:41 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:12:41 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:12:41 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:12:44 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:12:44 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:12:44 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:12:44 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:12:44 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:12:44 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:12:44 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:12:44 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:12:47 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:12:47 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:12:47 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:12:47 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:12:47 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:12:47 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:12:47 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:12:47 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:12:50 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:12:50 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:12:50 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:12:50 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:12:50 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:12:50 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:12:50 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:12:50 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:12:53 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:12:53 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:12:53 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:12:53 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:12:53 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:12:53 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:12:53 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:12:53 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:12:56 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:12:56 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:12:56 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:12:56 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:12:56 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:12:56 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:12:56 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:12:56 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:12:59 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:12:59 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:12:59 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:12:59 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:12:59 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:12:59 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:12:59 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:12:59 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:13:02 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:13:02 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:13:02 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:13:02 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:13:02 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:13:02 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:13:02 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:13:02 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:13:05 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:13:05 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:13:05 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:13:05 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:13:05 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:13:05 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:13:05 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:13:05 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:13:08 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:13:08 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:13:08 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:13:08 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:13:08 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:13:08 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:13:08 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:13:08 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:13:11 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:13:11 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:13:11 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:13:11 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:13:11 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:13:11 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:13:11 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:13:11 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:13:14 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:13:14 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:13:14 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:13:14 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:13:14 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:13:14 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:13:14 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:13:14 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:13:17 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:13:17 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:13:17 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:13:17 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:13:17 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:13:17 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:13:17 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:13:17 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:13:20 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:13:20 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:13:20 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:13:20 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:13:20 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:13:20 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:13:20 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:13:20 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:13:23 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:13:23 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:13:23 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:13:23 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:13:23 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:13:23 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:13:23 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:13:23 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:13:26 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:13:26 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:13:26 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:13:26 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:13:26 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:13:26 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:13:26 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:13:26 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:13:29 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:13:29 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:13:29 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:13:29 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:13:29 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:13:29 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:13:29 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:13:29 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:13:32 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:13:32 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:13:32 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:13:32 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:13:32 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:13:32 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:13:32 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:13:32 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:13:35 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:13:35 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:13:35 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:13:35 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:13:35 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:13:35 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:13:35 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:13:35 GMT body-parser:urlencoded skip empty body
+🔌 New WebSocket connection: {
+  url: '/logs',
+  path: '/logs',
+  parts: [ 'logs' ],
+  headers: {
+    host: 'mereka.ngrok.io',
+    connection: 'Upgrade',
+    'sec-websocket-extensions': 'permessage-deflate; client_max_window_bits',
+    'sec-websocket-key': 'bO9p8wLVNq41oQn5jRTmxA==',
+    'sec-websocket-version': '13',
+    upgrade: 'websocket',
+    'x-forwarded-for': '2406:2d40:43be:8710:2d76:19e4:6bfc:324b',
+    'x-forwarded-host': 'mereka.ngrok.io',
+    'x-forwarded-proto': 'https',
+    'accept-encoding': 'gzip'
+  }
+}
+🛠️ WebSocket path: logs
+📝 Handling logs connection
+🔄 Closing existing logs connection
+[Frontend] New connection established
+🔌 New WebSocket connection: {
+  url: '/call',
+  path: '/call',
+  parts: [ 'call' ],
+  headers: {
+    host: 'mereka.ngrok.io',
+    connection: 'Upgrade',
+    'sec-websocket-extensions': 'permessage-deflate; client_max_window_bits',
+    'sec-websocket-key': 'N8He6OFw/OGYsxfxffF6wQ==',
+    'sec-websocket-version': '13',
+    upgrade: 'websocket',
+    'x-forwarded-for': '2406:2d40:43be:8710:2d76:19e4:6bfc:324b',
+    'x-forwarded-host': 'mereka.ngrok.io',
+    'x-forwarded-proto': 'https',
+    'accept-encoding': 'gzip'
+  }
+}
+🛠️ WebSocket path: call
+📞 [Call] New connection request
+📋 [Call] Connection headers: {
+  host: 'mereka.ngrok.io',
+  connection: 'Upgrade',
+  'sec-websocket-extensions': 'permessage-deflate; client_max_window_bits',
+  'sec-websocket-key': 'N8He6OFw/OGYsxfxffF6wQ==',
+  'sec-websocket-version': '13',
+  upgrade: 'websocket',
+  'x-forwarded-for': '2406:2d40:43be:8710:2d76:19e4:6bfc:324b',
+  'x-forwarded-host': 'mereka.ngrok.io',
+  'x-forwarded-proto': 'https',
+  'accept-encoding': 'gzip'
+}
+🔄 [Call] Closing existing connection
+✅ [Call] Connection assigned as current call
+[Twilio] New call connection established
+🔌 New WebSocket connection: {
+  url: '/logs',
+  path: '/logs',
+  parts: [ 'logs' ],
+  headers: {
+    host: 'mereka.ngrok.io',
+    connection: 'Upgrade',
+    'sec-websocket-extensions': 'permessage-deflate; client_max_window_bits',
+    'sec-websocket-key': 'mS/EqyauIA1gA/Gh7WhJSQ==',
+    'sec-websocket-version': '13',
+    upgrade: 'websocket',
+    'x-forwarded-for': '2406:2d40:43be:8710:2d76:19e4:6bfc:324b',
+    'x-forwarded-host': 'mereka.ngrok.io',
+    'x-forwarded-proto': 'https',
+    'accept-encoding': 'gzip'
+  }
+}
+🛠️ WebSocket path: logs
+📝 Handling logs connection
+🔄 Closing existing logs connection
+[Frontend] New connection established
+[Frontend] Connection closed
+Fri, 21 Feb 2025 13:13:38 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:13:38 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:13:38 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:13:38 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:13:38 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:13:38 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:13:38 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:13:38 GMT body-parser:urlencoded skip empty body
+[Frontend] Connection closed
+Fri, 21 Feb 2025 13:13:39 GMT express:router dispatching POST /api/call/status
+Fri, 21 Feb 2025 13:13:39 GMT express:router query  : /api/call/status
+Fri, 21 Feb 2025 13:13:39 GMT express:router expressInit  : /api/call/status
+Fri, 21 Feb 2025 13:13:39 GMT express:router corsMiddleware  : /api/call/status
+Fri, 21 Feb 2025 13:13:39 GMT express:router jsonParser  : /api/call/status
+Fri, 21 Feb 2025 13:13:39 GMT body-parser:json content-type "application/x-www-form-urlencoded; charset=UTF-8"
+Fri, 21 Feb 2025 13:13:39 GMT body-parser:json skip parsing
+Fri, 21 Feb 2025 13:13:39 GMT express:router urlencodedParser  : /api/call/status
+Fri, 21 Feb 2025 13:13:39 GMT body-parser:urlencoded content-type "application/x-www-form-urlencoded; charset=UTF-8"
+Fri, 21 Feb 2025 13:13:39 GMT body-parser:urlencoded content-encoding "identity"
+Fri, 21 Feb 2025 13:13:39 GMT body-parser:urlencoded read body
+Fri, 21 Feb 2025 13:13:39 GMT body-parser:urlencoded parse body
+Fri, 21 Feb 2025 13:13:39 GMT body-parser:urlencoded parse extended urlencoding
+📞 Call status update: {
+  callSid: 'CA58c191a5299e4f6c023af109b9d362bd',
+  status: 'initiated',
+  timestamp: '2025-02-21T13:13:39.369Z'
+}
+Fri, 21 Feb 2025 13:13:40 GMT express:router dispatching POST /twiml
+Fri, 21 Feb 2025 13:13:40 GMT express:router query  : /twiml
+Fri, 21 Feb 2025 13:13:40 GMT express:router expressInit  : /twiml
+Fri, 21 Feb 2025 13:13:40 GMT express:router corsMiddleware  : /twiml
+Fri, 21 Feb 2025 13:13:40 GMT express:router jsonParser  : /twiml
+Fri, 21 Feb 2025 13:13:40 GMT body-parser:json content-type "application/x-www-form-urlencoded; charset=UTF-8"
+Fri, 21 Feb 2025 13:13:40 GMT body-parser:json skip parsing
+Fri, 21 Feb 2025 13:13:40 GMT express:router urlencodedParser  : /twiml
+Fri, 21 Feb 2025 13:13:40 GMT body-parser:urlencoded content-type "application/x-www-form-urlencoded; charset=UTF-8"
+Fri, 21 Feb 2025 13:13:40 GMT body-parser:urlencoded content-encoding "identity"
+Fri, 21 Feb 2025 13:13:40 GMT body-parser:urlencoded read body
+Fri, 21 Feb 2025 13:13:40 GMT body-parser:urlencoded parse body
+Fri, 21 Feb 2025 13:13:40 GMT body-parser:urlencoded parse extended urlencoding
+TwiML endpoint called via POST at /twiml
+📝 Generating TwiML with URLs: {
+  wsUrl: 'wss://mereka.ngrok.io/call',
+  publicUrl: 'https://mereka.ngrok.io'
+}
+Fri, 21 Feb 2025 13:13:40 GMT finalhandler default 500
+Fri, 21 Feb 2025 13:13:40 GMT finalhandler cannot 500 after headers sent
+Error: Cannot set headers after they are sent to the client
+    at ServerResponse.setHeader (node:_http_outgoing:699:11)
+    at ServerResponse.header (/Users/agent-g/Windsurf/Twilio/websocket-server/node_modules/express/lib/response.js:794:10)
+    at ServerResponse.contentType (/Users/agent-g/Windsurf/Twilio/websocket-server/node_modules/express/lib/response.js:624:15)
+    at /Users/agent-g/Windsurf/Twilio/websocket-server/src/server.ts:105:7
+    at Layer.handle [as handle_request] (/Users/agent-g/Windsurf/Twilio/websocket-server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/Users/agent-g/Windsurf/Twilio/websocket-server/node_modules/express/lib/router/route.js:149:13)
+    at next (/Users/agent-g/Windsurf/Twilio/websocket-server/node_modules/express/lib/router/route.js:145:7)
+    at next (/Users/agent-g/Windsurf/Twilio/websocket-server/node_modules/express/lib/router/route.js:145:7)
+    at next (/Users/agent-g/Windsurf/Twilio/websocket-server/node_modules/express/lib/router/route.js:145:7)
+    at next (/Users/agent-g/Windsurf/Twilio/websocket-server/node_modules/express/lib/router/route.js:145:7)
+Fri, 21 Feb 2025 13:13:40 GMT express:router dispatching POST /api/call/status
+Fri, 21 Feb 2025 13:13:40 GMT express:router query  : /api/call/status
+Fri, 21 Feb 2025 13:13:40 GMT express:router expressInit  : /api/call/status
+Fri, 21 Feb 2025 13:13:40 GMT express:router corsMiddleware  : /api/call/status
+Fri, 21 Feb 2025 13:13:40 GMT express:router jsonParser  : /api/call/status
+Fri, 21 Feb 2025 13:13:40 GMT body-parser:json content-type "application/x-www-form-urlencoded; charset=UTF-8"
+Fri, 21 Feb 2025 13:13:40 GMT body-parser:json skip parsing
+Fri, 21 Feb 2025 13:13:40 GMT express:router urlencodedParser  : /api/call/status
+Fri, 21 Feb 2025 13:13:40 GMT body-parser:urlencoded content-type "application/x-www-form-urlencoded; charset=UTF-8"
+Fri, 21 Feb 2025 13:13:40 GMT body-parser:urlencoded content-encoding "identity"
+Fri, 21 Feb 2025 13:13:40 GMT body-parser:urlencoded read body
+Fri, 21 Feb 2025 13:13:40 GMT body-parser:urlencoded parse body
+Fri, 21 Feb 2025 13:13:40 GMT body-parser:urlencoded parse extended urlencoding
+📞 Call status update: {
+  callSid: 'CA58c191a5299e4f6c023af109b9d362bd',
+  status: 'ringing',
+  timestamp: '2025-02-21T13:13:40.456Z'
+}
+Fri, 21 Feb 2025 13:13:41 GMT express:router dispatching POST /api/call/status
+Fri, 21 Feb 2025 13:13:41 GMT express:router query  : /api/call/status
+Fri, 21 Feb 2025 13:13:41 GMT express:router expressInit  : /api/call/status
+Fri, 21 Feb 2025 13:13:41 GMT express:router corsMiddleware  : /api/call/status
+Fri, 21 Feb 2025 13:13:41 GMT express:router jsonParser  : /api/call/status
+Fri, 21 Feb 2025 13:13:41 GMT body-parser:json content-type "application/x-www-form-urlencoded; charset=UTF-8"
+Fri, 21 Feb 2025 13:13:41 GMT body-parser:json skip parsing
+Fri, 21 Feb 2025 13:13:41 GMT express:router urlencodedParser  : /api/call/status
+Fri, 21 Feb 2025 13:13:41 GMT body-parser:urlencoded content-type "application/x-www-form-urlencoded; charset=UTF-8"
+Fri, 21 Feb 2025 13:13:41 GMT body-parser:urlencoded content-encoding "identity"
+Fri, 21 Feb 2025 13:13:41 GMT body-parser:urlencoded read body
+Fri, 21 Feb 2025 13:13:41 GMT body-parser:urlencoded parse body
+Fri, 21 Feb 2025 13:13:41 GMT body-parser:urlencoded parse extended urlencoding
+📞 Call status update: {
+  callSid: 'CA58c191a5299e4f6c023af109b9d362bd',
+  status: 'in-progress',
+  timestamp: '2025-02-21T13:13:41.031Z'
+}
+Fri, 21 Feb 2025 13:13:41 GMT express:router dispatching POST /twiml
+Fri, 21 Feb 2025 13:13:41 GMT express:router query  : /twiml
+Fri, 21 Feb 2025 13:13:41 GMT express:router expressInit  : /twiml
+Fri, 21 Feb 2025 13:13:41 GMT express:router corsMiddleware  : /twiml
+Fri, 21 Feb 2025 13:13:41 GMT express:router jsonParser  : /twiml
+Fri, 21 Feb 2025 13:13:41 GMT body-parser:json content-type "application/x-www-form-urlencoded; charset=UTF-8"
+Fri, 21 Feb 2025 13:13:41 GMT body-parser:json skip parsing
+Fri, 21 Feb 2025 13:13:41 GMT express:router urlencodedParser  : /twiml
+Fri, 21 Feb 2025 13:13:41 GMT body-parser:urlencoded content-type "application/x-www-form-urlencoded; charset=UTF-8"
+Fri, 21 Feb 2025 13:13:41 GMT body-parser:urlencoded content-encoding "identity"
+Fri, 21 Feb 2025 13:13:41 GMT body-parser:urlencoded read body
+Fri, 21 Feb 2025 13:13:41 GMT body-parser:urlencoded parse body
+Fri, 21 Feb 2025 13:13:41 GMT body-parser:urlencoded parse extended urlencoding
+TwiML endpoint called via POST at /twiml
+📝 Generating TwiML with URLs: {
+  wsUrl: 'wss://mereka.ngrok.io/call',
+  publicUrl: 'https://mereka.ngrok.io'
+}
+Fri, 21 Feb 2025 13:13:41 GMT finalhandler default 500
+Fri, 21 Feb 2025 13:13:41 GMT finalhandler cannot 500 after headers sent
+Error: Cannot set headers after they are sent to the client
+    at ServerResponse.setHeader (node:_http_outgoing:699:11)
+    at ServerResponse.header (/Users/agent-g/Windsurf/Twilio/websocket-server/node_modules/express/lib/response.js:794:10)
+    at ServerResponse.contentType (/Users/agent-g/Windsurf/Twilio/websocket-server/node_modules/express/lib/response.js:624:15)
+    at /Users/agent-g/Windsurf/Twilio/websocket-server/src/server.ts:105:7
+    at Layer.handle [as handle_request] (/Users/agent-g/Windsurf/Twilio/websocket-server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/Users/agent-g/Windsurf/Twilio/websocket-server/node_modules/express/lib/router/route.js:149:13)
+    at next (/Users/agent-g/Windsurf/Twilio/websocket-server/node_modules/express/lib/router/route.js:145:7)
+    at next (/Users/agent-g/Windsurf/Twilio/websocket-server/node_modules/express/lib/router/route.js:145:7)
+    at next (/Users/agent-g/Windsurf/Twilio/websocket-server/node_modules/express/lib/router/route.js:145:7)
+    at next (/Users/agent-g/Windsurf/Twilio/websocket-server/node_modules/express/lib/router/route.js:145:7)
+Fri, 21 Feb 2025 13:13:41 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:13:41 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:13:41 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:13:41 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:13:41 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:13:41 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:13:41 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:13:41 GMT body-parser:urlencoded skip empty body
+🔌 New WebSocket connection: {
+  url: '/call',
+  path: '/call',
+  parts: [ 'call' ],
+  headers: {
+    host: 'mereka.ngrok.io',
+    'user-agent': 'Twilio.TmeWs/1.0',
+    connection: 'Upgrade',
+    'sec-websocket-key': 'OQu59vkjgxeVMVD4clUWZg==',
+    'sec-websocket-version': '13',
+    upgrade: 'websocket',
+    'x-forwarded-for': '3.94.146.239',
+    'x-forwarded-host': 'mereka.ngrok.io',
+    'x-forwarded-proto': 'https',
+    'x-twilio-signature': 'QU143Or10ebn6KkTPRYlCO23gTs=',
+    'accept-encoding': 'gzip'
+  }
+}
+🛠️ WebSocket path: call
+📞 [Call] New connection request
+📋 [Call] Connection headers: {
+  host: 'mereka.ngrok.io',
+  'user-agent': 'Twilio.TmeWs/1.0',
+  connection: 'Upgrade',
+  'sec-websocket-key': 'OQu59vkjgxeVMVD4clUWZg==',
+  'sec-websocket-version': '13',
+  upgrade: 'websocket',
+  'x-forwarded-for': '3.94.146.239',
+  'x-forwarded-host': 'mereka.ngrok.io',
+  'x-forwarded-proto': 'https',
+  'x-twilio-signature': 'QU143Or10ebn6KkTPRYlCO23gTs=',
+  'accept-encoding': 'gzip'
+}
+🔄 [Call] Closing existing connection
+✅ [Call] Connection assigned as current call
+[Twilio] New call connection established
+🔌 New WebSocket connection: {
+  url: '/call',
+  path: '/call',
+  parts: [ 'call' ],
+  headers: {
+    host: 'mereka.ngrok.io',
+    'user-agent': 'Twilio.TmeWs/1.0',
+    connection: 'Upgrade',
+    'sec-websocket-key': 'WxmsIcocKXKRcwyNKFDVwQ==',
+    'sec-websocket-version': '13',
+    upgrade: 'websocket',
+    'x-forwarded-for': '3.86.15.87',
+    'x-forwarded-host': 'mereka.ngrok.io',
+    'x-forwarded-proto': 'https',
+    'x-twilio-signature': 'QU143Or10ebn6KkTPRYlCO23gTs=',
+    'accept-encoding': 'gzip'
+  }
+}
+🛠️ WebSocket path: call
+📞 [Call] New connection request
+📋 [Call] Connection headers: {
+  host: 'mereka.ngrok.io',
+  'user-agent': 'Twilio.TmeWs/1.0',
+  connection: 'Upgrade',
+  'sec-websocket-key': 'WxmsIcocKXKRcwyNKFDVwQ==',
+  'sec-websocket-version': '13',
+  upgrade: 'websocket',
+  'x-forwarded-for': '3.86.15.87',
+  'x-forwarded-host': 'mereka.ngrok.io',
+  'x-forwarded-proto': 'https',
+  'x-twilio-signature': 'QU143Or10ebn6KkTPRYlCO23gTs=',
+  'accept-encoding': 'gzip'
+}
+🔄 [Call] Closing existing connection
+✅ [Call] Connection assigned as current call
+[Twilio] New call connection established
+🔴 [Call] WebSocket connection closed
+[Twilio] Call connection closed
+📬 [Call] Raw message received: {"event":"connected","protocol":"Call","version":"1.0.0"}
+📥 [Call] Parsed message: { event: 'connected', protocol: 'Call', version: '1.0.0' }
+
+📞 [Twilio] Event: connected
+📬 [Call] Raw message received: {"event":"start","sequenceNumber":"1","start":{"accountSid":"ACab6a3b51e6078865e1e39e8005dc2bcd","streamSid":"MZ1e279bf3c7a3cc65933287c3fab27c04","callSid":"CA8f568a19c154b6fe8a47d73a25937a2f","tracks":["inbound"],"mediaFormat":{"encoding":"audio/x-mulaw","sampleRate":8000,"channels":1},"customParameters":{"track":"inbound","channels":"1","format":"audio/x-mulaw","rate":"8000"}},"streamSid":"MZ1e279bf3c7a3cc65933287c3fab27c04"}
+📥 [Call] Parsed message: {
+  event: 'start',
+  sequenceNumber: '1',
+  start: {
+    accountSid: 'ACab6a3b51e6078865e1e39e8005dc2bcd',
+    streamSid: 'MZ1e279bf3c7a3cc65933287c3fab27c04',
+    callSid: 'CA8f568a19c154b6fe8a47d73a25937a2f',
+    tracks: [ 'inbound' ],
+    mediaFormat: { encoding: 'audio/x-mulaw', sampleRate: 8000, channels: 1 },
+    customParameters: {
+      track: 'inbound',
+      channels: '1',
+      format: 'audio/x-mulaw',
+      rate: '8000'
+    }
+  },
+  streamSid: 'MZ1e279bf3c7a3cc65933287c3fab27c04'
+}
+🚀 [Call] Received start event
+📊 [Call] Start message details: {
+  streamSid: 'MZ1e279bf3c7a3cc65933287c3fab27c04',
+  tracks: [ 'inbound' ]
+}
+📤 [Call] Sending response: {
+  event: 'start',
+  protocol: 'wss',
+  version: '1.0.0',
+  streamSid: 'MZ1e279bf3c7a3cc65933287c3fab27c04',
+  tracks: [ { id: undefined } ]
+}
+
+📞 [Twilio] Event: start
+  🟢 [Twilio] Call started - SID: MZ1e279bf3c7a3cc65933287c3fab27c04
+  ⚠️ [Model] Missing required session data
+📬 [Call] Raw message received: {"event":"media","sequenceNumber":"2","media":{"track":"inbound","chunk":"1","timestamp":"261","payload":"cvlu+3tu+XpteHB6bXH7f23zeH55cPNk/Hlw+HF+fW1/fXDtaO57eftvfPtt9nN0bnD7b3X1a/Zt83177m/8+HDwen99bvz3du9362929npueud8avF5eHL76W117mbufXXkX+3sZ+V6duVc5upe3HP+31vb91/aY3fcWNv6ZtpX6uNS13xj3l3u9FfVaGbaXOX7WN1oat5d5PVc2mTz2w=="},"streamSid":"MZ1e279bf3c7a3cc65933287c3fab27c04"}
+📥 [Call] Parsed message: {
+  event: 'media',
+  sequenceNumber: '2',
+  media: {
+    track: 'inbound',
+    chunk: '1',
+    timestamp: '261',
+    payload: 'cvlu+3tu+XpteHB6bXH7f23zeH55cPNk/Hlw+HF+fW1/fXDtaO57eftvfPtt9nN0bnD7b3X1a/Zt83177m/8+HDwen99bvz3du9362929npueud8avF5eHL76W117mbufXXkX+3sZ+V6duVc5upe3HP+31vb91/aY3fcWNv6ZtpX6uNS13xj3l3u9FfVaGbaXOX7WN1oat5d5PVc2mTz2w=='
+  },
+  streamSid: 'MZ1e279bf3c7a3cc65933287c3fab27c04'
+}
+🔄 [Twilio] First media packet received, initiating model connection...
+⚠️ [Model] Missing required session data
+📬 [Call] Raw message received: {"event":"media","sequenceNumber":"3","media":{"track":"inbound","chunk":"2","timestamp":"281","payload":"X99yY9xpfe1m3m5u32rr+GzvcX7u/vtwa+z2d3z4fXDr92567e1y8fVvevZse/b/fff5+3789XPs+G7vbfL4eOd47/lt7210fGjx++/qbvH5d+3v/f17+/h1/XRy6vb+9np3fHn5dHHp8HD9+/5xeuX1cH3//3f77HVodO/6/uvrcmZw7/px+u16cfnzcm7z7Hp1+v16b37xdfzr9ndsew=="},"streamSid":"MZ1e279bf3c7a3cc65933287c3fab27c04"}
+📥 [Call] Parsed message: {
+  event: 'media',
+  sequenceNumber: '3',
+  media: {
+    track: 'inbound',
+    chunk: '2',
+    timestamp: '281',
+    payload: 'X99yY9xpfe1m3m5u32rr+GzvcX7u/vtwa+z2d3z4fXDr92567e1y8fVvevZse/b/fff5+3789XPs+G7vbfL4eOd47/lt7210fGjx++/qbvH5d+3v/f17+/h1/XRy6vb+9np3fHn5dHHp8HD9+/5xeuX1cH3//3f77HVodO/6/uvrcmZw7/px+u16cfnzcm7z7Hp1+v16b37xdfzr9ndsew=='
+  },
+  streamSid: 'MZ1e279bf3c7a3cc65933287c3fab27c04'
+}
+📬 [Call] Raw message received: {"event":"media","sequenceNumber":"4","media":{"track":"inbound","chunk":"3","timestamp":"349","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZ1e279bf3c7a3cc65933287c3fab27c04"}
+📥 [Call] Parsed message: {
+  event: 'media',
+  sequenceNumber: '4',
+  media: {
+    track: 'inbound',
+    chunk: '3',
+    timestamp: '349',
+    payload: '/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=='
+  },
+  streamSid: 'MZ1e279bf3c7a3cc65933287c3fab27c04'
+}
+📬 [Call] Raw message received: {"event":"media","sequenceNumber":"5","media":{"track":"inbound","chunk":"4","timestamp":"369","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZ1e279bf3c7a3cc65933287c3fab27c04"}
+📥 [Call] Parsed message: {
+  event: 'media',
+  sequenceNumber: '5',
+  media: {
+    track: 'inbound',
+    chunk: '4',
+    timestamp: '369',
+    payload: '/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=='
+  },
+  streamSid: 'MZ1e279bf3c7a3cc65933287c3fab27c04'
+}
+📬 [Call] Raw message received: {"event":"media","sequenceNumber":"6","media":{"track":"inbound","chunk":"5","timestamp":"389","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZ1e279bf3c7a3cc65933287c3fab27c04"}
+📥 [Call] Parsed message: {
+  event: 'media',
+  sequenceNumber: '6',
+  media: {
+    track: 'inbound',
+    chunk: '5',
+    timestamp: '389',
+    payload: '/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=='
+  },
+  streamSid: 'MZ1e279bf3c7a3cc65933287c3fab27c04'
+}
+📬 [Call] Raw message received: {"event":"media","sequenceNumber":"7","media":{"track":"inbound","chunk":"6","timestamp":"409","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZ1e279bf3c7a3cc65933287c3fab27c04"}
+📥 [Call] Parsed message: {
+  event: 'media',
+  sequenceNumber: '7',
+  media: {
+    track: 'inbound',
+    chunk: '6',
+    timestamp: '409',
+    payload: '/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=='
+  },
+  streamSid: 'MZ1e279bf3c7a3cc65933287c3fab27c04'
+}
+📬 [Call] Raw message received: {"event":"media","sequenceNumber":"8","media":{"track":"inbound","chunk":"7","timestamp":"429","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZ1e279bf3c7a3cc65933287c3fab27c04"}
+📥 [Call] Parsed message: {
+  event: 'media',
+  sequenceNumber: '8',
+  media: {
+    track: 'inbound',
+    chunk: '7',
+    timestamp: '429',
+    payload: '/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=='
+  },
+  streamSid: 'MZ1e279bf3c7a3cc65933287c3fab27c04'
+}
+📬 [Call] Raw message received: {"event":"media","sequenceNumber":"9","media":{"track":"inbound","chunk":"8","timestamp":"449","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZ1e279bf3c7a3cc65933287c3fab27c04"}
+📥 [Call] Parsed message: {
+  event: 'media',
+  sequenceNumber: '9',
+  media: {
+    track: 'inbound',
+    chunk: '8',
+    timestamp: '449',
+    payload: '/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=='
+  },
+  streamSid: 'MZ1e279bf3c7a3cc65933287c3fab27c04'
+}
+📬 [Call] Raw message received: {"event":"media","sequenceNumber":"10","media":{"track":"inbound","chunk":"9","timestamp":"469","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZ1e279bf3c7a3cc65933287c3fab27c04"}
+📥 [Call] Parsed message: {
+  event: 'media',
+  sequenceNumber: '10',
+  media: {
+    track: 'inbound',
+    chunk: '9',
+    timestamp: '469',
+    payload: '/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=='
+  },
+  streamSid: 'MZ1e279bf3c7a3cc65933287c3fab27c04'
+}
+📬 [Call] Raw message received: {"event":"media","sequenceNumber":"11","media":{"track":"inbound","chunk":"10","timestamp":"489","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZ1e279bf3c7a3cc65933287c3fab27c04"}
+📥 [Call] Parsed message: {
+  event: 'media',
+  sequenceNumber: '11',
+  media: {
+    track: 'inbound',
+    chunk: '10',
+    timestamp: '489',
+    payload: '/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=='
+  },
+  streamSid: 'MZ1e279bf3c7a3cc65933287c3fab27c04'
+}
+📬 [Call] Raw message received: {"event":"media","sequenceNumber":"12","media":{"track":"inbound","chunk":"11","timestamp":"509","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZ1e279bf3c7a3cc65933287c3fab27c04"}
+📥 [Call] Parsed message: {
+  event: 'media',
+  sequenceNumber: '12',
+  media: {
+    track: 'inbound',
+    chunk: '11',
+    timestamp: '509',
+    payload: '/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=='
+  },
+  streamSid: 'MZ1e279bf3c7a3cc65933287c3fab27c04'
+}
+📬 [Call] Raw message received: {"event":"media","sequenceNumber":"13","media":{"track":"inbound","chunk":"12","timestamp":"529","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZ1e279bf3c7a3cc65933287c3fab27c04"}
+📥 [Call] Parsed message: {
+  event: 'media',
+  sequenceNumber: '13',
+  media: {
+    track: 'inbound',
+    chunk: '12',
+    timestamp: '529',
+    payload: '/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=='
+  },
+  streamSid: 'MZ1e279bf3c7a3cc65933287c3fab27c04'
+}
+📬 [Call] Raw message received: {"event":"media","sequenceNumber":"14","media":{"track":"inbound","chunk":"13","timestamp":"549","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZ1e279bf3c7a3cc65933287c3fab27c04"}
+📥 [Call] Parsed message: {
+  event: 'media',
+  sequenceNumber: '14',
+  media: {
+    track: 'inbound',
+    chunk: '13',
+    timestamp: '549',
+    payload: '/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=='
+  },
+  streamSid: 'MZ1e279bf3c7a3cc65933287c3fab27c04'
+}
+📬 [Call] Raw message received: {"event":"connected","protocol":"Call","version":"1.0.0"}
+📥 [Call] Parsed message: { event: 'connected', protocol: 'Call', version: '1.0.0' }
+
+📞 [Twilio] Event: connected
+📬 [Call] Raw message received: {"event":"start","sequenceNumber":"1","start":{"accountSid":"ACab6a3b51e6078865e1e39e8005dc2bcd","streamSid":"MZb078c0c27facd106036303b4e1ca9069","callSid":"CA58c191a5299e4f6c023af109b9d362bd","tracks":["inbound"],"mediaFormat":{"encoding":"audio/x-mulaw","sampleRate":8000,"channels":1},"customParameters":{"track":"inbound","format":"audio/x-mulaw","channels":"1","rate":"8000"}},"streamSid":"MZb078c0c27facd106036303b4e1ca9069"}
+📥 [Call] Parsed message: {
+  event: 'start',
+  sequenceNumber: '1',
+  start: {
+    accountSid: 'ACab6a3b51e6078865e1e39e8005dc2bcd',
+    streamSid: 'MZb078c0c27facd106036303b4e1ca9069',
+    callSid: 'CA58c191a5299e4f6c023af109b9d362bd',
+    tracks: [ 'inbound' ],
+    mediaFormat: { encoding: 'audio/x-mulaw', sampleRate: 8000, channels: 1 },
+    customParameters: {
+      track: 'inbound',
+      format: 'audio/x-mulaw',
+      channels: '1',
+      rate: '8000'
+    }
+  },
+  streamSid: 'MZb078c0c27facd106036303b4e1ca9069'
+}
+🚀 [Call] Received start event
+📊 [Call] Start message details: {
+  streamSid: 'MZb078c0c27facd106036303b4e1ca9069',
+  tracks: [ 'inbound' ]
+}
+📤 [Call] Sending response: {
+  event: 'start',
+  protocol: 'wss',
+  version: '1.0.0',
+  streamSid: 'MZb078c0c27facd106036303b4e1ca9069',
+  tracks: [ { id: undefined } ]
+}
+
+📞 [Twilio] Event: start
+  🟢 [Twilio] Call started - SID: MZb078c0c27facd106036303b4e1ca9069
+  ⚠️ [Model] Missing required session data
+📬 [Call] Raw message received: {"event":"media","sequenceNumber":"2","media":{"track":"inbound","chunk":"1","timestamp":"262","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZb078c0c27facd106036303b4e1ca9069"}
+📥 [Call] Parsed message: {
+  event: 'media',
+  sequenceNumber: '2',
+  media: {
+    track: 'inbound',
+    chunk: '1',
+    timestamp: '262',
+    payload: '/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=='
+  },
+  streamSid: 'MZb078c0c27facd106036303b4e1ca9069'
+}
+📬 [Call] Raw message received: {"event":"media","sequenceNumber":"3","media":{"track":"inbound","chunk":"2","timestamp":"282","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZb078c0c27facd106036303b4e1ca9069"}
+📥 [Call] Parsed message: {
+  event: 'media',
+  sequenceNumber: '3',
+  media: {
+    track: 'inbound',
+    chunk: '2',
+    timestamp: '282',
+    payload: '/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=='
+  },
+  streamSid: 'MZb078c0c27facd106036303b4e1ca9069'
+}
+📬 [Call] Raw message received: {"event":"media","sequenceNumber":"4","media":{"track":"inbound","chunk":"3","timestamp":"302","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZb078c0c27facd106036303b4e1ca9069"}
+📥 [Call] Parsed message: {
+  event: 'media',
+  sequenceNumber: '4',
+  media: {
+    track: 'inbound',
+    chunk: '3',
+    timestamp: '302',
+    payload: '/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=='
+  },
+  streamSid: 'MZb078c0c27facd106036303b4e1ca9069'
+}
+📬 [Call] Raw message received: {"event":"media","sequenceNumber":"5","media":{"track":"inbound","chunk":"4","timestamp":"322","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZb078c0c27facd106036303b4e1ca9069"}
+📥 [Call] Parsed message: {
+  event: 'media',
+  sequenceNumber: '5',
+  media: {
+    track: 'inbound',
+    chunk: '4',
+    timestamp: '322',
+    payload: '/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=='
+  },
+  streamSid: 'MZb078c0c27facd106036303b4e1ca9069'
+}
+📬 [Call] Raw message received: {"event":"media","sequenceNumber":"6","media":{"track":"inbound","chunk":"5","timestamp":"342","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZb078c0c27facd106036303b4e1ca9069"}
+📥 [Call] Parsed message: {
+  event: 'media',
+  sequenceNumber: '6',
+  media: {
+    track: 'inbound',
+    chunk: '5',
+    timestamp: '342',
+    payload: '/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=='
+  },
+  streamSid: 'MZb078c0c27facd106036303b4e1ca9069'
+}
+📬 [Call] Raw message received: {"event":"media","sequenceNumber":"7","media":{"track":"inbound","chunk":"6","timestamp":"362","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZb078c0c27facd106036303b4e1ca9069"}
+📥 [Call] Parsed message: {
+  event: 'media',
+  sequenceNumber: '7',
+  media: {
+    track: 'inbound',
+    chunk: '6',
+    timestamp: '362',
+    payload: '/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=='
+  },
+  streamSid: 'MZb078c0c27facd106036303b4e1ca9069'
+}
+📬 [Call] Raw message received: {"event":"media","sequenceNumber":"8","media":{"track":"inbound","chunk":"7","timestamp":"382","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZb078c0c27facd106036303b4e1ca9069"}
+📥 [Call] Parsed message: {
+  event: 'media',
+  sequenceNumber: '8',
+  media: {
+    track: 'inbound',
+    chunk: '7',
+    timestamp: '382',
+    payload: '/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=='
+  },
+  streamSid: 'MZb078c0c27facd106036303b4e1ca9069'
+}
+📬 [Call] Raw message received: {"event":"media","sequenceNumber":"9","media":{"track":"inbound","chunk":"8","timestamp":"402","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZb078c0c27facd106036303b4e1ca9069"}
+📥 [Call] Parsed message: {
+  event: 'media',
+  sequenceNumber: '9',
+  media: {
+    track: 'inbound',
+    chunk: '8',
+    timestamp: '402',
+    payload: '/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=='
+  },
+  streamSid: 'MZb078c0c27facd106036303b4e1ca9069'
+}
+📬 [Call] Raw message received: {"event":"media","sequenceNumber":"10","media":{"track":"inbound","chunk":"9","timestamp":"422","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZb078c0c27facd106036303b4e1ca9069"}
+📥 [Call] Parsed message: {
+  event: 'media',
+  sequenceNumber: '10',
+  media: {
+    track: 'inbound',
+    chunk: '9',
+    timestamp: '422',
+    payload: '/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=='
+  },
+  streamSid: 'MZb078c0c27facd106036303b4e1ca9069'
+}
+📬 [Call] Raw message received: {"event":"media","sequenceNumber":"15","media":{"track":"inbound","chunk":"14","timestamp":"569","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZ1e279bf3c7a3cc65933287c3fab27c04"}
+📥 [Call] Parsed message: {
+  event: 'media',
+  sequenceNumber: '15',
+  media: {
+    track: 'inbound',
+    chunk: '14',
+    timestamp: '569',
+    payload: '/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=='
+  },
+  streamSid: 'MZ1e279bf3c7a3cc65933287c3fab27c04'
+}
+📬 [Call] Raw message received: {"event":"media","sequenceNumber":"16","media":{"track":"inbound","chunk":"15","timestamp":"589","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZ1e279bf3c7a3cc65933287c3fab27c04"}
+📥 [Call] Parsed message: {
+  event: 'media',
+  sequenceNumber: '16',
+  media: {
+    track: 'inbound',
+    chunk: '15',
+    timestamp: '589',
+    payload: '/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=='
+  },
+  streamSid: 'MZ1e279bf3c7a3cc65933287c3fab27c04'
+}
+📬 [Call] Raw message received: {"event":"media","sequenceNumber":"11","media":{"track":"inbound","chunk":"10","timestamp":"442","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZb078c0c27facd106036303b4e1ca9069"}
+📥 [Call] Parsed message: {
+  event: 'media',
+  sequenceNumber: '11',
+  media: {
+    track: 'inbound',
+    chunk: '10',
+    timestamp: '442',
+    payload: '/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=='
+  },
+  streamSid: 'MZb078c0c27facd106036303b4e1ca9069'
+}
+📬 [Call] Raw message received: {"event":"media","sequenceNumber":"12","media":{"track":"inbound","chunk":"11","timestamp":"462","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZb078c0c27facd106036303b4e1ca9069"}
+📥 [Call] Parsed message: {
+  event: 'media',
+  sequenceNumber: '12',
+  media: {
+    track: 'inbound',
+    chunk: '11',
+    timestamp: '462',
+    payload: '/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=='
+  },
+  streamSid: 'MZb078c0c27facd106036303b4e1ca9069'
+}
+📬 [Call] Raw message received: {"event":"media","sequenceNumber":"13","media":{"track":"inbound","chunk":"12","timestamp":"482","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZb078c0c27facd106036303b4e1ca9069"}
+📥 [Call] Parsed message: {
+  event: 'media',
+  sequenceNumber: '13',
+  media: {
+    track: 'inbound',
+    chunk: '12',
+    timestamp: '482',
+    payload: '/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=='
+  },
+  streamSid: 'MZb078c0c27facd106036303b4e1ca9069'
+}
+📬 [Call] Raw message received: {"event":"media","sequenceNumber":"14","media":{"track":"inbound","chunk":"13","timestamp":"502","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZb078c0c27facd106036303b4e1ca9069"}
+📥 [Call] Parsed message: {
+  event: 'media',
+  sequenceNumber: '14',
+  media: {
+    track: 'inbound',
+    chunk: '13',
+    timestamp: '502',
+    payload: '/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=='
+  },
+  streamSid: 'MZb078c0c27facd106036303b4e1ca9069'
+}
+📬 [Call] Raw message received: {"event":"media","sequenceNumber":"15","media":{"track":"inbound","chunk":"14","timestamp":"522","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZb078c0c27facd106036303b4e1ca9069"}
+📥 [Call] Parsed message: {
+  event: 'media',
+  sequenceNumber: '15',
+  media: {
+    track: 'inbound',
+    chunk: '14',
+    timestamp: '522',
+    payload: '/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=='
+  },
+  streamSid: 'MZb078c0c27facd106036303b4e1ca9069'
+}
+📬 [Call] Raw message received: {"event":"media","sequenceNumber":"16","media":{"track":"inbound","chunk":"15","timestamp":"542","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZb078c0c27facd106036303b4e1ca9069"}
+📥 [Call] Parsed message: {
+  event: 'media',
+  sequenceNumber: '16',
+  media: {
+    track: 'inbound',
+    chunk: '15',
+    timestamp: '542',
+    payload: '/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=='
+  },
+  streamSid: 'MZb078c0c27facd106036303b4e1ca9069'
+}
+📬 [Call] Raw message received: {"event":"media","sequenceNumber":"17","media":{"track":"inbound","chunk":"16","timestamp":"562","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZb078c0c27facd106036303b4e1ca9069"}
+📥 [Call] Parsed message: {
+  event: 'media',
+  sequenceNumber: '17',
+  media: {
+    track: 'inbound',
+    chunk: '16',
+    timestamp: '562',
+    payload: '/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=='
+  },
+  streamSid: 'MZb078c0c27facd106036303b4e1ca9069'
+}
+📬 [Call] Raw message received: {"event":"media","sequenceNumber":"18","media":{"track":"inbound","chunk":"17","timestamp":"582","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZb078c0c27facd106036303b4e1ca9069"}
+📥 [Call] Parsed message: {
+  event: 'media',
+  sequenceNumber: '18',
+  media: {
+    track: 'inbound',
+    chunk: '17',
+    timestamp: '582',
+    payload: '/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=='
+  },
+  streamSid: 'MZb078c0c27facd106036303b4e1ca9069'
+}
+Fri, 21 Feb 2025 13:13:44 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:13:44 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:13:44 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:13:44 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:13:44 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:13:44 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:13:44 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:13:44 GMT body-parser:urlencoded skip empty body
+🔴 [Call] WebSocket connection closed
+[Twilio] Call connection closed
+🔴 [Call] WebSocket connection closed
+[Twilio] Call connection closed
+Fri, 21 Feb 2025 13:13:45 GMT express:router dispatching POST /api/call/status
+Fri, 21 Feb 2025 13:13:45 GMT express:router query  : /api/call/status
+Fri, 21 Feb 2025 13:13:45 GMT express:router expressInit  : /api/call/status
+Fri, 21 Feb 2025 13:13:45 GMT express:router corsMiddleware  : /api/call/status
+Fri, 21 Feb 2025 13:13:45 GMT express:router jsonParser  : /api/call/status
+Fri, 21 Feb 2025 13:13:45 GMT body-parser:json content-type "application/x-www-form-urlencoded; charset=UTF-8"
+Fri, 21 Feb 2025 13:13:45 GMT body-parser:json skip parsing
+Fri, 21 Feb 2025 13:13:45 GMT express:router urlencodedParser  : /api/call/status
+Fri, 21 Feb 2025 13:13:45 GMT body-parser:urlencoded content-type "application/x-www-form-urlencoded; charset=UTF-8"
+Fri, 21 Feb 2025 13:13:45 GMT body-parser:urlencoded content-encoding "identity"
+Fri, 21 Feb 2025 13:13:45 GMT body-parser:urlencoded read body
+Fri, 21 Feb 2025 13:13:45 GMT body-parser:urlencoded parse body
+Fri, 21 Feb 2025 13:13:45 GMT body-parser:urlencoded parse extended urlencoding
+📞 Call status update: {
+  callSid: 'CA58c191a5299e4f6c023af109b9d362bd',
+  status: 'completed',
+  timestamp: '2025-02-21T13:13:45.206Z'
+}
+Fri, 21 Feb 2025 13:13:47 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:13:47 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:13:47 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:13:47 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:13:47 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:13:47 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:13:47 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:13:47 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:13:50 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:13:50 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:13:50 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:13:50 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:13:50 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:13:50 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:13:50 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:13:50 GMT body-parser:urlencoded skip empty body
+Fri, 21 Feb 2025 13:13:53 GMT express:router dispatching GET /tools
+Fri, 21 Feb 2025 13:13:53 GMT express:router query  : /tools
+Fri, 21 Feb 2025 13:13:53 GMT express:router expressInit  : /tools
+Fri, 21 Feb 2025 13:13:53 GMT express:router corsMiddleware  : /tools
+Fri, 21 Feb 2025 13:13:53 GMT express:router jsonParser  : /tools
+Fri, 21 Feb 2025 13:13:53 GMT body-parser:json skip empty body
+Fri, 21 Feb 2025 13:13:53 GMT express:router urlencodedParser  : /tools
+Fri, 21 Feb 2025 13:13:53 GMT body-parser:urlencoded skip empty body

@@ -6926,3 +6926,713 @@
 }
 2025-02-21T12:58:32.476Z [INFO] 🔴 [Call] WebSocket connection closed
 2025-02-21T12:58:32.476Z [INFO] [Twilio] Call connection closed
+2025-02-21T13:13:37.479Z [INFO] 🔌 New WebSocket connection: {
+  "url": "/logs",
+  "path": "/logs",
+  "parts": [
+    "logs"
+  ],
+  "headers": {
+    "host": "mereka.ngrok.io",
+    "connection": "Upgrade",
+    "sec-websocket-extensions": "permessage-deflate; client_max_window_bits",
+    "sec-websocket-key": "bO9p8wLVNq41oQn5jRTmxA==",
+    "sec-websocket-version": "13",
+    "upgrade": "websocket",
+    "x-forwarded-for": "2406:2d40:43be:8710:2d76:19e4:6bfc:324b",
+    "x-forwarded-host": "mereka.ngrok.io",
+    "x-forwarded-proto": "https",
+    "accept-encoding": "gzip"
+  }
+}
+2025-02-21T13:13:37.479Z [INFO] 🛠️ WebSocket path: logs
+2025-02-21T13:13:37.479Z [INFO] 📝 Handling logs connection
+2025-02-21T13:13:37.480Z [INFO] 🔄 Closing existing logs connection
+2025-02-21T13:13:37.480Z [INFO] [Frontend] New connection established
+2025-02-21T13:13:37.879Z [INFO] 🔌 New WebSocket connection: {
+  "url": "/call",
+  "path": "/call",
+  "parts": [
+    "call"
+  ],
+  "headers": {
+    "host": "mereka.ngrok.io",
+    "connection": "Upgrade",
+    "sec-websocket-extensions": "permessage-deflate; client_max_window_bits",
+    "sec-websocket-key": "N8He6OFw/OGYsxfxffF6wQ==",
+    "sec-websocket-version": "13",
+    "upgrade": "websocket",
+    "x-forwarded-for": "2406:2d40:43be:8710:2d76:19e4:6bfc:324b",
+    "x-forwarded-host": "mereka.ngrok.io",
+    "x-forwarded-proto": "https",
+    "accept-encoding": "gzip"
+  }
+}
+2025-02-21T13:13:37.879Z [INFO] 🛠️ WebSocket path: call
+2025-02-21T13:13:37.879Z [INFO] 📞 [Call] New connection request
+2025-02-21T13:13:37.879Z [INFO] 📋 [Call] Connection headers: {
+  "host": "mereka.ngrok.io",
+  "connection": "Upgrade",
+  "sec-websocket-extensions": "permessage-deflate; client_max_window_bits",
+  "sec-websocket-key": "N8He6OFw/OGYsxfxffF6wQ==",
+  "sec-websocket-version": "13",
+  "upgrade": "websocket",
+  "x-forwarded-for": "2406:2d40:43be:8710:2d76:19e4:6bfc:324b",
+  "x-forwarded-host": "mereka.ngrok.io",
+  "x-forwarded-proto": "https",
+  "accept-encoding": "gzip"
+}
+2025-02-21T13:13:37.879Z [INFO] 🔄 [Call] Closing existing connection
+2025-02-21T13:13:37.879Z [INFO] ✅ [Call] Connection assigned as current call
+2025-02-21T13:13:37.879Z [INFO] [Twilio] New call connection established
+2025-02-21T13:13:38.225Z [INFO] 🔌 New WebSocket connection: {
+  "url": "/logs",
+  "path": "/logs",
+  "parts": [
+    "logs"
+  ],
+  "headers": {
+    "host": "mereka.ngrok.io",
+    "connection": "Upgrade",
+    "sec-websocket-extensions": "permessage-deflate; client_max_window_bits",
+    "sec-websocket-key": "mS/EqyauIA1gA/Gh7WhJSQ==",
+    "sec-websocket-version": "13",
+    "upgrade": "websocket",
+    "x-forwarded-for": "2406:2d40:43be:8710:2d76:19e4:6bfc:324b",
+    "x-forwarded-host": "mereka.ngrok.io",
+    "x-forwarded-proto": "https",
+    "accept-encoding": "gzip"
+  }
+}
+2025-02-21T13:13:38.226Z [INFO] 🛠️ WebSocket path: logs
+2025-02-21T13:13:38.226Z [INFO] 📝 Handling logs connection
+2025-02-21T13:13:38.226Z [INFO] 🔄 Closing existing logs connection
+2025-02-21T13:13:38.226Z [INFO] [Frontend] New connection established
+2025-02-21T13:13:38.428Z [INFO] [Frontend] Connection closed
+2025-02-21T13:13:38.613Z [INFO] [Frontend] Connection closed
+2025-02-21T13:13:39.369Z [INFO] 📞 Call status update: {
+  "callSid": "CA58c191a5299e4f6c023af109b9d362bd",
+  "status": "initiated",
+  "timestamp": "2025-02-21T13:13:39.369Z"
+}
+2025-02-21T13:13:40.211Z [INFO] TwiML endpoint called via POST at /twiml
+2025-02-21T13:13:40.211Z [INFO] 📝 Generating TwiML with URLs: {
+  "wsUrl": "wss://mereka.ngrok.io/call",
+  "publicUrl": "https://mereka.ngrok.io"
+}
+2025-02-21T13:13:40.212Z [ERROR] Error: Cannot set headers after they are sent to the client
+    at ServerResponse.setHeader (node:_http_outgoing:699:11)
+    at ServerResponse.header (/Users/agent-g/Windsurf/Twilio/websocket-server/node_modules/express/lib/response.js:794:10)
+    at ServerResponse.contentType (/Users/agent-g/Windsurf/Twilio/websocket-server/node_modules/express/lib/response.js:624:15)
+    at /Users/agent-g/Windsurf/Twilio/websocket-server/src/server.ts:105:7
+    at Layer.handle [as handle_request] (/Users/agent-g/Windsurf/Twilio/websocket-server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/Users/agent-g/Windsurf/Twilio/websocket-server/node_modules/express/lib/router/route.js:149:13)
+    at next (/Users/agent-g/Windsurf/Twilio/websocket-server/node_modules/express/lib/router/route.js:145:7)
+    at next (/Users/agent-g/Windsurf/Twilio/websocket-server/node_modules/express/lib/router/route.js:145:7)
+    at next (/Users/agent-g/Windsurf/Twilio/websocket-server/node_modules/express/lib/router/route.js:145:7)
+    at next (/Users/agent-g/Windsurf/Twilio/websocket-server/node_modules/express/lib/router/route.js:145:7)
+2025-02-21T13:13:40.456Z [INFO] 📞 Call status update: {
+  "callSid": "CA58c191a5299e4f6c023af109b9d362bd",
+  "status": "ringing",
+  "timestamp": "2025-02-21T13:13:40.456Z"
+}
+2025-02-21T13:13:41.031Z [INFO] 📞 Call status update: {
+  "callSid": "CA58c191a5299e4f6c023af109b9d362bd",
+  "status": "in-progress",
+  "timestamp": "2025-02-21T13:13:41.031Z"
+}
+2025-02-21T13:13:41.291Z [INFO] TwiML endpoint called via POST at /twiml
+2025-02-21T13:13:41.291Z [INFO] 📝 Generating TwiML with URLs: {
+  "wsUrl": "wss://mereka.ngrok.io/call",
+  "publicUrl": "https://mereka.ngrok.io"
+}
+2025-02-21T13:13:41.291Z [ERROR] Error: Cannot set headers after they are sent to the client
+    at ServerResponse.setHeader (node:_http_outgoing:699:11)
+    at ServerResponse.header (/Users/agent-g/Windsurf/Twilio/websocket-server/node_modules/express/lib/response.js:794:10)
+    at ServerResponse.contentType (/Users/agent-g/Windsurf/Twilio/websocket-server/node_modules/express/lib/response.js:624:15)
+    at /Users/agent-g/Windsurf/Twilio/websocket-server/src/server.ts:105:7
+    at Layer.handle [as handle_request] (/Users/agent-g/Windsurf/Twilio/websocket-server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/Users/agent-g/Windsurf/Twilio/websocket-server/node_modules/express/lib/router/route.js:149:13)
+    at next (/Users/agent-g/Windsurf/Twilio/websocket-server/node_modules/express/lib/router/route.js:145:7)
+    at next (/Users/agent-g/Windsurf/Twilio/websocket-server/node_modules/express/lib/router/route.js:145:7)
+    at next (/Users/agent-g/Windsurf/Twilio/websocket-server/node_modules/express/lib/router/route.js:145:7)
+    at next (/Users/agent-g/Windsurf/Twilio/websocket-server/node_modules/express/lib/router/route.js:145:7)
+2025-02-21T13:13:43.561Z [INFO] 🔌 New WebSocket connection: {
+  "url": "/call",
+  "path": "/call",
+  "parts": [
+    "call"
+  ],
+  "headers": {
+    "host": "mereka.ngrok.io",
+    "user-agent": "Twilio.TmeWs/1.0",
+    "connection": "Upgrade",
+    "sec-websocket-key": "OQu59vkjgxeVMVD4clUWZg==",
+    "sec-websocket-version": "13",
+    "upgrade": "websocket",
+    "x-forwarded-for": "3.94.146.239",
+    "x-forwarded-host": "mereka.ngrok.io",
+    "x-forwarded-proto": "https",
+    "x-twilio-signature": "QU143Or10ebn6KkTPRYlCO23gTs=",
+    "accept-encoding": "gzip"
+  }
+}
+2025-02-21T13:13:43.561Z [INFO] 🛠️ WebSocket path: call
+2025-02-21T13:13:43.561Z [INFO] 📞 [Call] New connection request
+2025-02-21T13:13:43.561Z [INFO] 📋 [Call] Connection headers: {
+  "host": "mereka.ngrok.io",
+  "user-agent": "Twilio.TmeWs/1.0",
+  "connection": "Upgrade",
+  "sec-websocket-key": "OQu59vkjgxeVMVD4clUWZg==",
+  "sec-websocket-version": "13",
+  "upgrade": "websocket",
+  "x-forwarded-for": "3.94.146.239",
+  "x-forwarded-host": "mereka.ngrok.io",
+  "x-forwarded-proto": "https",
+  "x-twilio-signature": "QU143Or10ebn6KkTPRYlCO23gTs=",
+  "accept-encoding": "gzip"
+}
+2025-02-21T13:13:43.561Z [INFO] 🔄 [Call] Closing existing connection
+2025-02-21T13:13:43.561Z [INFO] ✅ [Call] Connection assigned as current call
+2025-02-21T13:13:43.561Z [INFO] [Twilio] New call connection established
+2025-02-21T13:13:43.649Z [INFO] 🔌 New WebSocket connection: {
+  "url": "/call",
+  "path": "/call",
+  "parts": [
+    "call"
+  ],
+  "headers": {
+    "host": "mereka.ngrok.io",
+    "user-agent": "Twilio.TmeWs/1.0",
+    "connection": "Upgrade",
+    "sec-websocket-key": "WxmsIcocKXKRcwyNKFDVwQ==",
+    "sec-websocket-version": "13",
+    "upgrade": "websocket",
+    "x-forwarded-for": "3.86.15.87",
+    "x-forwarded-host": "mereka.ngrok.io",
+    "x-forwarded-proto": "https",
+    "x-twilio-signature": "QU143Or10ebn6KkTPRYlCO23gTs=",
+    "accept-encoding": "gzip"
+  }
+}
+2025-02-21T13:13:43.649Z [INFO] 🛠️ WebSocket path: call
+2025-02-21T13:13:43.649Z [INFO] 📞 [Call] New connection request
+2025-02-21T13:13:43.649Z [INFO] 📋 [Call] Connection headers: {
+  "host": "mereka.ngrok.io",
+  "user-agent": "Twilio.TmeWs/1.0",
+  "connection": "Upgrade",
+  "sec-websocket-key": "WxmsIcocKXKRcwyNKFDVwQ==",
+  "sec-websocket-version": "13",
+  "upgrade": "websocket",
+  "x-forwarded-for": "3.86.15.87",
+  "x-forwarded-host": "mereka.ngrok.io",
+  "x-forwarded-proto": "https",
+  "x-twilio-signature": "QU143Or10ebn6KkTPRYlCO23gTs=",
+  "accept-encoding": "gzip"
+}
+2025-02-21T13:13:43.649Z [INFO] 🔄 [Call] Closing existing connection
+2025-02-21T13:13:43.649Z [INFO] ✅ [Call] Connection assigned as current call
+2025-02-21T13:13:43.649Z [INFO] [Twilio] New call connection established
+2025-02-21T13:13:43.724Z [INFO] 🔴 [Call] WebSocket connection closed
+2025-02-21T13:13:43.724Z [INFO] [Twilio] Call connection closed
+2025-02-21T13:13:43.838Z [INFO] 📬 [Call] Raw message received: {"event":"connected","protocol":"Call","version":"1.0.0"}
+2025-02-21T13:13:43.838Z [INFO] 📥 [Call] Parsed message: {
+  "event": "connected",
+  "protocol": "Call",
+  "version": "1.0.0"
+}
+2025-02-21T13:13:43.838Z [INFO] 
+📞 [Twilio] Event: connected
+2025-02-21T13:13:43.838Z [INFO] 📬 [Call] Raw message received: {"event":"start","sequenceNumber":"1","start":{"accountSid":"ACab6a3b51e6078865e1e39e8005dc2bcd","streamSid":"MZ1e279bf3c7a3cc65933287c3fab27c04","callSid":"CA8f568a19c154b6fe8a47d73a25937a2f","tracks":["inbound"],"mediaFormat":{"encoding":"audio/x-mulaw","sampleRate":8000,"channels":1},"customParameters":{"track":"inbound","channels":"1","format":"audio/x-mulaw","rate":"8000"}},"streamSid":"MZ1e279bf3c7a3cc65933287c3fab27c04"}
+2025-02-21T13:13:43.838Z [INFO] 📥 [Call] Parsed message: {
+  "event": "start",
+  "sequenceNumber": "1",
+  "start": {
+    "accountSid": "ACab6a3b51e6078865e1e39e8005dc2bcd",
+    "streamSid": "MZ1e279bf3c7a3cc65933287c3fab27c04",
+    "callSid": "CA8f568a19c154b6fe8a47d73a25937a2f",
+    "tracks": [
+      "inbound"
+    ],
+    "mediaFormat": {
+      "encoding": "audio/x-mulaw",
+      "sampleRate": 8000,
+      "channels": 1
+    },
+    "customParameters": {
+      "track": "inbound",
+      "channels": "1",
+      "format": "audio/x-mulaw",
+      "rate": "8000"
+    }
+  },
+  "streamSid": "MZ1e279bf3c7a3cc65933287c3fab27c04"
+}
+2025-02-21T13:13:43.838Z [INFO] 🚀 [Call] Received start event
+2025-02-21T13:13:43.838Z [INFO] 📊 [Call] Start message details: {
+  "streamSid": "MZ1e279bf3c7a3cc65933287c3fab27c04",
+  "tracks": [
+    "inbound"
+  ]
+}
+2025-02-21T13:13:43.838Z [INFO] 📤 [Call] Sending response: {
+  "event": "start",
+  "protocol": "wss",
+  "version": "1.0.0",
+  "streamSid": "MZ1e279bf3c7a3cc65933287c3fab27c04",
+  "tracks": [
+    {}
+  ]
+}
+2025-02-21T13:13:43.838Z [INFO] 
+📞 [Twilio] Event: start
+2025-02-21T13:13:43.838Z [INFO] 🟢 [Twilio] Call started - SID: MZ1e279bf3c7a3cc65933287c3fab27c04
+2025-02-21T13:13:43.838Z [INFO] ⚠️ [Model] Missing required session data
+2025-02-21T13:13:43.838Z [INFO] 📬 [Call] Raw message received: {"event":"media","sequenceNumber":"2","media":{"track":"inbound","chunk":"1","timestamp":"261","payload":"cvlu+3tu+XpteHB6bXH7f23zeH55cPNk/Hlw+HF+fW1/fXDtaO57eftvfPtt9nN0bnD7b3X1a/Zt83177m/8+HDwen99bvz3du9362929npueud8avF5eHL76W117mbufXXkX+3sZ+V6duVc5upe3HP+31vb91/aY3fcWNv6ZtpX6uNS13xj3l3u9FfVaGbaXOX7WN1oat5d5PVc2mTz2w=="},"streamSid":"MZ1e279bf3c7a3cc65933287c3fab27c04"}
+2025-02-21T13:13:43.838Z [INFO] 📥 [Call] Parsed message: {
+  "event": "media",
+  "sequenceNumber": "2",
+  "media": {
+    "track": "inbound",
+    "chunk": "1",
+    "timestamp": "261",
+    "payload": "cvlu+3tu+XpteHB6bXH7f23zeH55cPNk/Hlw+HF+fW1/fXDtaO57eftvfPtt9nN0bnD7b3X1a/Zt83177m/8+HDwen99bvz3du9362929npueud8avF5eHL76W117mbufXXkX+3sZ+V6duVc5upe3HP+31vb91/aY3fcWNv6ZtpX6uNS13xj3l3u9FfVaGbaXOX7WN1oat5d5PVc2mTz2w=="
+  },
+  "streamSid": "MZ1e279bf3c7a3cc65933287c3fab27c04"
+}
+2025-02-21T13:13:43.839Z [INFO] 🔄 [Twilio] First media packet received, initiating model connection...
+2025-02-21T13:13:43.839Z [INFO] ⚠️ [Model] Missing required session data
+2025-02-21T13:13:43.839Z [INFO] 📬 [Call] Raw message received: {"event":"media","sequenceNumber":"3","media":{"track":"inbound","chunk":"2","timestamp":"281","payload":"X99yY9xpfe1m3m5u32rr+GzvcX7u/vtwa+z2d3z4fXDr92567e1y8fVvevZse/b/fff5+3789XPs+G7vbfL4eOd47/lt7210fGjx++/qbvH5d+3v/f17+/h1/XRy6vb+9np3fHn5dHHp8HD9+/5xeuX1cH3//3f77HVodO/6/uvrcmZw7/px+u16cfnzcm7z7Hp1+v16b37xdfzr9ndsew=="},"streamSid":"MZ1e279bf3c7a3cc65933287c3fab27c04"}
+2025-02-21T13:13:43.839Z [INFO] 📥 [Call] Parsed message: {
+  "event": "media",
+  "sequenceNumber": "3",
+  "media": {
+    "track": "inbound",
+    "chunk": "2",
+    "timestamp": "281",
+    "payload": "X99yY9xpfe1m3m5u32rr+GzvcX7u/vtwa+z2d3z4fXDr92567e1y8fVvevZse/b/fff5+3789XPs+G7vbfL4eOd47/lt7210fGjx++/qbvH5d+3v/f17+/h1/XRy6vb+9np3fHn5dHHp8HD9+/5xeuX1cH3//3f77HVodO/6/uvrcmZw7/px+u16cfnzcm7z7Hp1+v16b37xdfzr9ndsew=="
+  },
+  "streamSid": "MZ1e279bf3c7a3cc65933287c3fab27c04"
+}
+2025-02-21T13:13:43.888Z [INFO] 📬 [Call] Raw message received: {"event":"media","sequenceNumber":"4","media":{"track":"inbound","chunk":"3","timestamp":"349","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZ1e279bf3c7a3cc65933287c3fab27c04"}
+2025-02-21T13:13:43.888Z [INFO] 📥 [Call] Parsed message: {
+  "event": "media",
+  "sequenceNumber": "4",
+  "media": {
+    "track": "inbound",
+    "chunk": "3",
+    "timestamp": "349",
+    "payload": "/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="
+  },
+  "streamSid": "MZ1e279bf3c7a3cc65933287c3fab27c04"
+}
+2025-02-21T13:13:43.888Z [INFO] 📬 [Call] Raw message received: {"event":"media","sequenceNumber":"5","media":{"track":"inbound","chunk":"4","timestamp":"369","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZ1e279bf3c7a3cc65933287c3fab27c04"}
+2025-02-21T13:13:43.888Z [INFO] 📥 [Call] Parsed message: {
+  "event": "media",
+  "sequenceNumber": "5",
+  "media": {
+    "track": "inbound",
+    "chunk": "4",
+    "timestamp": "369",
+    "payload": "/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="
+  },
+  "streamSid": "MZ1e279bf3c7a3cc65933287c3fab27c04"
+}
+2025-02-21T13:13:43.888Z [INFO] 📬 [Call] Raw message received: {"event":"media","sequenceNumber":"6","media":{"track":"inbound","chunk":"5","timestamp":"389","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZ1e279bf3c7a3cc65933287c3fab27c04"}
+2025-02-21T13:13:43.888Z [INFO] 📥 [Call] Parsed message: {
+  "event": "media",
+  "sequenceNumber": "6",
+  "media": {
+    "track": "inbound",
+    "chunk": "5",
+    "timestamp": "389",
+    "payload": "/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="
+  },
+  "streamSid": "MZ1e279bf3c7a3cc65933287c3fab27c04"
+}
+2025-02-21T13:13:43.888Z [INFO] 📬 [Call] Raw message received: {"event":"media","sequenceNumber":"7","media":{"track":"inbound","chunk":"6","timestamp":"409","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZ1e279bf3c7a3cc65933287c3fab27c04"}
+2025-02-21T13:13:43.888Z [INFO] 📥 [Call] Parsed message: {
+  "event": "media",
+  "sequenceNumber": "7",
+  "media": {
+    "track": "inbound",
+    "chunk": "6",
+    "timestamp": "409",
+    "payload": "/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="
+  },
+  "streamSid": "MZ1e279bf3c7a3cc65933287c3fab27c04"
+}
+2025-02-21T13:13:43.888Z [INFO] 📬 [Call] Raw message received: {"event":"media","sequenceNumber":"8","media":{"track":"inbound","chunk":"7","timestamp":"429","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZ1e279bf3c7a3cc65933287c3fab27c04"}
+2025-02-21T13:13:43.888Z [INFO] 📥 [Call] Parsed message: {
+  "event": "media",
+  "sequenceNumber": "8",
+  "media": {
+    "track": "inbound",
+    "chunk": "7",
+    "timestamp": "429",
+    "payload": "/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="
+  },
+  "streamSid": "MZ1e279bf3c7a3cc65933287c3fab27c04"
+}
+2025-02-21T13:13:43.894Z [INFO] 📬 [Call] Raw message received: {"event":"media","sequenceNumber":"9","media":{"track":"inbound","chunk":"8","timestamp":"449","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZ1e279bf3c7a3cc65933287c3fab27c04"}
+2025-02-21T13:13:43.894Z [INFO] 📥 [Call] Parsed message: {
+  "event": "media",
+  "sequenceNumber": "9",
+  "media": {
+    "track": "inbound",
+    "chunk": "8",
+    "timestamp": "449",
+    "payload": "/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="
+  },
+  "streamSid": "MZ1e279bf3c7a3cc65933287c3fab27c04"
+}
+2025-02-21T13:13:43.895Z [INFO] 📬 [Call] Raw message received: {"event":"media","sequenceNumber":"10","media":{"track":"inbound","chunk":"9","timestamp":"469","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZ1e279bf3c7a3cc65933287c3fab27c04"}
+2025-02-21T13:13:43.895Z [INFO] 📥 [Call] Parsed message: {
+  "event": "media",
+  "sequenceNumber": "10",
+  "media": {
+    "track": "inbound",
+    "chunk": "9",
+    "timestamp": "469",
+    "payload": "/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="
+  },
+  "streamSid": "MZ1e279bf3c7a3cc65933287c3fab27c04"
+}
+2025-02-21T13:13:43.895Z [INFO] 📬 [Call] Raw message received: {"event":"media","sequenceNumber":"11","media":{"track":"inbound","chunk":"10","timestamp":"489","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZ1e279bf3c7a3cc65933287c3fab27c04"}
+2025-02-21T13:13:43.895Z [INFO] 📥 [Call] Parsed message: {
+  "event": "media",
+  "sequenceNumber": "11",
+  "media": {
+    "track": "inbound",
+    "chunk": "10",
+    "timestamp": "489",
+    "payload": "/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="
+  },
+  "streamSid": "MZ1e279bf3c7a3cc65933287c3fab27c04"
+}
+2025-02-21T13:13:43.895Z [INFO] 📬 [Call] Raw message received: {"event":"media","sequenceNumber":"12","media":{"track":"inbound","chunk":"11","timestamp":"509","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZ1e279bf3c7a3cc65933287c3fab27c04"}
+2025-02-21T13:13:43.895Z [INFO] 📥 [Call] Parsed message: {
+  "event": "media",
+  "sequenceNumber": "12",
+  "media": {
+    "track": "inbound",
+    "chunk": "11",
+    "timestamp": "509",
+    "payload": "/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="
+  },
+  "streamSid": "MZ1e279bf3c7a3cc65933287c3fab27c04"
+}
+2025-02-21T13:13:43.895Z [INFO] 📬 [Call] Raw message received: {"event":"media","sequenceNumber":"13","media":{"track":"inbound","chunk":"12","timestamp":"529","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZ1e279bf3c7a3cc65933287c3fab27c04"}
+2025-02-21T13:13:43.895Z [INFO] 📥 [Call] Parsed message: {
+  "event": "media",
+  "sequenceNumber": "13",
+  "media": {
+    "track": "inbound",
+    "chunk": "12",
+    "timestamp": "529",
+    "payload": "/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="
+  },
+  "streamSid": "MZ1e279bf3c7a3cc65933287c3fab27c04"
+}
+2025-02-21T13:13:43.895Z [INFO] 📬 [Call] Raw message received: {"event":"media","sequenceNumber":"14","media":{"track":"inbound","chunk":"13","timestamp":"549","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZ1e279bf3c7a3cc65933287c3fab27c04"}
+2025-02-21T13:13:43.895Z [INFO] 📥 [Call] Parsed message: {
+  "event": "media",
+  "sequenceNumber": "14",
+  "media": {
+    "track": "inbound",
+    "chunk": "13",
+    "timestamp": "549",
+    "payload": "/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="
+  },
+  "streamSid": "MZ1e279bf3c7a3cc65933287c3fab27c04"
+}
+2025-02-21T13:13:43.934Z [INFO] 📬 [Call] Raw message received: {"event":"connected","protocol":"Call","version":"1.0.0"}
+2025-02-21T13:13:43.934Z [INFO] 📥 [Call] Parsed message: {
+  "event": "connected",
+  "protocol": "Call",
+  "version": "1.0.0"
+}
+2025-02-21T13:13:43.934Z [INFO] 
+📞 [Twilio] Event: connected
+2025-02-21T13:13:43.934Z [INFO] 📬 [Call] Raw message received: {"event":"start","sequenceNumber":"1","start":{"accountSid":"ACab6a3b51e6078865e1e39e8005dc2bcd","streamSid":"MZb078c0c27facd106036303b4e1ca9069","callSid":"CA58c191a5299e4f6c023af109b9d362bd","tracks":["inbound"],"mediaFormat":{"encoding":"audio/x-mulaw","sampleRate":8000,"channels":1},"customParameters":{"track":"inbound","format":"audio/x-mulaw","channels":"1","rate":"8000"}},"streamSid":"MZb078c0c27facd106036303b4e1ca9069"}
+2025-02-21T13:13:43.934Z [INFO] 📥 [Call] Parsed message: {
+  "event": "start",
+  "sequenceNumber": "1",
+  "start": {
+    "accountSid": "ACab6a3b51e6078865e1e39e8005dc2bcd",
+    "streamSid": "MZb078c0c27facd106036303b4e1ca9069",
+    "callSid": "CA58c191a5299e4f6c023af109b9d362bd",
+    "tracks": [
+      "inbound"
+    ],
+    "mediaFormat": {
+      "encoding": "audio/x-mulaw",
+      "sampleRate": 8000,
+      "channels": 1
+    },
+    "customParameters": {
+      "track": "inbound",
+      "format": "audio/x-mulaw",
+      "channels": "1",
+      "rate": "8000"
+    }
+  },
+  "streamSid": "MZb078c0c27facd106036303b4e1ca9069"
+}
+2025-02-21T13:13:43.934Z [INFO] 🚀 [Call] Received start event
+2025-02-21T13:13:43.934Z [INFO] 📊 [Call] Start message details: {
+  "streamSid": "MZb078c0c27facd106036303b4e1ca9069",
+  "tracks": [
+    "inbound"
+  ]
+}
+2025-02-21T13:13:43.934Z [INFO] 📤 [Call] Sending response: {
+  "event": "start",
+  "protocol": "wss",
+  "version": "1.0.0",
+  "streamSid": "MZb078c0c27facd106036303b4e1ca9069",
+  "tracks": [
+    {}
+  ]
+}
+2025-02-21T13:13:43.934Z [INFO] 
+📞 [Twilio] Event: start
+2025-02-21T13:13:43.934Z [INFO] 🟢 [Twilio] Call started - SID: MZb078c0c27facd106036303b4e1ca9069
+2025-02-21T13:13:43.934Z [INFO] ⚠️ [Model] Missing required session data
+2025-02-21T13:13:43.934Z [INFO] 📬 [Call] Raw message received: {"event":"media","sequenceNumber":"2","media":{"track":"inbound","chunk":"1","timestamp":"262","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZb078c0c27facd106036303b4e1ca9069"}
+2025-02-21T13:13:43.935Z [INFO] 📥 [Call] Parsed message: {
+  "event": "media",
+  "sequenceNumber": "2",
+  "media": {
+    "track": "inbound",
+    "chunk": "1",
+    "timestamp": "262",
+    "payload": "/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="
+  },
+  "streamSid": "MZb078c0c27facd106036303b4e1ca9069"
+}
+2025-02-21T13:13:43.935Z [INFO] 📬 [Call] Raw message received: {"event":"media","sequenceNumber":"3","media":{"track":"inbound","chunk":"2","timestamp":"282","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZb078c0c27facd106036303b4e1ca9069"}
+2025-02-21T13:13:43.935Z [INFO] 📥 [Call] Parsed message: {
+  "event": "media",
+  "sequenceNumber": "3",
+  "media": {
+    "track": "inbound",
+    "chunk": "2",
+    "timestamp": "282",
+    "payload": "/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="
+  },
+  "streamSid": "MZb078c0c27facd106036303b4e1ca9069"
+}
+2025-02-21T13:13:43.935Z [INFO] 📬 [Call] Raw message received: {"event":"media","sequenceNumber":"4","media":{"track":"inbound","chunk":"3","timestamp":"302","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZb078c0c27facd106036303b4e1ca9069"}
+2025-02-21T13:13:43.935Z [INFO] 📥 [Call] Parsed message: {
+  "event": "media",
+  "sequenceNumber": "4",
+  "media": {
+    "track": "inbound",
+    "chunk": "3",
+    "timestamp": "302",
+    "payload": "/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="
+  },
+  "streamSid": "MZb078c0c27facd106036303b4e1ca9069"
+}
+2025-02-21T13:13:43.935Z [INFO] 📬 [Call] Raw message received: {"event":"media","sequenceNumber":"5","media":{"track":"inbound","chunk":"4","timestamp":"322","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZb078c0c27facd106036303b4e1ca9069"}
+2025-02-21T13:13:43.935Z [INFO] 📥 [Call] Parsed message: {
+  "event": "media",
+  "sequenceNumber": "5",
+  "media": {
+    "track": "inbound",
+    "chunk": "4",
+    "timestamp": "322",
+    "payload": "/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="
+  },
+  "streamSid": "MZb078c0c27facd106036303b4e1ca9069"
+}
+2025-02-21T13:13:43.935Z [INFO] 📬 [Call] Raw message received: {"event":"media","sequenceNumber":"6","media":{"track":"inbound","chunk":"5","timestamp":"342","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZb078c0c27facd106036303b4e1ca9069"}
+2025-02-21T13:13:43.935Z [INFO] 📥 [Call] Parsed message: {
+  "event": "media",
+  "sequenceNumber": "6",
+  "media": {
+    "track": "inbound",
+    "chunk": "5",
+    "timestamp": "342",
+    "payload": "/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="
+  },
+  "streamSid": "MZb078c0c27facd106036303b4e1ca9069"
+}
+2025-02-21T13:13:43.938Z [INFO] 📬 [Call] Raw message received: {"event":"media","sequenceNumber":"7","media":{"track":"inbound","chunk":"6","timestamp":"362","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZb078c0c27facd106036303b4e1ca9069"}
+2025-02-21T13:13:43.938Z [INFO] 📥 [Call] Parsed message: {
+  "event": "media",
+  "sequenceNumber": "7",
+  "media": {
+    "track": "inbound",
+    "chunk": "6",
+    "timestamp": "362",
+    "payload": "/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="
+  },
+  "streamSid": "MZb078c0c27facd106036303b4e1ca9069"
+}
+2025-02-21T13:13:43.938Z [INFO] 📬 [Call] Raw message received: {"event":"media","sequenceNumber":"8","media":{"track":"inbound","chunk":"7","timestamp":"382","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZb078c0c27facd106036303b4e1ca9069"}
+2025-02-21T13:13:43.938Z [INFO] 📥 [Call] Parsed message: {
+  "event": "media",
+  "sequenceNumber": "8",
+  "media": {
+    "track": "inbound",
+    "chunk": "7",
+    "timestamp": "382",
+    "payload": "/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="
+  },
+  "streamSid": "MZb078c0c27facd106036303b4e1ca9069"
+}
+2025-02-21T13:13:43.938Z [INFO] 📬 [Call] Raw message received: {"event":"media","sequenceNumber":"9","media":{"track":"inbound","chunk":"8","timestamp":"402","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZb078c0c27facd106036303b4e1ca9069"}
+2025-02-21T13:13:43.938Z [INFO] 📥 [Call] Parsed message: {
+  "event": "media",
+  "sequenceNumber": "9",
+  "media": {
+    "track": "inbound",
+    "chunk": "8",
+    "timestamp": "402",
+    "payload": "/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="
+  },
+  "streamSid": "MZb078c0c27facd106036303b4e1ca9069"
+}
+2025-02-21T13:13:43.938Z [INFO] 📬 [Call] Raw message received: {"event":"media","sequenceNumber":"10","media":{"track":"inbound","chunk":"9","timestamp":"422","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZb078c0c27facd106036303b4e1ca9069"}
+2025-02-21T13:13:43.938Z [INFO] 📥 [Call] Parsed message: {
+  "event": "media",
+  "sequenceNumber": "10",
+  "media": {
+    "track": "inbound",
+    "chunk": "9",
+    "timestamp": "422",
+    "payload": "/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="
+  },
+  "streamSid": "MZb078c0c27facd106036303b4e1ca9069"
+}
+2025-02-21T13:13:44.030Z [INFO] 📬 [Call] Raw message received: {"event":"media","sequenceNumber":"15","media":{"track":"inbound","chunk":"14","timestamp":"569","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZ1e279bf3c7a3cc65933287c3fab27c04"}
+2025-02-21T13:13:44.030Z [INFO] 📥 [Call] Parsed message: {
+  "event": "media",
+  "sequenceNumber": "15",
+  "media": {
+    "track": "inbound",
+    "chunk": "14",
+    "timestamp": "569",
+    "payload": "/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="
+  },
+  "streamSid": "MZ1e279bf3c7a3cc65933287c3fab27c04"
+}
+2025-02-21T13:13:44.030Z [INFO] 📬 [Call] Raw message received: {"event":"media","sequenceNumber":"16","media":{"track":"inbound","chunk":"15","timestamp":"589","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZ1e279bf3c7a3cc65933287c3fab27c04"}
+2025-02-21T13:13:44.030Z [INFO] 📥 [Call] Parsed message: {
+  "event": "media",
+  "sequenceNumber": "16",
+  "media": {
+    "track": "inbound",
+    "chunk": "15",
+    "timestamp": "589",
+    "payload": "/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="
+  },
+  "streamSid": "MZ1e279bf3c7a3cc65933287c3fab27c04"
+}
+2025-02-21T13:13:44.122Z [INFO] 📬 [Call] Raw message received: {"event":"media","sequenceNumber":"11","media":{"track":"inbound","chunk":"10","timestamp":"442","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZb078c0c27facd106036303b4e1ca9069"}
+2025-02-21T13:13:44.122Z [INFO] 📥 [Call] Parsed message: {
+  "event": "media",
+  "sequenceNumber": "11",
+  "media": {
+    "track": "inbound",
+    "chunk": "10",
+    "timestamp": "442",
+    "payload": "/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="
+  },
+  "streamSid": "MZb078c0c27facd106036303b4e1ca9069"
+}
+2025-02-21T13:13:44.122Z [INFO] 📬 [Call] Raw message received: {"event":"media","sequenceNumber":"12","media":{"track":"inbound","chunk":"11","timestamp":"462","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZb078c0c27facd106036303b4e1ca9069"}
+2025-02-21T13:13:44.122Z [INFO] 📥 [Call] Parsed message: {
+  "event": "media",
+  "sequenceNumber": "12",
+  "media": {
+    "track": "inbound",
+    "chunk": "11",
+    "timestamp": "462",
+    "payload": "/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="
+  },
+  "streamSid": "MZb078c0c27facd106036303b4e1ca9069"
+}
+2025-02-21T13:13:44.122Z [INFO] 📬 [Call] Raw message received: {"event":"media","sequenceNumber":"13","media":{"track":"inbound","chunk":"12","timestamp":"482","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZb078c0c27facd106036303b4e1ca9069"}
+2025-02-21T13:13:44.122Z [INFO] 📥 [Call] Parsed message: {
+  "event": "media",
+  "sequenceNumber": "13",
+  "media": {
+    "track": "inbound",
+    "chunk": "12",
+    "timestamp": "482",
+    "payload": "/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="
+  },
+  "streamSid": "MZb078c0c27facd106036303b4e1ca9069"
+}
+2025-02-21T13:13:44.122Z [INFO] 📬 [Call] Raw message received: {"event":"media","sequenceNumber":"14","media":{"track":"inbound","chunk":"13","timestamp":"502","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZb078c0c27facd106036303b4e1ca9069"}
+2025-02-21T13:13:44.122Z [INFO] 📥 [Call] Parsed message: {
+  "event": "media",
+  "sequenceNumber": "14",
+  "media": {
+    "track": "inbound",
+    "chunk": "13",
+    "timestamp": "502",
+    "payload": "/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="
+  },
+  "streamSid": "MZb078c0c27facd106036303b4e1ca9069"
+}
+2025-02-21T13:13:44.122Z [INFO] 📬 [Call] Raw message received: {"event":"media","sequenceNumber":"15","media":{"track":"inbound","chunk":"14","timestamp":"522","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZb078c0c27facd106036303b4e1ca9069"}
+2025-02-21T13:13:44.123Z [INFO] 📥 [Call] Parsed message: {
+  "event": "media",
+  "sequenceNumber": "15",
+  "media": {
+    "track": "inbound",
+    "chunk": "14",
+    "timestamp": "522",
+    "payload": "/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="
+  },
+  "streamSid": "MZb078c0c27facd106036303b4e1ca9069"
+}
+2025-02-21T13:13:44.123Z [INFO] 📬 [Call] Raw message received: {"event":"media","sequenceNumber":"16","media":{"track":"inbound","chunk":"15","timestamp":"542","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZb078c0c27facd106036303b4e1ca9069"}
+2025-02-21T13:13:44.123Z [INFO] 📥 [Call] Parsed message: {
+  "event": "media",
+  "sequenceNumber": "16",
+  "media": {
+    "track": "inbound",
+    "chunk": "15",
+    "timestamp": "542",
+    "payload": "/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="
+  },
+  "streamSid": "MZb078c0c27facd106036303b4e1ca9069"
+}
+2025-02-21T13:13:44.123Z [INFO] 📬 [Call] Raw message received: {"event":"media","sequenceNumber":"17","media":{"track":"inbound","chunk":"16","timestamp":"562","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZb078c0c27facd106036303b4e1ca9069"}
+2025-02-21T13:13:44.123Z [INFO] 📥 [Call] Parsed message: {
+  "event": "media",
+  "sequenceNumber": "17",
+  "media": {
+    "track": "inbound",
+    "chunk": "16",
+    "timestamp": "562",
+    "payload": "/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="
+  },
+  "streamSid": "MZb078c0c27facd106036303b4e1ca9069"
+}
+2025-02-21T13:13:44.123Z [INFO] 📬 [Call] Raw message received: {"event":"media","sequenceNumber":"18","media":{"track":"inbound","chunk":"17","timestamp":"582","payload":"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="},"streamSid":"MZb078c0c27facd106036303b4e1ca9069"}
+2025-02-21T13:13:44.123Z [INFO] 📥 [Call] Parsed message: {
+  "event": "media",
+  "sequenceNumber": "18",
+  "media": {
+    "track": "inbound",
+    "chunk": "17",
+    "timestamp": "582",
+    "payload": "/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w=="
+  },
+  "streamSid": "MZb078c0c27facd106036303b4e1ca9069"
+}
+2025-02-21T13:13:44.930Z [INFO] 🔴 [Call] WebSocket connection closed
+2025-02-21T13:13:44.930Z [INFO] [Twilio] Call connection closed
+2025-02-21T13:13:45.015Z [INFO] 🔴 [Call] WebSocket connection closed
+2025-02-21T13:13:45.015Z [INFO] [Twilio] Call connection closed
+2025-02-21T13:13:45.206Z [INFO] 📞 Call status update: {
+  "callSid": "CA58c191a5299e4f6c023af109b9d362bd",
+  "status": "completed",
+  "timestamp": "2025-02-21T13:13:45.206Z"
+}
