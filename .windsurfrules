@@ -1,6 +1,54 @@
 # Windsurf Rules and Memories
 
-## Environment Configuration
+## Never Modify Existing Environment Variables
+Critical rules for handling environment variables and sensitive data:
+
+1. Protected Variables:
+   - OpenAI API keys
+   - Twilio credentials
+   - Configuration variables
+   - Service endpoints
+
+2. Rules:
+   - Never modify existing variables
+   - Never delete environment variables
+   - Only add new variables if they don't exist
+   - Preserve all sensitive credentials
+
+3. Rationale:
+   - Maintains system stability
+   - Preserves security configurations
+   - Ensures service connectivity
+   - Prevents accidental disruptions
+
+4. Exception Process:
+   - Any changes must be explicitly requested
+   - Changes must be documented
+   - Changes must be tested in isolation
+   - Rollback plan must be available
+
+## Always Use Startup Script
+The start.sh script is critical for application startup and must always be used:
+
+1. Importance:
+   - Ensures proper initialization
+   - Handles environment setup
+   - Manages service dependencies
+   - Performs cleanup when needed
+
+2. Rules:
+   - Never start services manually
+   - Never start in a different order
+   - Always use ./start.sh from project root
+   - Let the script handle all service orchestration
+
+3. Benefits:
+   - Consistent environment setup
+   - Proper service initialization
+   - Clean shutdown and cleanup
+   - Reliable development environment
+
+## Environment File Structure and Rules
 1. Environment File Locations:
    - webapp/.env: ONLY Twilio credentials and phone numbers
    - websocket-server/.env: ONLY OpenAI key and ngrok URL
@@ -17,20 +65,13 @@
    - Inbound (users call this): 60393880467
    - Outbound (AI uses this): +60393880542
 
-## Git Rules
-1. Environment Files:
+4. Git Rules:
    - Never gitignore .env files in this project
    - Keep all API keys and credentials in the repository
    - Each .env file must be in its correct location
 
-## Startup Process
-1. Service Management:
-   - Always use start.sh for starting services
-   - Never start services manually or in a different order
-   - The script handles proper cleanup and environment setup
-
-## WebSocket Behavior
-1. Connection Management:
+## WebSocket Connection Management
+1. Connection Behavior:
    - Must match original repo's behavior
    - Single connection to /logs endpoint
    - Clean disconnection without auto-reconnect
@@ -53,8 +94,14 @@
    - Clean state transitions without race conditions
    - Proper cleanup of old connections before new ones
 
-## Ngrok Configuration
-1. Domain Settings:
+## Twilio Demo Project Configuration Rules
+1. Phone Number Configuration:
+   - Inbound Number (60393880467): This is the number that users call to reach the AI assistant
+   - Outbound/Agent Number (+60393880542): This is the number the AI assistant uses to make outbound calls
+   - Both numbers must be properly configured in Twilio console
+   - Each number requires its own webhook configuration in Twilio
+
+2. Ngrok Configuration:
    - Always use the permanent domain: mereka.ngrok.io
    - Never use temporary ngrok URLs
    - Webhooks for both numbers must point to this domain
