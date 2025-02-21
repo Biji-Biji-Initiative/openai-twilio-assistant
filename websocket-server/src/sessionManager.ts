@@ -307,6 +307,7 @@ function tryConnectModel() {
       jsonSend(modelConn, {
         type: "session.update",
         session: {
+          model: "gpt-4o-realtime-preview-2024-12-17",
           modalities: ["text", "audio"],
           turn_detection: { type: "server_vad" },
           voice: "ash",

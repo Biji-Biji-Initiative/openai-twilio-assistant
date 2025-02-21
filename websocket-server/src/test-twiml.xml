@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+  <!-- Begin inbound media streaming -->
+  <Start>
+    <!-- Replace YOUR_NGROK_DOMAIN with your actual Ngrok domain -->
+    <Stream url="wss://mereka.ngrok.io/streams" track="inbound" />
+  </Start>
+  <!-- Play a prerecorded audio file (Twilio's cowbell) -->
+  <Play>https://api.twilio.com/cowbell.mp3</Play>
+  <!-- Pause for 60 seconds to keep the call active for inbound audio capture -->
+  <Pause length="60"/>
+  <Hangup/>
+</Response>
