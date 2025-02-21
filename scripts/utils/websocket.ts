@@ -1,6 +1,7 @@
 import WebSocket from 'ws';
 import { logger } from './logger';
 import { CONFIG } from './config';
+import { processWebSocketMessage } from './message-handler';
 
 /**
  * WebSocket connection states
@@ -19,6 +20,8 @@ export class WebSocketManager {
   private ws: WebSocket | null = null;
   private state: ConnectionState = ConnectionState.DISCONNECTED;
   private reconnectTimeout: NodeJS.Timeout | null = null;
+  private messageQueue: string[] = [];
+  private readonly maxQueueSize = 1000;
 
   private constructor() {
     // Private constructor for singleton pattern
@@ -42,6 +45,36 @@ export class WebSocketManager {
   }
 
   /**
+   * Set up WebSocket event handlers
+   */
+  private setupEventHandlers(ws: WebSocket): void {
+    ws.on('message', (data) => {
+      try {
+        const message = data.toString();
+        
+        // Add to message queue for replay if needed
+        if (this.messageQueue.length < this.maxQueueSize) {
+          this.messageQueue.push(message);
+        }
+        
+        // Process the message
+        processWebSocketMessage(message);
+      } catch (error) {
+        logger.error('Failed to handle WebSocket message', error as Error);
+      }
+    });
+
+    ws.on('error', (error) => {
+      logger.error('WebSocket error', error as Error);
+    });
+
+    ws.on('close', (code, reason) => {
+      logger.warning(`WebSocket closed: ${code} - ${reason}`);
+      this.state = ConnectionState.DISCONNECTED;
+    });
+  }
+
+  /**
    * Connect to WebSocket server with retry mechanism
    */
   public async connect(endpoint: string): Promise<void> {
@@ -57,6 +90,13 @@ export class WebSocketManager {
       return new Promise((resolve, reject) => {
         logger.info(`Connecting to WebSocket (attempt ${CONFIG.maxRetries.websocket - retries + 1}/${CONFIG.maxRetries.websocket})...`);
 
+        // Clear any existing connection
+        if (this.ws) {
+          this.ws.terminate();
+          this.ws = null;
+        }
+
+        // Create new connection
         this.ws = new WebSocket(endpoint);
 
         // Set connection timeout
@@ -67,24 +107,18 @@ export class WebSocketManager {
           }
         }, CONFIG.timeouts.websocketConnection);
 
-        this.ws.on('open', () => {
+        // Set up event handlers
+        this.ws.once('open', () => {
           clearTimeout(timeout);
           this.state = ConnectionState.CONNECTED;
+          this.setupEventHandlers(this.ws!);
           logger.success('WebSocket connected successfully');
           resolve();
         });
 
-        this.ws.on('error', (error) => {
+        this.ws.once('error', (error) => {
           clearTimeout(timeout);
-          logger.error('WebSocket connection error', error);
           reject(error);
-        });
-
-        this.ws.on('close', () => {
-          if (this.state === ConnectionState.CONNECTED) {
-            logger.warning('WebSocket connection closed');
-            this.state = ConnectionState.DISCONNECTED;
-          }
         });
       });
     };
@@ -115,12 +149,19 @@ export class WebSocketManager {
     }
 
     if (this.ws) {
-      this.ws.terminate();
-      this.ws = null;
+      try {
+        this.ws.terminate();
+      } catch (error) {
+        logger.error('Error during WebSocket termination', error as Error);
+      } finally {
+        this.ws = null;
+        this.state = ConnectionState.DISCONNECTED;
+        logger.info('WebSocket disconnected');
+      }
     }
 
-    this.state = ConnectionState.DISCONNECTED;
-    logger.info('WebSocket disconnected');
+    // Clear message queue
+    this.messageQueue = [];
   }
 
   /**
@@ -137,6 +178,13 @@ export class WebSocketManager {
       logger.error('Failed to send WebSocket message', error as Error);
       throw error;
     }
+  }
+
+  /**
+   * Get recent messages from the queue
+   */
+  public getRecentMessages(): string[] {
+    return [...this.messageQueue];
   }
 }
 

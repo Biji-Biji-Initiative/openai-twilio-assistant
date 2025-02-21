@@ -6,6 +6,15 @@ source "$SOURCE_DIR/utils.sh"
 
 # Enable error handling
 set -euo pipefail
+
+# Initialize PID variables
+WEBAPP_PID=""
+WS_PID=""
+NGROK_PID=""
+
+# Cleanup function
+cleanup() {
+    log_info "Cleaning up processes..."
     
     # Kill specific PIDs if they exist
     [[ ! -z "$WEBAPP_PID" ]] && kill -9 $WEBAPP_PID 2>/dev/null || true
@@ -16,8 +25,10 @@ set -euo pipefail
     sleep 2
 
     # Verify ports are free
-    check_port 3000 || echo "Warning: Port 3000 still in use after cleanup"
-    check_port 8081 || echo "Warning: Port 8081 still in use after cleanup"
+    check_port 3000 || log_warning "Port 3000 still in use after cleanup"
+    check_port 8081 || log_warning "Port 8081 still in use after cleanup"
+
+    log_info "Cleanup complete"
 }
 
 # Function to create/update webapp .env
@@ -141,23 +152,12 @@ main() {
     log_info "Webapp running on http://localhost:$WEBAPP_PORT"
     log_info "WebSocket server running on http://localhost:$WEBSOCKET_PORT"
     log_info "Ngrok running on http://localhost:$NGROK_PORT"
+    log_info "Public URL: https://mereka.ngrok.io"
     log_info "Press Ctrl+C to stop all services"
 
-    # Keep script running
-    while true; do sleep 1; done
-    echo "WebSocket server running on http://localhost:8081"
-    echo "Ngrok tunnel running at https://mereka.ngrok.io"
-
-    # Keep script running
+    # Wait for any child process to exit
     wait
 }
 
 # Run main function
 main
-
-# Set up cleanup on script termination
-trap cleanup EXIT INT TERM
-
-# Keep script running and show status
-echo "All services started!"
-echo "Press Ctrl+C to stop all services"

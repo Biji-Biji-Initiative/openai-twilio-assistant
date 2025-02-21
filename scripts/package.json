@@ -1,8 +1,7 @@
 {
-  "name": "twilio-validation-scripts",
+  "name": "twilio-openai-scripts",
   "version": "1.0.0",
-  "description": "Validation scripts for Twilio integration",
-  "main": "validate-connections.ts",
+  "description": "Scripts for managing Twilio-OpenAI integration",
   "scripts": {
     "validate": "ts-node connection.ts",
     "test:call": "ts-node call-flow.ts",
@@ -10,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^1.5.1",
+    "date-fns": "^2.30.0",
     "dotenv": "^16.3.1",
     "twilio": "^4.18.0",
     "ws": "^8.14.2"
@@ -17,6 +17,7 @@
   "devDependencies": {
     "@types/node": "^20.8.2",
     "@types/ws": "^8.5.6",
+    "@types/axios": "^0.14.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.2.2"
   }
