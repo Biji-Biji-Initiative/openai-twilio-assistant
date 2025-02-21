@@ -1,54 +1,11 @@
 #!/bin/bash
 
+# Source shared utilities
+SOURCE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SOURCE_DIR/utils.sh"
+
 # Enable error handling
-set -e
-
-# Function to check if a port is in use
-check_port() {
-    local port=$1
-    if lsof -i :"$port" > /dev/null 2>&1; then
-        echo "Port $port is already in use"
-        return 1
-    fi
-    return 0
-}
-
-# Function to wait for a service to be ready
-wait_for_service() {
-    local port=$1
-    local service=$2
-    local max_attempts=30
-    local attempt=1
-
-    echo "Waiting for $service to be ready on port $port..."
-    while ! curl -s "http://localhost:$port" > /dev/null 2>&1; do
-        if [ $attempt -gt $max_attempts ]; then
-            echo "$service failed to start after $max_attempts attempts"
-            return 1
-        fi
-        echo "Attempt $attempt: $service not ready yet..."
-        sleep 1
-        ((attempt++))
-    done
-    echo "$service is ready!"
-    return 0
-}
-
-# Function for thorough cleanup
-cleanup() {
-    echo "Cleaning up processes..."
-    cd "$(dirname "$0")"
-    
-    # Kill processes by port
-    lsof -ti :3000 | xargs kill -9 2>/dev/null || true
-    lsof -ti :8081 | xargs kill -9 2>/dev/null || true
-    
-    # Kill any lingering node processes from our directories
-    pkill -f "node.*webapp" || true
-    pkill -f "node.*websocket-server" || true
-    
-    # Kill ngrok
-    pkill -f "ngrok" || true
+set -euo pipefail
     
     # Kill specific PIDs if they exist
     [[ ! -z "$WEBAPP_PID" ]] && kill -9 $WEBAPP_PID 2>/dev/null || true
@@ -134,64 +91,60 @@ main() {
     # Set up cleanup on script exit
     trap cleanup EXIT INT TERM
 
-    # Initial cleanup
+    # Move to project root
+    cd "$SOURCE_DIR/.."
+    
+    log_info "=== Starting Twilio Demo Setup ==="
+
+    # Initial cleanup and checks
     cleanup
-
-    # Get the script directory
-    SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-
-    echo "=== Starting Twilio Demo Setup ==="
-
-    # Check if ports are available
-    echo "Checking ports..."
-    check_port 3000 || { echo "Error: Port 3000 is in use"; exit 1; }
-    check_port 8081 || { echo "Error: Port 8081 is in use"; exit 1; }
+    check_dependencies || exit 1
+    
+    # Check ports
+    check_port $WEBAPP_PORT "Webapp" || exit 1
+    check_port $WEBSOCKET_PORT "WebSocket Server" || exit 1
 
     # Create .env files
-    echo "Setting up environment files..."
+    log_info "Setting up environment files..."
     create_webapp_env || exit 1
     create_websocket_env || exit 1
 
     # Install dependencies
-    echo "Setting up dependencies..."
-    install_deps "$SCRIPT_DIR/webapp" || exit 1
-    install_deps "$SCRIPT_DIR/websocket-server" || exit 1
+    log_info "Setting up dependencies..."
+    install_deps "webapp" || exit 1
+    install_deps "websocket-server" || exit 1
 
-    # Start the webapp
-    echo "Starting webapp..."
-    cd "$SCRIPT_DIR/webapp"
-    npm run dev -- -p 3000 &
-    WEBAPP_PID=$!
-
-    # Wait for webapp to be ready
-    wait_for_service 3000 "webapp" || {
-        echo "Error: Webapp failed to start"
-        exit 1
-    }
+    # Start ngrok
+    log_info "Starting ngrok..."
+    ngrok start --config ./ngrok.yml --all > /dev/null &
+    NGROK_PID=$!
+    check_ngrok || exit 1
 
     # Start the websocket server
-    echo "Starting websocket server..."
-    cd "$SCRIPT_DIR/websocket-server"
-    PORT=8081 npm run dev &
+    log_info "Starting websocket server..."
+    cd websocket-server
+    PORT=$WEBSOCKET_PORT npm run dev > /dev/null 2>&1 &
     WS_PID=$!
+    cd ..
+    wait_for_service $WEBSOCKET_PORT "WebSocket server" || exit 1
 
-    # Wait for websocket server to be ready
-    wait_for_service 8081 "websocket server" || {
-        echo "Error: WebSocket server failed to start"
-        exit 1
-    }
+    # Start the webapp
+    log_info "Starting webapp..."
+    cd webapp
+    npm run dev -- -p $WEBAPP_PORT > /dev/null 2>&1 &
+    WEBAPP_PID=$!
+    cd ..
+    wait_for_service $WEBAPP_PORT "Webapp" || exit 1
 
-    # Start ngrok using config file
-    echo "Starting ngrok..."
-    cd "$SCRIPT_DIR"
-    ngrok start --config ./ngrok.yml --all &
-    NGROK_PID=$!
+    # Final status
+    log_success "=== Setup Complete ==="
+    log_info "Webapp running on http://localhost:$WEBAPP_PORT"
+    log_info "WebSocket server running on http://localhost:$WEBSOCKET_PORT"
+    log_info "Ngrok running on http://localhost:$NGROK_PORT"
+    log_info "Press Ctrl+C to stop all services"
 
-    # Wait a bit for ngrok to establish tunnels
-    sleep 5
-
-    echo "=== Setup Complete ==="
-    echo "Webapp running on http://localhost:3000"
+    # Keep script running
+    while true; do sleep 1; done
     echo "WebSocket server running on http://localhost:8081"
     echo "Ngrok tunnel running at https://mereka.ngrok.io"
 
