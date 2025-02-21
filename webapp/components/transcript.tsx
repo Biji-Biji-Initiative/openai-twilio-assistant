@@ -15,13 +15,8 @@ const Transcript: React.FC<TranscriptProps> = ({ items }) => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [items]);
 
-  // Show messages, function calls, and function call outputs in the transcript
-  const transcriptItems = items.filter(
-    (it) =>
-      it.type === "message" ||
-      it.type === "function_call" ||
-      it.type === "function_call_output"
-  );
+  // Show all items in the transcript
+  const transcriptItems = items;
 
   return (
     <Card className="h-full flex flex-col overflow-hidden">
@@ -48,8 +43,10 @@ const Transcript: React.FC<TranscriptProps> = ({ items }) => {
             {transcriptItems.map((msg, i) => {
               const isUser = msg.role === "user";
               const isTool = msg.role === "tool";
-              // Default to assistant if not user or tool
-              const Icon = isUser ? Phone : isTool ? Wrench : Bot;
+              const isEvent = msg.type === "event";
+              const isError = msg.type === "error";
+              // Choose icon based on message type
+              const Icon = isUser ? Phone : isTool ? Wrench : isEvent ? MessageSquare : isError ? Bot : Bot;
 
               // Combine all text parts into a single string for display
               const displayText = msg.content
@@ -73,14 +70,16 @@ const Transcript: React.FC<TranscriptProps> = ({ items }) => {
                     <div className="flex items-center gap-2 mb-1.5">
                       <span
                         className={`text-sm font-medium ${
-                          isUser ? "text-muted-foreground" : "text-foreground"
+                          isUser ? "text-muted-foreground" : 
+                          isError ? "text-destructive" :
+                          "text-foreground"
                         }`}
                       >
-                        {isUser
-                          ? "Caller"
-                          : isTool
-                          ? "Tool Response"
-                          : "Assistant"}
+                        {isUser ? "Caller" :
+                         isTool ? "Tool Response" :
+                         isEvent ? "Event" :
+                         isError ? "Error" :
+                         "Assistant"}
                       </span>
                       <span className="text-xs text-muted-foreground">
                         {msg.timestamp}

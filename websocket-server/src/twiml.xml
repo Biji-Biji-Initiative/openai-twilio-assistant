@@ -2,10 +2,11 @@
 <Response>
   <Say>Connected to AI assistant</Say>
   <Connect>
-    <Stream url="{{WS_URL}}" track="inbound_track">
-      <Parameter name="statusCallback" value="{{PUBLIC_URL}}/api/call/status"/>
-      <Parameter name="statusCallbackEvent" value="initiated ringing answered completed"/>
-      <Parameter name="statusCallbackMethod" value="POST"/>
+    <Stream url="{{WS_URL}}">
+      <Parameter name="track" value="inbound" />
+      <Parameter name="format" value="audio/x-mulaw" />
+      <Parameter name="rate" value="8000" />
+      <Parameter name="channels" value="1" />
     </Stream>
   </Connect>
   <Say>Disconnected</Say>

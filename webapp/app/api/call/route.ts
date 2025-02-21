@@ -9,10 +9,18 @@ export async function POST(request: Request) {
   try {
     const { from, to } = await request.json();
 
+    const ngrokDomain = process.env.NGROK_DOMAIN || 'mereka.ngrok.io';
+    const baseUrl = `https://${ngrokDomain}`;
+
+    console.log('Creating call:', { from, to });
+
     const call = await client.calls.create({
-      url: 'https://mereka.ngrok.io/api/twiml',
+      url: `${baseUrl}/twiml`,
       to: to,
       from: from,
+      statusCallback: `${baseUrl}/api/call/status`,
+      statusCallbackEvent: ['initiated', 'ringing', 'answered', 'completed'],
+      statusCallbackMethod: 'POST'
     });
 
     return NextResponse.json({ success: true, callSid: call.sid });

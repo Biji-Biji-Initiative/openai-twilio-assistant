@@ -86,28 +86,62 @@ export default function ChecklistAndConfig({ setSelectedPhoneNumber, setAllConfi
 
   useEffect(() => {
     let polling = true;
+    let pollCount = 0;
+    const MAX_POLLS = 3; // Maximum number of consecutive successful polls
+    const POLL_INTERVAL = 5000; // 5 seconds between polls
+    let lastPollTime = 0;
 
     const pollChecks = async () => {
+      if (!polling) return;
+      
+      // Prevent polling more frequently than POLL_INTERVAL
+      const now = Date.now();
+      if (now - lastPollTime < POLL_INTERVAL) return;
+      lastPollTime = now;
+      
+      // Only log on first poll and when status changes
+      if (pollCount === 0) {
+        console.log(`[Checklist] Starting configuration checks (Poll 1/${MAX_POLLS})`);
+      }
+      
       try {
         // 1. Check credentials
         let res = await fetch("/api/twilio");
-        if (!res.ok) throw new Error("Failed credentials check");
+        if (!res.ok) {
+          console.warn("Credentials check failed:", await res.text());
+          throw new Error("Failed credentials check");
+        }
         const credData = await res.json();
-        setHasCredentials(!!credData?.credentialsSet);
+        const hasValidCreds = !!credData?.credentialsSet;
+        if (hasValidCreds !== hasCredentials) {
+          console.log("✓ Credentials status:", hasValidCreds ? "Valid" : "Invalid");
+          setHasCredentials(hasValidCreds);
+        }
 
         // 2. Fetch numbers
         res = await fetch("/api/twilio/numbers");
-        if (!res.ok) throw new Error("Failed to fetch phone numbers");
+        if (!res.ok) {
+          console.warn("Numbers fetch failed:", await res.text());
+          throw new Error("Failed to fetch phone numbers");
+        }
         const numbersData = await res.json();
         if (Array.isArray(numbersData) && numbersData.length > 0) {
-          setPhoneNumbers(numbersData);
-          // If currentNumberSid not set or not in the list, use first
-          const selected =
-            numbersData.find((p: PhoneNumber) => p.sid === currentNumberSid) ||
-            numbersData[0];
-          setCurrentNumberSid(selected.sid);
-          setCurrentVoiceUrl(selected.voiceUrl || "");
-          setSelectedPhoneNumber(selected.friendlyName || "");
+          // Only update if numbers have changed
+          const currentNumbers = JSON.stringify(phoneNumbers);
+          const newNumbers = JSON.stringify(numbersData);
+          if (currentNumbers !== newNumbers) {
+            console.log("✓ Phone numbers updated:", numbersData.length, "numbers found");
+            setPhoneNumbers(numbersData);
+            // If currentNumberSid not set or not in the list, use first
+            const selected =
+              numbersData.find((p: PhoneNumber) => p.sid === currentNumberSid) ||
+              numbersData[0];
+            setCurrentNumberSid(selected.sid);
+            setCurrentVoiceUrl(selected.voiceUrl || "");
+            setSelectedPhoneNumber(selected.friendlyName || "");
+          } else {
+            console.log("✓ Phone numbers verified:", numbersData.length, "numbers available");
+          }
         }
 
         // 3. Check local server & public URL
@@ -118,21 +152,50 @@ export default function ChecklistAndConfig({ setSelectedPhoneNumber, setAllConfi
             const pubData = await resLocal.json();
             foundPublicUrl = pubData?.publicUrl || "";
             setLocalServerUp(true);
-            setPublicUrl(foundPublicUrl);
+            if (foundPublicUrl !== publicUrl) {
+              console.log("✓ Public URL updated:", foundPublicUrl);
+              setPublicUrl(foundPublicUrl);
+            } else {
+              console.log("✓ Public URL verified:", foundPublicUrl);
+            }
           } else {
             throw new Error("Local server not responding");
           }
         } catch {
-          setLocalServerUp(false);
-          setPublicUrl("");
+          if (localServerUp) {
+            console.warn("✗ Local server connection lost");
+            setLocalServerUp(false);
+            setPublicUrl("");
+          }
         }
+
+        // Increment successful poll count
+        pollCount++;
+        
+        // If we've had enough successful polls, slow down polling
+        if (pollCount >= MAX_POLLS) {
+          polling = false;
+          console.log("✓ All checks stable, stopping frequent polls");
+        }
+        
+        console.groupEnd();
+
       } catch (err) {
-        console.error(err);
+        console.error('[Checklist] Error in poll checks:', err);
+        if (err instanceof Error) {
+          console.error('[Checklist] Error details:', err.message);
+        }
+        // Reset poll count on error
+        pollCount = 0;
       }
     };
 
+    // Initial check
     pollChecks();
-    const intervalId = setInterval(() => polling && pollChecks(), 1000);
+    
+    // Set up polling interval
+    const intervalId = setInterval(() => polling && pollChecks(), POLL_INTERVAL);
+    
     return () => {
       polling = false;
       clearInterval(intervalId);

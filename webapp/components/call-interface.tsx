@@ -29,6 +29,7 @@ const CallInterface = ({ allConfigsReady, setAllConfigsReady }: CallInterfacePro
   const [wsStatus, setWsStatus] = useState<'connecting' | 'connected' | 'disconnected'>('disconnected');
   const [error, setError] = useState<string | null>(null);
   const [selectedPhoneNumber, setSelectedPhoneNumber] = useState("");
+  const [currentCallSid, setCurrentCallSid] = useState<string | null>(null);
   // allConfigsReady is now passed as a prop
   const [checklistComplete, setChecklistComplete] = useState(false);
   
@@ -40,62 +41,163 @@ const CallInterface = ({ allConfigsReady, setAllConfigsReady }: CallInterfacePro
 
   // Initialize WebSocket when configs are ready
   useEffect(() => {
-    if (allConfigsReady) {
-      // Force reconnect when configs are ready
-      if (ws) {
-        ws.close();
-        setWs(null);
-      }
+    if (allConfigsReady && !ws && wsStatus === 'disconnected') {
+      console.log('[WebSocket] Configs ready, initiating connection');
       connectWebSocket();
     }
-  }, [allConfigsReady]);
+  }, [allConfigsReady, wsStatus]);
 
   // Remove redundant effect
 
   const connectWebSocket = () => {
-    console.log('Attempting WebSocket connection...');
+    // Prevent multiple connection attempts
+    if (wsStatus === 'connecting' || wsStatus === 'connected') {
+      console.log('[WebSocket] Connection already in progress or established');
+      return;
+    }
+
+    console.log('[WebSocket] Initiating connection...');
     setWsStatus('connecting');
     setError(null);
+
     try {
-      setWsStatus('connecting');
-      const wsHost = process.env.NEXT_PUBLIC_WS_HOST || 'localhost';
-const wsPort = process.env.NEXT_PUBLIC_WS_PORT || '8081';
-const newWs = new WebSocket(`ws://${wsHost}:${wsPort}/logs`);
+      const ngrokDomain = process.env.NEXT_PUBLIC_NGROK_DOMAIN || 'mereka.ngrok.io';
+      console.log('[WebSocket] Connecting to:', `wss://${ngrokDomain}/logs`);
+      const newWs = new WebSocket(`wss://${ngrokDomain}/logs`);
 
       newWs.onopen = () => {
-        console.log("Connected to logs websocket");
+        console.log("[WebSocket] Connection established");
         setWsStatus('connected');
         setError(null);
         setWs(newWs);
+        
+        // Log connection success with timestamp
+        console.log(`[WebSocket] Connected at ${new Date().toISOString()}`);
+        
+        // Send a test message to verify connection
+        newWs.send(JSON.stringify({
+          type: 'test',
+          message: 'Testing WebSocket connection'
+        }));
       };
 
       newWs.onmessage = (event) => {
         try {
           const data = JSON.parse(event.data);
-          console.log("Received logs event:", data);
-          handleRealtimeEvent(data, setItems);
+          
+          // Handle Twilio events
+          if (data.type === 'twilio_event') {
+            const twilioData = data.data;
+            const eventType = twilioData.event;
+            
+            // Only log non-media events
+            if (eventType !== 'media') {
+              const timestamp = new Date().toISOString();
+              console.group(`[Twilio Event: ${eventType}] at ${timestamp}`);
+              console.log('Event data:', twilioData);
+              console.groupEnd();
+            }
+
+            // Update state based on event type
+            switch (eventType) {
+              case 'media':
+                setCallStatus('connected');
+                break;
+                
+              case 'start':
+                setCallStatus('connecting');
+                setItems(prev => [...prev, {
+                  id: `event-${Date.now()}`,
+                  type: 'event',
+                  content: [{ type: 'text', text: 'Call started' }],
+                  timestamp: new Date().toLocaleTimeString()
+                }]);
+                break;
+                
+              case 'stop':
+                setCallStatus('disconnected');
+                setCurrentCallSid(null);
+                setItems(prev => [...prev, {
+                  id: `event-${Date.now()}`,
+                  type: 'event',
+                  content: [{ type: 'text', text: 'Call ended' }],
+                  timestamp: new Date().toLocaleTimeString()
+                }]);
+                break;
+                
+              case 'status':
+                // Update call status based on Twilio status
+                const status = twilioData.status;
+                if (status === 'initiated' || status === 'ringing') {
+                  setCallStatus('connecting');
+                } else if (status === 'in-progress') {
+                  setCallStatus('connected');
+                } else if (status === 'completed' || status === 'failed') {
+                  setCallStatus('disconnected');
+                  setCurrentCallSid(null);
+                }
+                
+                setItems(prev => [...prev, {
+                  id: `status-${Date.now()}`,
+                  type: 'event',
+                  content: [{ type: 'text', text: `Call status: ${status}` }],
+                  timestamp: new Date().toLocaleTimeString()
+                }]);
+                break;
+                
+              case 'connected':
+                setItems(prev => [...prev, {
+                  id: `event-${Date.now()}`,
+                  type: 'event',
+                  content: [{ type: 'text', text: 'WebSocket connected to Twilio' }],
+                  timestamp: new Date().toLocaleTimeString()
+                }]);
+                break;
+                
+              default:
+                if (eventType !== 'media') {
+                  setItems(prev => [...prev, {
+                    id: `event-${Date.now()}`,
+                    type: 'event',
+                    content: [{ type: 'text', text: `Twilio event: ${eventType}` }],
+                    timestamp: new Date().toLocaleTimeString()
+                  }]);
+                }
+            }
+          } else {
+            // Handle model events
+            handleRealtimeEvent(data, setItems);
+          }
         } catch (err) {
-          console.error('Error processing websocket message:', err);
+          console.error('[WebSocket] Error processing message:', err);
+          setItems(prev => [...prev, {
+            id: `error-${Date.now()}`,
+            type: 'error',
+            content: [{ type: 'text', text: `Error: ${err.message}` }],
+            timestamp: new Date().toLocaleTimeString()
+          }]);
         }
       };
 
       newWs.onclose = () => {
-        console.log("Logs websocket disconnected");
+        console.log("[WebSocket] Disconnected");
         setWs(null);
         setWsStatus('disconnected');
-        // Auto reconnect if checklist is complete
-        if (checklistComplete) {
-          setTimeout(() => {
-            if (checklistComplete && !ws) {
-              connectWebSocket();
-            }
-          }, 1000);
-        }
+        // No auto-reconnect here - the useEffect will handle reconnection if needed
       };
 
       newWs.onerror = (err) => {
-        console.error('WebSocket error:', err);
-        setError('Failed to connect to server. Retrying...');
+        const timestamp = new Date().toISOString();
+        console.error(`[WebSocket] Error at ${timestamp}:`, err);
+        setError('Failed to connect to server');
+        setWsStatus('disconnected');
+        setWs(null);
+        // Log detailed error info
+        console.group('[WebSocket] Connection Error Details');
+        console.log('Timestamp:', timestamp);
+        console.log('Status:', wsStatus);
+        console.log('Has existing connection:', !!ws);
+        console.groupEnd();
       };
 
       // setWs moved to onopen handler
@@ -149,8 +251,17 @@ const newWs = new WebSocket(`ws://${wsHost}:${wsPort}/logs`);
       });
       localStorage.setItem('conversations', JSON.stringify(conversations));
       
-      toast.success('Call initiated successfully');
+      setCurrentCallSid(data.callSid);
       setCallStatus('connecting');
+      
+      // Add call initiation to logs
+      setItems(prev => [...prev, {
+        id: `call-${Date.now()}`,
+        type: 'event',
+        content: [{ type: 'text', text: `Initiating call to ${formattedNumber}` }],
+        timestamp: new Date().toLocaleTimeString()
+      }]);
+      toast.success('Call initiated successfully');
     } catch (error) {
       console.error('Error initiating call:', error);
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
@@ -158,6 +269,38 @@ const newWs = new WebSocket(`ws://${wsHost}:${wsPort}/logs`);
       toast.error(errorMessage);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleHangup = async () => {
+    if (!currentCallSid) {
+      toast.error('No active call to hang up');
+      return;
+    }
+    
+    try {
+      const response = await fetch('/api/call/hangup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          callSid: currentCallSid,
+        }),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to hang up call');
+      }
+      
+      toast.success('Call ended successfully');
+      setCallStatus('disconnected');
+      setCurrentCallSid(null);
+    } catch (error) {
+      console.error('Error hanging up:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      setError(`Failed to hang up call: ${errorMessage}`);
+      toast.error(errorMessage);
     }
   };
 
@@ -231,15 +374,15 @@ const newWs = new WebSocket(`ws://${wsHost}:${wsPort}/logs`);
           </div>
           <div className="flex-shrink-0 pt-6">
             <Button
-              onClick={initiateOutgoingCall}
-              disabled={!outgoingNumber || callStatus === 'connected' || isLoading || wsStatus !== 'connected'}
+              onClick={callStatus === 'connected' ? handleHangup : initiateOutgoingCall}
+              disabled={(!outgoingNumber && callStatus !== 'connected') || isLoading || wsStatus !== 'connected'}
               variant={callStatus === 'connected' ? 'destructive' : 'default'}
               className="w-[120px]"
             >
               {isLoading ? (
                 <>
                   <Phone className="mr-2 h-4 w-4 animate-spin" />
-                  Calling...
+                  {callStatus === 'connected' ? 'Ending...' : 'Calling...'}
                 </>
               ) : callStatus === 'connected' ? (
                 <>

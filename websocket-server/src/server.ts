@@ -45,8 +45,8 @@ function generateTwiML(req: express.Request) {
   const wsUrl = new URL(PUBLIC_URL);
   wsUrl.protocol = "wss:";
   
-  // Remove trailing slashes and ensure clean path
-  wsUrl.pathname = "/media".replace(/\/+/g, "/").replace(/\/$/, "");
+  // Use /call to match Twilio's expected protocol
+  wsUrl.pathname = "/call";
   
   // Log the generated URLs for debugging
   console.log('📝 Generating TwiML with URLs:', {
@@ -117,19 +117,70 @@ wss.on("connection", (ws: WebSocket, req: IncomingMessage) => {
     return;
   }
 
-  // Normalize path by removing duplicate slashes and trailing slash
-  const normalizedPath = "/" + parts.join("/").replace(/\/+/g, "/").replace(/\/$/, "");
-  console.log('🛠️ Normalized path:', normalizedPath);
+  const path = parts[0];
+  console.log('🛠️ WebSocket path:', path);
   
-  if (normalizedPath === "/media") {
-    console.log('🎤 Handling media connection');
+  if (path === "call") {
+    console.log('📞 [Call] New connection request');
+    
+    // Log headers to verify Twilio's connection
+    console.log('📋 [Call] Connection headers:', req.headers);
+
     if (currentCall) {
-      console.log('🔄 Closing existing media connection');
+      console.log('🔄 [Call] Closing existing connection');
       currentCall.close();
     }
+
+    // Set up WebSocket event handlers
+    ws.on('open', () => {
+      console.log('🌟 [Call] WebSocket connection opened');
+    });
+
+    ws.on('close', () => {
+      console.log('🔴 [Call] WebSocket connection closed');
+    });
+
+    ws.on('error', (error) => {
+      console.error('❌ [Call] WebSocket error:', error);
+    });
+
     currentCall = ws;
+    console.log('✅ [Call] Connection assigned as current call');
+
+    // Handle Twilio protocol messages
+    ws.on('message', (data: Buffer) => {
+      try {
+        const rawMessage = data.toString();
+        console.log('📬 [Call] Raw message received:', rawMessage);
+
+        const msg = JSON.parse(rawMessage);
+        console.log('📥 [Call] Parsed message:', msg);
+
+        if (msg.event === 'start') {
+          console.log('🚀 [Call] Received start event');
+          console.log('📊 [Call] Start message details:', {
+            streamSid: msg.streamSid,
+            tracks: msg.start?.tracks
+          });
+
+          const response = {
+            event: 'start',
+            protocol: 'wss',
+            version: '1.0.0',
+            streamSid: msg.streamSid,
+            tracks: msg.start?.tracks ? [{ id: msg.start.tracks[0].id }] : []
+          };
+
+          console.log('📤 [Call] Sending response:', response);
+          ws.send(JSON.stringify(response));
+        }
+      } catch (error) {
+        console.error('❌ [Call] Error handling message:', error);
+      }
+    });
+
     handleCallConnection(currentCall, OPENAI_API_KEY);
-  } else if (normalizedPath === "/logs") {
+  } else if (path === "logs") {
     console.log('📝 Handling logs connection');
     if (currentLogs) {
       console.log('🔄 Closing existing logs connection');
@@ -144,7 +195,7 @@ wss.on("connection", (ws: WebSocket, req: IncomingMessage) => {
       message: "WebSocket connection established"
     }));
   } else {
-    console.error("❌ Unknown connection type. Path:", normalizedPath);
+    console.error("❌ Unknown connection type. Path:", path);
     ws.close();
   }
 });
