@@ -3,9 +3,10 @@ import dotenv from 'dotenv';
 import path from 'path';
 import { promisify } from 'util';
 import { execSync, spawn } from 'child_process';
-import { twilio } from 'twilio';
+import twilio, { Twilio } from 'twilio';
 import axios from 'axios';
 import { writeFileSync, readFileSync } from 'fs';
+import logger from './utils/logger';
 
 // Load both .env files
 dotenv.config({ path: path.join(__dirname, '../webapp/.env') });
@@ -47,7 +48,7 @@ class ConnectionValidator {
     delayMs: 1000,
     backoffFactor: 1.5
   };
-  private twilioClient: any;
+  private twilioClient: Twilio | null = null;
   private lastValidationTime: number = 0;
   private validationHistory: ValidationResult[] = [];
 
@@ -99,33 +100,58 @@ class ConnectionValidator {
     try {
       const ngrokDomain = process.env.NGROK_DOMAIN || 'mereka.ngrok.io';
       
-      // Check if ngrok is running
       // Check if ngrok is running with correct configuration
       try {
-        const ngrokPs = execSync('ps aux | grep ngrok').toString();
-        if (!ngrokPs.includes(ngrokDomain)) {
-          this.log('recovery', 'Ngrok not running with correct domain, restarting...');
-          execSync('pkill ngrok');
-          spawn('ngrok', ['http', '3000', '--subdomain=' + ngrokDomain.split('.')[0]], {
-            detached: true,
-            stdio: 'ignore'
-          });
+        interface NgrokTunnel {
+          public_url: string;
+          config: {
+            addr: string;
+          };
+        }
+
+        interface NgrokApiResponse {
+          tunnels: NgrokTunnel[];
+        }
+
+        const response = await fetch('http://localhost:4040/api/tunnels');
+        const ngrokApi = await response.json() as NgrokApiResponse;
+        const tunnels = ngrokApi.tunnels || [];
+        const correctTunnel = tunnels.find(t => 
+          t.public_url.includes(ngrokDomain) && 
+          t.config.addr === 'http://localhost:8081'
+        );
+
+        if (!correctTunnel) {
+          this.log('recovery', 'Ngrok not running with correct configuration, restarting...');
+          execSync('cd ../webapp && ngrok start --config ngrok.yml --all');
           // Wait for ngrok to start
           await new Promise(resolve => setTimeout(resolve, 5000));
         }
-      } catch {
+      } catch (error) {
         return {
           success: false,
-          message: 'Ngrok is not running. Please start ngrok first.'
+          message: 'Ngrok is not running or API is not accessible. Please start ngrok first.',
+          error
         };
       }
 
       // Validate domain is accessible
-      const response = await fetch(`https://${ngrokDomain}/health`);
-      if (!response.ok) {
+      const wsUrl = `wss://${ngrokDomain}/logs`;
+      try {
+        const ws = new WebSocket(wsUrl);
+        await new Promise((resolve, reject) => {
+          ws.onopen = resolve;
+          ws.onerror = reject;
+          // Timeout after 5 seconds
+          setTimeout(() => reject(new Error('WebSocket connection timeout')), 5000);
+        });
+        ws.close();
+        this.log('success', `Successfully connected to WebSocket at ${wsUrl}`);
+      } catch (error) {
         return {
           success: false,
-          message: `Ngrok domain ${ngrokDomain} is not accessible`
+          message: `WebSocket connection to ${wsUrl} failed`,
+          error
         };
       }
 
@@ -144,12 +170,12 @@ class ConnectionValidator {
 
   private async validateTwilio(): Promise<ValidationResult> {
     try {
-      const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+      const client = new Twilio(process.env.TWILIO_ACCOUNT_SID!, process.env.TWILIO_AUTH_TOKEN!);
       this.twilioClient = client;
 
       // Validate credentials
-      const account = await client.api.accounts(process.env.TWILIO_ACCOUNT_SID).fetch();
-      if (!account.status === 'active') {
+      const account = await client.api.accounts(process.env.TWILIO_ACCOUNT_SID!).fetch();
+      if (account.status !== 'active') {
         return {
           success: false,
           message: 'Twilio account is not active'
@@ -158,11 +184,28 @@ class ConnectionValidator {
 
       // Validate phone numbers
       const numbers = await client.incomingPhoneNumbers.list();
-      const hasValidNumber = numbers.some(n => n.phoneNumber === process.env.TWILIO_PHONE_NUMBER);
-      if (!hasValidNumber) {
+      const inboundNumber = process.env.TWILIO_INBOUND_NUMBER;
+      const outboundNumber = process.env.TWILIO_OUTBOUND_NUMBER;
+      
+      if (!inboundNumber || !outboundNumber) {
         return {
           success: false,
-          message: 'Configured phone number not found in Twilio account'
+          message: 'Missing required phone numbers in environment variables'
+        };
+      }
+      
+      const hasInboundNumber = numbers.some((n: { phoneNumber: string }) => 
+        n.phoneNumber === inboundNumber || n.phoneNumber === '+' + inboundNumber
+      );
+      
+      const hasOutboundNumber = numbers.some((n: { phoneNumber: string }) => 
+        n.phoneNumber === outboundNumber || n.phoneNumber === '+' + outboundNumber
+      );
+      
+      if (!hasInboundNumber || !hasOutboundNumber) {
+        return {
+          success: false,
+          message: `Phone numbers not found in Twilio account. Inbound: ${hasInboundNumber}, Outbound: ${hasOutboundNumber}`
         };
       }
 
@@ -213,7 +256,7 @@ class ConnectionValidator {
       const ws = new WebSocket(`wss://${ngrokDomain}/${path}`);
       
       const timeoutId = setTimeout(() => {
-        ws.close();
+        ws.terminate(); // Force close the connection
         resolve({
           success: false,
           message: `Connection timeout for ${path}`
@@ -223,8 +266,14 @@ class ConnectionValidator {
       ws.on('open', () => {
         clearTimeout(timeoutId);
         if (path === 'call') {
+          if (this.wsCallConnection) {
+            this.wsCallConnection.terminate();
+          }
           this.wsCallConnection = ws;
         } else {
+          if (this.wsLogsConnection) {
+            this.wsLogsConnection.terminate();
+          }
           this.wsLogsConnection = ws;
         }
         resolve({
@@ -235,24 +284,37 @@ class ConnectionValidator {
 
       ws.on('error', (error) => {
         clearTimeout(timeoutId);
+        ws.terminate(); // Force close on error
         resolve({
           success: false,
           message: `Failed to connect to ${path} endpoint`,
           error
         });
       });
+
+      // Add close handler to clean up
+      ws.on('close', () => {
+        clearTimeout(timeoutId);
+        if (path === 'call' && this.wsCallConnection === ws) {
+          this.wsCallConnection = null;
+        } else if (path === 'logs' && this.wsLogsConnection === ws) {
+          this.wsLogsConnection = null;
+        }
+      });
     });
   }
 
   private async cleanup() {
     if (this.wsCallConnection) {
-      this.wsCallConnection.close();
+      this.wsCallConnection.terminate();
       this.wsCallConnection = null;
     }
     if (this.wsLogsConnection) {
-      this.wsLogsConnection.close();
+      this.wsLogsConnection.terminate();
       this.wsLogsConnection = null;
     }
+    // Wait for connections to fully close
+    await new Promise(resolve => setTimeout(resolve, 1000));
   }
 
   private async checkHealth(): Promise<void> {
@@ -302,7 +364,8 @@ class ConnectionValidator {
       const requiredVars = [
         'TWILIO_ACCOUNT_SID',
         'TWILIO_AUTH_TOKEN',
-        'TWILIO_PHONE_NUMBER',
+        'TWILIO_INBOUND_NUMBER',
+        'TWILIO_OUTBOUND_NUMBER',
         'OPENAI_API_KEY',
         'NGROK_DOMAIN',
         'NGROK_AUTH_TOKEN'
@@ -339,6 +402,8 @@ class ConnectionValidator {
           }
         } catch (error) {
           this.log('error', `${service.name} validation failed after retries`);
+          await this.cleanup();
+          process.exit(1);
           return;
         }
       }
@@ -359,8 +424,14 @@ class ConnectionValidator {
       const logsResult = await this.createWebSocketConnection('logs');
       if (!logsResult.success) {
         this.log('error', logsResult.message);
+        await this.cleanup();
+        process.exit(1);
         return;
       }
+      
+      this.log('success', 'All validations passed');
+      await this.cleanup();
+      process.exit(0);
       this.log('success', logsResult.message);
 
       // 4. Save validation results
@@ -369,7 +440,10 @@ class ConnectionValidator {
         health: this.healthStatus,
         success: true
       };
-      this.validationHistory.push(validationResult);
+      this.validationHistory.push({
+        ...validationResult,
+        message: 'Validation completed successfully'
+      });
       writeFileSync('validation-history.json', 
         JSON.stringify(this.validationHistory, null, 2));
 
@@ -388,10 +462,26 @@ class ConnectionValidator {
   }
 }
 
+// Handle SIGINT (Ctrl+C)
+process.on('SIGINT', () => {
+  console.log('\nReceived SIGINT. Cleaning up...');
+  process.exit(0);
+});
+
 // Run validation
 if (require.main === module) {
   const validator = ConnectionValidator.getInstance();
-  validator.validateAll().catch(console.error);
+  validator.validateAll()
+    .catch(error => {
+      console.error('Validation failed:', error);
+      process.exit(1);
+    });
+    
+  // Force exit after timeout
+  setTimeout(() => {
+    console.error('Validation timed out');
+    process.exit(1);
+  }, 30000); // 30 second timeout
 }
 
 export default ConnectionValidator;

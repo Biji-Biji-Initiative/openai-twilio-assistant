@@ -1,0 +1,316 @@
+{
+  "timestamp": "2025-02-21T11:52:59.489Z",
+  "callSid": "CA3842b8b7a97a5ba16a5a26f8c26cb46f",
+  "logs": [
+    {
+      "timestamp": "2025-02-21T11:52:18.923Z",
+      "type": "websocket",
+      "message": "Connecting to logs endpoint..."
+    },
+    {
+      "timestamp": "2025-02-21T11:52:19.413Z",
+      "type": "websocket",
+      "message": "Connected to logs endpoint"
+    },
+    {
+      "timestamp": "2025-02-21T11:52:19.413Z",
+      "type": "websocket",
+      "message": "Connecting to call endpoint..."
+    },
+    {
+      "timestamp": "2025-02-21T11:52:19.414Z",
+      "type": "websocket",
+      "message": "Received message on logs",
+      "data": {
+        "type": "status",
+        "message": "WebSocket connection established"
+      }
+    },
+    {
+      "timestamp": "2025-02-21T11:52:19.777Z",
+      "type": "websocket",
+      "message": "Connected to call endpoint"
+    },
+    {
+      "timestamp": "2025-02-21T11:52:19.778Z",
+      "type": "call",
+      "message": "Initiating test call..."
+    },
+    {
+      "timestamp": "2025-02-21T11:52:20.641Z",
+      "type": "call",
+      "message": "Call initiated with SID: CA3842b8b7a97a5ba16a5a26f8c26cb46f"
+    },
+    {
+      "timestamp": "2025-02-21T11:52:20.963Z",
+      "type": "websocket",
+      "message": "Received message on logs",
+      "data": {
+        "type": "twilio_event",
+        "data": {
+          "event": "status",
+          "callSid": "CA3842b8b7a97a5ba16a5a26f8c26cb46f",
+          "status": "initiated",
+          "timestamp": "2025-02-21T11:52:20.880Z"
+        }
+      }
+    },
+    {
+      "timestamp": "2025-02-21T11:52:21.236Z",
+      "type": "call",
+      "message": "Initial status: queued"
+    },
+    {
+      "timestamp": "2025-02-21T11:52:22.037Z",
+      "type": "websocket",
+      "message": "Received message on logs",
+      "data": {
+        "type": "twilio_event",
+        "data": {
+          "event": "status",
+          "callSid": "CA3842b8b7a97a5ba16a5a26f8c26cb46f",
+          "status": "ringing",
+          "timestamp": "2025-02-21T11:52:21.945Z"
+        }
+      }
+    },
+    {
+      "timestamp": "2025-02-21T11:52:22.640Z",
+      "type": "websocket",
+      "message": "Received message on logs",
+      "data": {
+        "type": "twilio_event",
+        "data": {
+          "event": "status",
+          "callSid": "CA3842b8b7a97a5ba16a5a26f8c26cb46f",
+          "status": "in-progress",
+          "timestamp": "2025-02-21T11:52:22.547Z"
+        }
+      }
+    },
+    {
+      "timestamp": "2025-02-21T11:52:22.799Z",
+      "type": "call",
+      "message": "Updated status: in-progress"
+    },
+    {
+      "timestamp": "2025-02-21T11:52:24.370Z",
+      "type": "call",
+      "message": "Updated status: in-progress"
+    },
+    {
+      "timestamp": "2025-02-21T11:52:25.261Z",
+      "type": "websocket",
+      "message": "Connection closed for call"
+    },
+    {
+      "timestamp": "2025-02-21T11:52:25.471Z",
+      "type": "websocket",
+      "message": "Received message on logs",
+      "data": {
+        "type": "twilio_event",
+        "timestamp": "2025-02-21T11:52:25.369Z",
+        "data": {
+          "event": "connected",
+          "protocol": "Call",
+          "version": "1.0.0"
+        }
+      }
+    },
+    {
+      "timestamp": "2025-02-21T11:52:25.471Z",
+      "type": "websocket",
+      "message": "Received message on logs",
+      "data": {
+        "type": "twilio_event",
+        "timestamp": "2025-02-21T11:52:25.369Z",
+        "data": {
+          "event": "start",
+          "sequenceNumber": "1",
+          "start": {
+            "accountSid": "ACab6a3b51e6078865e1e39e8005dc2bcd",
+            "streamSid": "MZ05005f4482afa344902d424567aeed11",
+            "callSid": "CA4da78eacb2b4a57d3c9544a5c9621ccd",
+            "tracks": [
+              "inbound"
+            ],
+            "mediaFormat": {
+              "encoding": "audio/x-mulaw",
+              "sampleRate": 8000,
+              "channels": 1
+            },
+            "customParameters": {
+              "format": "audio/x-mulaw",
+              "track": "inbound",
+              "rate": "8000",
+              "channels": "1"
+            }
+          },
+          "streamSid": "MZ05005f4482afa344902d424567aeed11"
+        }
+      }
+    },
+    {
+      "timestamp": "2025-02-21T11:52:25.552Z",
+      "type": "websocket",
+      "message": "Received message on logs",
+      "data": {
+        "type": "twilio_event",
+        "timestamp": "2025-02-21T11:52:25.455Z",
+        "data": {
+          "event": "connected",
+          "protocol": "Call",
+          "version": "1.0.0"
+        }
+      }
+    },
+    {
+      "timestamp": "2025-02-21T11:52:25.552Z",
+      "type": "websocket",
+      "message": "Received message on logs",
+      "data": {
+        "type": "twilio_event",
+        "timestamp": "2025-02-21T11:52:25.455Z",
+        "data": {
+          "event": "start",
+          "sequenceNumber": "1",
+          "start": {
+            "accountSid": "ACab6a3b51e6078865e1e39e8005dc2bcd",
+            "streamSid": "MZc50ebce4d1e3a03f0462661f3d911c6a",
+            "callSid": "CA3842b8b7a97a5ba16a5a26f8c26cb46f",
+            "tracks": [
+              "inbound"
+            ],
+            "mediaFormat": {
+              "encoding": "audio/x-mulaw",
+              "sampleRate": 8000,
+              "channels": 1
+            },
+            "customParameters": {
+              "format": "audio/x-mulaw",
+              "rate": "8000",
+              "channels": "1",
+              "track": "inbound"
+            }
+          },
+          "streamSid": "MZc50ebce4d1e3a03f0462661f3d911c6a"
+        }
+      }
+    },
+    {
+      "timestamp": "2025-02-21T11:52:26.343Z",
+      "type": "call",
+      "message": "Updated status: in-progress"
+    },
+    {
+      "timestamp": "2025-02-21T11:52:26.853Z",
+      "type": "websocket",
+      "message": "Received message on logs",
+      "data": {
+        "type": "twilio_event",
+        "data": {
+          "event": "status",
+          "callSid": "CA3842b8b7a97a5ba16a5a26f8c26cb46f",
+          "status": "completed",
+          "timestamp": "2025-02-21T11:52:26.728Z"
+        }
+      }
+    },
+    {
+      "timestamp": "2025-02-21T11:52:27.877Z",
+      "type": "call",
+      "message": "Updated status: completed"
+    },
+    {
+      "timestamp": "2025-02-21T11:52:28.953Z",
+      "type": "call",
+      "message": "Event: undefined at undefined"
+    },
+    {
+      "timestamp": "2025-02-21T11:52:28.953Z",
+      "type": "call",
+      "message": "Event: undefined at undefined"
+    },
+    {
+      "timestamp": "2025-02-21T11:52:28.953Z",
+      "type": "call",
+      "message": "Event: undefined at undefined"
+    },
+    {
+      "timestamp": "2025-02-21T11:52:28.953Z",
+      "type": "call",
+      "message": "Event: undefined at undefined"
+    },
+    {
+      "timestamp": "2025-02-21T11:52:28.953Z",
+      "type": "call",
+      "message": "Event: undefined at undefined"
+    },
+    {
+      "timestamp": "2025-02-21T11:52:28.953Z",
+      "type": "call",
+      "message": "Event: undefined at undefined"
+    },
+    {
+      "timestamp": "2025-02-21T11:52:28.953Z",
+      "type": "call",
+      "message": "Call initiated",
+      "data": {
+        "callSid": "CA3842b8b7a97a5ba16a5a26f8c26cb46f"
+      }
+    },
+    {
+      "timestamp": "2025-02-21T11:52:28.953Z",
+      "type": "call",
+      "message": "Monitoring call status..."
+    },
+    {
+      "timestamp": "2025-02-21T11:52:29.487Z",
+      "type": "call",
+      "message": "Call status: completed",
+      "data": {
+        "sid": "CA3842b8b7a97a5ba16a5a26f8c26cb46f",
+        "dateCreated": "2025-02-21T11:52:20.000Z",
+        "dateUpdated": "2025-02-21T11:52:26.000Z",
+        "parentCallSid": null,
+        "accountSid": "ACab6a3b51e6078865e1e39e8005dc2bcd",
+        "to": "+60393880467",
+        "toFormatted": "+60393880467",
+        "from": "+60393880542",
+        "fromFormatted": "+60393880542",
+        "phoneNumberSid": "PN94c5aeb92ffe04fb7b04617379d7848c",
+        "status": "completed",
+        "startTime": "2025-02-21T11:52:22.000Z",
+        "endTime": "2025-02-21T11:52:26.000Z",
+        "duration": "4",
+        "price": null,
+        "priceUnit": "USD",
+        "direction": "outbound-api",
+        "answeredBy": null,
+        "apiVersion": "2010-04-01",
+        "forwardedFrom": "+60393880467",
+        "groupSid": null,
+        "callerName": "",
+        "queueTime": "0",
+        "trunkSid": "",
+        "uri": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA3842b8b7a97a5ba16a5a26f8c26cb46f.json",
+        "subresourceUris": {
+          "notifications": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA3842b8b7a97a5ba16a5a26f8c26cb46f/Notifications.json",
+          "user_defined_messages": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA3842b8b7a97a5ba16a5a26f8c26cb46f/UserDefinedMessages.json",
+          "transcriptions": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA3842b8b7a97a5ba16a5a26f8c26cb46f/Transcriptions.json",
+          "recordings": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA3842b8b7a97a5ba16a5a26f8c26cb46f/Recordings.json",
+          "streams": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA3842b8b7a97a5ba16a5a26f8c26cb46f/Streams.json",
+          "payments": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA3842b8b7a97a5ba16a5a26f8c26cb46f/Payments.json",
+          "user_defined_message_subscriptions": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA3842b8b7a97a5ba16a5a26f8c26cb46f/UserDefinedMessageSubscriptions.json",
+          "siprec": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA3842b8b7a97a5ba16a5a26f8c26cb46f/Siprec.json",
+          "events": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA3842b8b7a97a5ba16a5a26f8c26cb46f/Events.json"
+        }
+      }
+    },
+    {
+      "timestamp": "2025-02-21T11:52:29.487Z",
+      "type": "websocket",
+      "message": "Collecting final logs..."
+    }
+  ]
+}

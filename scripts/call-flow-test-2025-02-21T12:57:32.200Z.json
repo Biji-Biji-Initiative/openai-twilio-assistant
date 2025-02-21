@@ -1,0 +1,166 @@
+{
+  "timestamp": "2025-02-21T12:57:32.200Z",
+  "callSid": "CA4275364b8681a3eefecc1697a678eec4",
+  "logs": [
+    {
+      "timestamp": "2025-02-21T12:56:53.033Z",
+      "type": "websocket",
+      "message": "Connecting to logs endpoint..."
+    },
+    {
+      "timestamp": "2025-02-21T12:56:53.438Z",
+      "type": "websocket",
+      "message": "Connected to logs endpoint"
+    },
+    {
+      "timestamp": "2025-02-21T12:56:53.438Z",
+      "type": "websocket",
+      "message": "Connecting to call endpoint..."
+    },
+    {
+      "timestamp": "2025-02-21T12:56:53.448Z",
+      "type": "websocket",
+      "message": "Received message on logs",
+      "data": {
+        "type": "status",
+        "message": "WebSocket connection established"
+      }
+    },
+    {
+      "timestamp": "2025-02-21T12:56:53.673Z",
+      "type": "websocket",
+      "message": "Connection closed for logs"
+    },
+    {
+      "timestamp": "2025-02-21T12:56:53.763Z",
+      "type": "websocket",
+      "message": "Connected to call endpoint"
+    },
+    {
+      "timestamp": "2025-02-21T12:56:53.764Z",
+      "type": "call",
+      "message": "Initiating test call..."
+    },
+    {
+      "timestamp": "2025-02-21T12:56:53.987Z",
+      "type": "websocket",
+      "message": "Connection closed for call"
+    },
+    {
+      "timestamp": "2025-02-21T12:56:54.088Z",
+      "type": "websocket",
+      "message": "Connected to logs endpoint"
+    },
+    {
+      "timestamp": "2025-02-21T12:56:54.124Z",
+      "type": "websocket",
+      "message": "Logs: WebSocket connection established"
+    },
+    {
+      "timestamp": "2025-02-21T12:56:54.821Z",
+      "type": "call",
+      "message": "Call initiated with SID: CA4275364b8681a3eefecc1697a678eec4"
+    },
+    {
+      "timestamp": "2025-02-21T12:56:55.108Z",
+      "type": "call",
+      "message": "Twilio: {\"event\":\"status\",\"callSid\":\"CA4275364b8681a3eefecc1697a678eec4\",\"status\":\"initiated\",\"timestamp\":\"2025-02-21T12:56:55.029Z\"}"
+    },
+    {
+      "timestamp": "2025-02-21T12:56:56.173Z",
+      "type": "call",
+      "message": "Twilio: {\"event\":\"status\",\"callSid\":\"CA4275364b8681a3eefecc1697a678eec4\",\"status\":\"ringing\",\"timestamp\":\"2025-02-21T12:56:56.111Z\"}"
+    },
+    {
+      "timestamp": "2025-02-21T12:56:56.851Z",
+      "type": "call",
+      "message": "Twilio: {\"event\":\"status\",\"callSid\":\"CA4275364b8681a3eefecc1697a678eec4\",\"status\":\"in-progress\",\"timestamp\":\"2025-02-21T12:56:56.777Z\"}"
+    },
+    {
+      "timestamp": "2025-02-21T12:56:59.738Z",
+      "type": "call",
+      "message": "Twilio: {\"event\":\"connected\",\"protocol\":\"Call\",\"version\":\"1.0.0\"}"
+    },
+    {
+      "timestamp": "2025-02-21T12:56:59.738Z",
+      "type": "call",
+      "message": "Twilio: {\"event\":\"start\",\"sequenceNumber\":\"1\",\"start\":{\"accountSid\":\"ACab6a3b51e6078865e1e39e8005dc2bcd\",\"streamSid\":\"MZ8034a29e22f52047a5bc1b962c6dbff2\",\"callSid\":\"CA42a008e066bfbc0f3ac832e73bea0252\",\"tracks\":[\"inbound\"],\"mediaFormat\":{\"encoding\":\"audio/x-mulaw\",\"sampleRate\":8000,\"channels\":1},\"customParameters\":{\"channels\":\"1\",\"rate\":\"8000\",\"track\":\"inbound\",\"format\":\"audio/x-mulaw\"}},\"streamSid\":\"MZ8034a29e22f52047a5bc1b962c6dbff2\"}"
+    },
+    {
+      "timestamp": "2025-02-21T12:56:59.821Z",
+      "type": "call",
+      "message": "Twilio: {\"event\":\"connected\",\"protocol\":\"Call\",\"version\":\"1.0.0\"}"
+    },
+    {
+      "timestamp": "2025-02-21T12:56:59.821Z",
+      "type": "call",
+      "message": "Twilio: {\"event\":\"start\",\"sequenceNumber\":\"1\",\"start\":{\"accountSid\":\"ACab6a3b51e6078865e1e39e8005dc2bcd\",\"streamSid\":\"MZ1193467244511d9d2b69878fb3657b56\",\"callSid\":\"CA4275364b8681a3eefecc1697a678eec4\",\"tracks\":[\"inbound\"],\"mediaFormat\":{\"encoding\":\"audio/x-mulaw\",\"sampleRate\":8000,\"channels\":1},\"customParameters\":{\"rate\":\"8000\",\"format\":\"audio/x-mulaw\",\"channels\":\"1\",\"track\":\"inbound\"}},\"streamSid\":\"MZ1193467244511d9d2b69878fb3657b56\"}"
+    },
+    {
+      "timestamp": "2025-02-21T12:57:00.846Z",
+      "type": "call",
+      "message": "Twilio: {\"event\":\"stop\",\"sequenceNumber\":\"65\",\"streamSid\":\"MZ1193467244511d9d2b69878fb3657b56\",\"stop\":{\"accountSid\":\"ACab6a3b51e6078865e1e39e8005dc2bcd\",\"callSid\":\"CA4275364b8681a3eefecc1697a678eec4\"}}"
+    },
+    {
+      "timestamp": "2025-02-21T12:57:01.622Z",
+      "type": "call",
+      "message": "Call initiated",
+      "data": {
+        "callSid": "CA4275364b8681a3eefecc1697a678eec4"
+      }
+    },
+    {
+      "timestamp": "2025-02-21T12:57:01.622Z",
+      "type": "call",
+      "message": "Monitoring call status..."
+    },
+    {
+      "timestamp": "2025-02-21T12:57:02.199Z",
+      "type": "call",
+      "message": "Call status: completed",
+      "data": {
+        "sid": "CA4275364b8681a3eefecc1697a678eec4",
+        "dateCreated": "2025-02-21T12:56:54.000Z",
+        "dateUpdated": "2025-02-21T12:57:00.000Z",
+        "parentCallSid": null,
+        "accountSid": "ACab6a3b51e6078865e1e39e8005dc2bcd",
+        "to": "+60393880467",
+        "toFormatted": "+60393880467",
+        "from": "+60393880542",
+        "fromFormatted": "+60393880542",
+        "phoneNumberSid": "PN94c5aeb92ffe04fb7b04617379d7848c",
+        "status": "completed",
+        "startTime": "2025-02-21T12:56:56.000Z",
+        "endTime": "2025-02-21T12:57:00.000Z",
+        "duration": "4",
+        "price": null,
+        "priceUnit": "USD",
+        "direction": "outbound-api",
+        "answeredBy": null,
+        "apiVersion": "2010-04-01",
+        "forwardedFrom": "+60393880467",
+        "groupSid": null,
+        "callerName": "",
+        "queueTime": "0",
+        "trunkSid": "",
+        "uri": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA4275364b8681a3eefecc1697a678eec4.json",
+        "subresourceUris": {
+          "notifications": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA4275364b8681a3eefecc1697a678eec4/Notifications.json",
+          "user_defined_messages": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA4275364b8681a3eefecc1697a678eec4/UserDefinedMessages.json",
+          "transcriptions": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA4275364b8681a3eefecc1697a678eec4/Transcriptions.json",
+          "recordings": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA4275364b8681a3eefecc1697a678eec4/Recordings.json",
+          "streams": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA4275364b8681a3eefecc1697a678eec4/Streams.json",
+          "payments": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA4275364b8681a3eefecc1697a678eec4/Payments.json",
+          "user_defined_message_subscriptions": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA4275364b8681a3eefecc1697a678eec4/UserDefinedMessageSubscriptions.json",
+          "siprec": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA4275364b8681a3eefecc1697a678eec4/Siprec.json",
+          "events": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA4275364b8681a3eefecc1697a678eec4/Events.json"
+        }
+      }
+    },
+    {
+      "timestamp": "2025-02-21T12:57:02.199Z",
+      "type": "websocket",
+      "message": "Collecting final logs..."
+    }
+  ]
+}

@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "Scripts for managing Twilio-OpenAI integration",
   "scripts": {
-    "validate": "ts-node connection.ts",
-    "test:call": "ts-node call-flow.ts",
-    "logs:collect": "ts-node collect-logs.ts"
+    "validate": "DEBUG=* ts-node connection.ts",
+    "test:call": "DEBUG=* ts-node call-flow.ts",
+    "logs:collect": "DEBUG=* ts-node collect-logs.ts"
   },
   "dependencies": {
     "axios": "^1.5.1",

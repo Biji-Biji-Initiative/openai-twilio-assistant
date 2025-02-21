@@ -15,7 +15,7 @@ export async function POST(request: Request) {
     console.log('Creating call:', { from, to });
 
     const call = await client.calls.create({
-      url: `${baseUrl}/twiml`,
+      url: `${baseUrl}/api/call/twiml`,
       to: to,
       from: from,
       statusCallback: `${baseUrl}/api/call/status`,

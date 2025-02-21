@@ -1,7 +1,7 @@
 import WebSocket from 'ws';
 import dotenv from 'dotenv';
 import path from 'path';
-import { twilio } from 'twilio';
+import { Twilio } from 'twilio';
 import { writeFileSync } from 'fs';
 
 // Load environment variables
@@ -23,9 +23,9 @@ class CallFlowTester {
   private twilioClient: any;
 
   constructor() {
-    this.twilioClient = twilio(
-      process.env.TWILIO_ACCOUNT_SID,
-      process.env.TWILIO_AUTH_TOKEN
+    this.twilioClient = new Twilio(
+      process.env.TWILIO_ACCOUNT_SID!,
+      process.env.TWILIO_AUTH_TOKEN!
     );
   }
 
@@ -53,7 +53,9 @@ class CallFlowTester {
   private async connectWebSocket(endpoint: 'call' | 'logs'): Promise<WebSocket> {
     return new Promise((resolve, reject) => {
       const ngrokDomain = process.env.NGROK_DOMAIN || 'mereka.ngrok.io';
-      const ws = new WebSocket(`wss://${ngrokDomain}/${endpoint}`);
+      const ws = new WebSocket(`wss://${ngrokDomain}/${endpoint}`, {
+        rejectUnauthorized: false // For self-signed certs
+      });
       
       const timeout = setTimeout(() => {
         ws.close();
@@ -95,11 +97,85 @@ class CallFlowTester {
 
   private async makeCall(): Promise<string> {
     try {
-      const call = await this.twilioClient.calls.create({
-        to: process.env.TWILIO_PHONE_NUMBER,
-        from: process.env.TWILIO_OUTBOUND_NUMBER,
-        url: `https://${process.env.NGROK_DOMAIN}/twiml`
+      // Connect to logs endpoint first
+      const logsWs = new WebSocket(`wss://${process.env.NGROK_DOMAIN}/logs`, {
+        rejectUnauthorized: false
       });
+      
+      logsWs.on('message', (data) => {
+        const msg = JSON.parse(data.toString());
+        if (msg.type === 'status') {
+          this.log('websocket', `Logs: ${msg.message}`);
+        } else if (msg.type === 'twilio_event') {
+          this.log('call', `Twilio: ${JSON.stringify(msg.data)}`);
+        } else if (msg.type === 'model_event') {
+          this.log('model', `Model: ${JSON.stringify(msg)}`);
+        } else if (msg.type === 'session.update') {
+          this.log('model', `OpenAI Session: ${JSON.stringify(msg)}`);
+        } else if (msg.type && msg.type.startsWith('input_audio')) {
+          this.log('model', `OpenAI Audio: ${JSON.stringify(msg)}`);
+        } else if (msg.type && msg.type.startsWith('response')) {
+          this.log('model', `OpenAI Response: ${JSON.stringify(msg)}`);
+        }
+      });
+      
+      await new Promise<void>((resolve, reject) => {
+        logsWs.on('open', () => {
+          this.log('websocket', 'Connected to logs endpoint');
+          resolve();
+        });
+        logsWs.on('error', (error) => {
+          reject(new Error(`Logs connection failed: ${error.message}`));
+        });
+        setTimeout(() => reject(new Error('Logs connection timeout')), 5000);
+      });
+      
+      // Set up event monitoring
+      let mediaStarted = false;
+      let openAiConnected = false;
+      let transcriptReceived = false;
+
+      logsWs.on('message', (data) => {
+        const msg = JSON.parse(data.toString());
+        if (msg.type === 'twilio_event' && msg.data?.event === 'media') {
+          if (!mediaStarted) {
+            mediaStarted = true;
+            this.log('call', 'Media streaming started');
+          }
+        } else if (msg.type === 'model_event' && msg.data?.type === 'connected') {
+          openAiConnected = true;
+          this.log('model', 'OpenAI connected and ready');
+        } else if (msg.type === 'transcript') {
+          transcriptReceived = true;
+          this.log('model', 'Received transcript:', msg.data);
+        }
+      });
+
+      // Make the call
+      const call = await this.twilioClient.calls.create({
+        to: process.env.TWILIO_INBOUND_NUMBER,
+        from: process.env.TWILIO_OUTBOUND_NUMBER,
+        url: `https://${process.env.NGROK_DOMAIN}/twiml`,
+        statusCallback: `https://${process.env.NGROK_DOMAIN}/api/call/status`,
+        statusCallbackEvent: ['initiated', 'ringing', 'answered', 'completed'],
+        statusCallbackMethod: 'POST'
+      });
+      
+      this.log('call', `Call initiated with SID: ${call.sid}`);
+      
+      // Wait for call to complete while monitoring logs
+      let callStatus = await this.twilioClient.calls(call.sid).fetch();
+      while (callStatus.status !== 'completed' && callStatus.status !== 'failed') {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        callStatus = await this.twilioClient.calls(call.sid).fetch();
+      }
+      
+      // Close logs connection
+      logsWs.close();
+      
+      if (callStatus.status === 'failed') {
+        throw new Error(`Call failed: ${callStatus.status}`);
+      }
       
       this.callSid = call.sid;
       this.log('call', 'Call initiated', { callSid: call.sid });

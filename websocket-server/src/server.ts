@@ -3,7 +3,7 @@ import { WebSocketServer, WebSocket } from "ws";
 import { IncomingMessage } from "http";
 import dotenv from "dotenv";
 import http from "http";
-import { readFileSync } from "fs";
+import { readFileSync, writeFileSync, existsSync, mkdirSync, createWriteStream } from "fs";
 import { join } from "path";
 import cors from "cors";
 import {
@@ -11,8 +11,38 @@ import {
   handleFrontendConnection,
 } from "./sessionManager";
 import functions from "./functionHandlers";
+// TwiML template is loaded directly from file
 
 dotenv.config();
+
+// Create logs directory if it doesn't exist
+const logsDir = join(__dirname, '..', 'logs');
+if (!existsSync(logsDir)) {
+  mkdirSync(logsDir, { recursive: true });
+}
+
+// Create a write stream for logs
+const logStream = createWriteStream(join(logsDir, 'server.log'), { flags: 'a' });
+
+// Override console.log and console.error
+const originalConsoleLog = console.log;
+const originalConsoleError = console.error;
+
+console.log = (...args) => {
+  const message = args.map(arg => 
+    typeof arg === 'object' ? JSON.stringify(arg, null, 2) : arg
+  ).join(' ');
+  logStream.write(`${new Date().toISOString()} [INFO] ${message}\n`);
+  originalConsoleLog.apply(console, args);
+};
+
+console.error = (...args) => {
+  const message = args.map(arg => 
+    typeof arg === 'object' ? JSON.stringify(arg, null, 2) : arg
+  ).join(' ');
+  logStream.write(`${new Date().toISOString()} [ERROR] ${message}\n`);
+  originalConsoleError.apply(console, args);
+};
 
 const PORT = 8081; // Fixed port for consistency
 const PUBLIC_URL = process.env.PUBLIC_URL || "";
@@ -40,6 +70,11 @@ app.get("/public-url", (req, res) => {
   res.json({ publicUrl: PUBLIC_URL });
 });
 
+// Health check endpoint
+app.get("/health", (req, res) => {
+  res.json({ status: "ok" });
+});
+
 // Function to generate TwiML response
 function generateTwiML(req: express.Request) {
   const wsUrl = new URL(PUBLIC_URL);
@@ -65,7 +100,7 @@ function generateTwiML(req: express.Request) {
 app.all(["/twiml", "/api/twiml"], (req, res) => {
   console.log(`TwiML endpoint called via ${req.method} at ${req.path}`);
   const twimlContent = generateTwiML(req);
-  res.type("text/xml").send(twimlContent);
+  res.type('text/xml').send(twimlContent);
 });
 
 // New endpoint to list available tools (schemas)

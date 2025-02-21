@@ -1,0 +1,240 @@
+{
+  "timestamp": "2025-02-21T11:43:54.008Z",
+  "callSid": "CA20126697d833eee3a8282695c4f06b8b",
+  "logs": [
+    {
+      "timestamp": "2025-02-21T11:43:13.334Z",
+      "type": "websocket",
+      "message": "Connecting to logs endpoint..."
+    },
+    {
+      "timestamp": "2025-02-21T11:43:13.699Z",
+      "type": "websocket",
+      "message": "Connected to logs endpoint"
+    },
+    {
+      "timestamp": "2025-02-21T11:43:13.699Z",
+      "type": "websocket",
+      "message": "Connecting to call endpoint..."
+    },
+    {
+      "timestamp": "2025-02-21T11:43:13.700Z",
+      "type": "websocket",
+      "message": "Received message on logs",
+      "data": {
+        "type": "status",
+        "message": "WebSocket connection established"
+      }
+    },
+    {
+      "timestamp": "2025-02-21T11:43:13.968Z",
+      "type": "websocket",
+      "message": "Connection closed for logs"
+    },
+    {
+      "timestamp": "2025-02-21T11:43:14.020Z",
+      "type": "websocket",
+      "message": "Connected to call endpoint"
+    },
+    {
+      "timestamp": "2025-02-21T11:43:14.020Z",
+      "type": "call",
+      "message": "Initiating test call..."
+    },
+    {
+      "timestamp": "2025-02-21T11:43:15.782Z",
+      "type": "call",
+      "message": "Call initiated",
+      "data": {
+        "callSid": "CA20126697d833eee3a8282695c4f06b8b"
+      }
+    },
+    {
+      "timestamp": "2025-02-21T11:43:15.782Z",
+      "type": "call",
+      "message": "Monitoring call status..."
+    },
+    {
+      "timestamp": "2025-02-21T11:43:16.326Z",
+      "type": "call",
+      "message": "Call status: queued",
+      "data": {
+        "sid": "CA20126697d833eee3a8282695c4f06b8b",
+        "dateCreated": "2025-02-21T11:43:15.000Z",
+        "dateUpdated": "2025-02-21T11:43:15.000Z",
+        "parentCallSid": null,
+        "accountSid": "ACab6a3b51e6078865e1e39e8005dc2bcd",
+        "to": "+60393880467",
+        "toFormatted": "+60393880467",
+        "from": "+60393880542",
+        "fromFormatted": "+60393880542",
+        "phoneNumberSid": "PN94c5aeb92ffe04fb7b04617379d7848c",
+        "status": "queued",
+        "startTime": "2025-02-21T11:43:15.000Z",
+        "endTime": null,
+        "duration": "0",
+        "price": null,
+        "priceUnit": "USD",
+        "direction": "outbound-api",
+        "answeredBy": null,
+        "apiVersion": "2010-04-01",
+        "forwardedFrom": null,
+        "groupSid": null,
+        "callerName": "",
+        "queueTime": "0",
+        "trunkSid": "",
+        "uri": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA20126697d833eee3a8282695c4f06b8b.json",
+        "subresourceUris": {
+          "notifications": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA20126697d833eee3a8282695c4f06b8b/Notifications.json",
+          "user_defined_messages": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA20126697d833eee3a8282695c4f06b8b/UserDefinedMessages.json",
+          "transcriptions": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA20126697d833eee3a8282695c4f06b8b/Transcriptions.json",
+          "recordings": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA20126697d833eee3a8282695c4f06b8b/Recordings.json",
+          "streams": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA20126697d833eee3a8282695c4f06b8b/Streams.json",
+          "payments": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA20126697d833eee3a8282695c4f06b8b/Payments.json",
+          "user_defined_message_subscriptions": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA20126697d833eee3a8282695c4f06b8b/UserDefinedMessageSubscriptions.json",
+          "siprec": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA20126697d833eee3a8282695c4f06b8b/Siprec.json",
+          "events": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA20126697d833eee3a8282695c4f06b8b/Events.json"
+        }
+      }
+    },
+    {
+      "timestamp": "2025-02-21T11:43:18.895Z",
+      "type": "call",
+      "message": "Call status: in-progress",
+      "data": {
+        "sid": "CA20126697d833eee3a8282695c4f06b8b",
+        "dateCreated": "2025-02-21T11:43:15.000Z",
+        "dateUpdated": "2025-02-21T11:43:17.000Z",
+        "parentCallSid": null,
+        "accountSid": "ACab6a3b51e6078865e1e39e8005dc2bcd",
+        "to": "+60393880467",
+        "toFormatted": "+60393880467",
+        "from": "+60393880542",
+        "fromFormatted": "+60393880542",
+        "phoneNumberSid": "PN94c5aeb92ffe04fb7b04617379d7848c",
+        "status": "in-progress",
+        "startTime": "2025-02-21T11:43:17.000Z",
+        "endTime": null,
+        "duration": "0",
+        "price": null,
+        "priceUnit": "USD",
+        "direction": "outbound-api",
+        "answeredBy": null,
+        "apiVersion": "2010-04-01",
+        "forwardedFrom": "+60393880467",
+        "groupSid": null,
+        "callerName": "",
+        "queueTime": "0",
+        "trunkSid": "",
+        "uri": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA20126697d833eee3a8282695c4f06b8b.json",
+        "subresourceUris": {
+          "notifications": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA20126697d833eee3a8282695c4f06b8b/Notifications.json",
+          "user_defined_messages": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA20126697d833eee3a8282695c4f06b8b/UserDefinedMessages.json",
+          "transcriptions": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA20126697d833eee3a8282695c4f06b8b/Transcriptions.json",
+          "recordings": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA20126697d833eee3a8282695c4f06b8b/Recordings.json",
+          "streams": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA20126697d833eee3a8282695c4f06b8b/Streams.json",
+          "payments": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA20126697d833eee3a8282695c4f06b8b/Payments.json",
+          "user_defined_message_subscriptions": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA20126697d833eee3a8282695c4f06b8b/UserDefinedMessageSubscriptions.json",
+          "siprec": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA20126697d833eee3a8282695c4f06b8b/Siprec.json",
+          "events": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA20126697d833eee3a8282695c4f06b8b/Events.json"
+        }
+      }
+    },
+    {
+      "timestamp": "2025-02-21T11:43:20.434Z",
+      "type": "websocket",
+      "message": "Connection closed for call"
+    },
+    {
+      "timestamp": "2025-02-21T11:43:21.444Z",
+      "type": "call",
+      "message": "Call status: in-progress",
+      "data": {
+        "sid": "CA20126697d833eee3a8282695c4f06b8b",
+        "dateCreated": "2025-02-21T11:43:15.000Z",
+        "dateUpdated": "2025-02-21T11:43:17.000Z",
+        "parentCallSid": null,
+        "accountSid": "ACab6a3b51e6078865e1e39e8005dc2bcd",
+        "to": "+60393880467",
+        "toFormatted": "+60393880467",
+        "from": "+60393880542",
+        "fromFormatted": "+60393880542",
+        "phoneNumberSid": "PN94c5aeb92ffe04fb7b04617379d7848c",
+        "status": "in-progress",
+        "startTime": "2025-02-21T11:43:17.000Z",
+        "endTime": null,
+        "duration": "0",
+        "price": null,
+        "priceUnit": "USD",
+        "direction": "outbound-api",
+        "answeredBy": null,
+        "apiVersion": "2010-04-01",
+        "forwardedFrom": "+60393880467",
+        "groupSid": null,
+        "callerName": "",
+        "queueTime": "0",
+        "trunkSid": "",
+        "uri": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA20126697d833eee3a8282695c4f06b8b.json",
+        "subresourceUris": {
+          "notifications": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA20126697d833eee3a8282695c4f06b8b/Notifications.json",
+          "user_defined_messages": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA20126697d833eee3a8282695c4f06b8b/UserDefinedMessages.json",
+          "transcriptions": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA20126697d833eee3a8282695c4f06b8b/Transcriptions.json",
+          "recordings": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA20126697d833eee3a8282695c4f06b8b/Recordings.json",
+          "streams": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA20126697d833eee3a8282695c4f06b8b/Streams.json",
+          "payments": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA20126697d833eee3a8282695c4f06b8b/Payments.json",
+          "user_defined_message_subscriptions": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA20126697d833eee3a8282695c4f06b8b/UserDefinedMessageSubscriptions.json",
+          "siprec": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA20126697d833eee3a8282695c4f06b8b/Siprec.json",
+          "events": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA20126697d833eee3a8282695c4f06b8b/Events.json"
+        }
+      }
+    },
+    {
+      "timestamp": "2025-02-21T11:43:24.006Z",
+      "type": "call",
+      "message": "Call status: completed",
+      "data": {
+        "sid": "CA20126697d833eee3a8282695c4f06b8b",
+        "dateCreated": "2025-02-21T11:43:15.000Z",
+        "dateUpdated": "2025-02-21T11:43:21.000Z",
+        "parentCallSid": null,
+        "accountSid": "ACab6a3b51e6078865e1e39e8005dc2bcd",
+        "to": "+60393880467",
+        "toFormatted": "+60393880467",
+        "from": "+60393880542",
+        "fromFormatted": "+60393880542",
+        "phoneNumberSid": "PN94c5aeb92ffe04fb7b04617379d7848c",
+        "status": "completed",
+        "startTime": "2025-02-21T11:43:17.000Z",
+        "endTime": "2025-02-21T11:43:21.000Z",
+        "duration": "4",
+        "price": null,
+        "priceUnit": "USD",
+        "direction": "outbound-api",
+        "answeredBy": null,
+        "apiVersion": "2010-04-01",
+        "forwardedFrom": "+60393880467",
+        "groupSid": null,
+        "callerName": "",
+        "queueTime": "0",
+        "trunkSid": "",
+        "uri": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA20126697d833eee3a8282695c4f06b8b.json",
+        "subresourceUris": {
+          "notifications": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA20126697d833eee3a8282695c4f06b8b/Notifications.json",
+          "user_defined_messages": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA20126697d833eee3a8282695c4f06b8b/UserDefinedMessages.json",
+          "transcriptions": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA20126697d833eee3a8282695c4f06b8b/Transcriptions.json",
+          "recordings": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA20126697d833eee3a8282695c4f06b8b/Recordings.json",
+          "streams": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA20126697d833eee3a8282695c4f06b8b/Streams.json",
+          "payments": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA20126697d833eee3a8282695c4f06b8b/Payments.json",
+          "user_defined_message_subscriptions": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA20126697d833eee3a8282695c4f06b8b/UserDefinedMessageSubscriptions.json",
+          "siprec": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA20126697d833eee3a8282695c4f06b8b/Siprec.json",
+          "events": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA20126697d833eee3a8282695c4f06b8b/Events.json"
+        }
+      }
+    },
+    {
+      "timestamp": "2025-02-21T11:43:24.006Z",
+      "type": "websocket",
+      "message": "Collecting final logs..."
+    }
+  ]
+}

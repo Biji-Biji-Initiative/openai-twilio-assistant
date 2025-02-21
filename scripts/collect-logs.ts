@@ -5,8 +5,8 @@ import { writeFileSync, mkdirSync, existsSync } from 'fs';
 import { execSync } from 'child_process';
 
 // Load environment variables
-dotenv.config({ path: path.join(__dirname, '../../webapp/.env') });
-dotenv.config({ path: path.join(__dirname, '../../websocket-server/.env') });
+dotenv.config({ path: path.join(__dirname, '../webapp/.env') });
+dotenv.config({ path: path.join(__dirname, '../websocket-server/.env') });
 
 interface LogEntry {
   timestamp: string;
@@ -24,7 +24,7 @@ class LogCollector {
 
   constructor() {
     this.currentSession = new Date().toISOString().replace(/[:.]/g, '-');
-    this.logDir = path.join(__dirname, '../../logs', this.currentSession);
+    this.logDir = path.join(__dirname, '../logs', this.currentSession);
     if (!existsSync(this.logDir)) {
       mkdirSync(this.logDir, { recursive: true });
     }
@@ -66,28 +66,28 @@ class LogCollector {
 
   private async collectSystemLogs() {
     try {
-      // Collect PM2 logs if available
+      // Collect ngrok logs from terminal output
       try {
-        const pm2Logs = execSync('pm2 logs --nostream --lines 100').toString();
-        this.log('info', 'system', 'Collected PM2 logs', { pm2Logs });
+        const ngrokLogs = execSync('ps aux | grep ngrok').toString();
+        this.log('info', 'system', 'Collected ngrok process info', { ngrokLogs });
       } catch {
-        this.log('warning', 'system', 'PM2 logs not available');
+        this.log('warning', 'system', 'Ngrok process info not available');
       }
 
-      // Collect ngrok logs
+      // Check WebSocket server status
       try {
-        const ngrokLogs = execSync('tail -n 100 ~/.ngrok2/ngrok.log').toString();
-        this.log('info', 'system', 'Collected ngrok logs', { ngrokLogs });
+        const wsStatus = execSync('lsof -i :8081').toString();
+        this.log('info', 'system', 'WebSocket server status', { wsStatus });
       } catch {
-        this.log('warning', 'system', 'Ngrok logs not available');
+        this.log('warning', 'system', 'WebSocket server not running');
       }
 
-      // Collect application logs
+      // Check webapp status
       try {
-        const appLogs = execSync('tail -n 100 ./websocket-server/logs/app.log').toString();
-        this.log('info', 'system', 'Collected application logs', { appLogs });
+        const webappStatus = execSync('lsof -i :3000').toString();
+        this.log('info', 'system', 'Webapp status', { webappStatus });
       } catch {
-        this.log('warning', 'system', 'Application logs not available');
+        this.log('warning', 'system', 'Webapp not running');
       }
     } catch (error) {
       this.log('error', 'system', 'Failed to collect system logs', error);
@@ -97,7 +97,9 @@ class LogCollector {
   private async connectWebSocket(): Promise<void> {
     return new Promise((resolve, reject) => {
       const ngrokDomain = process.env.NGROK_DOMAIN || 'mereka.ngrok.io';
-      this.wsConnection = new WebSocket(`wss://${ngrokDomain}/logs`);
+      this.wsConnection = new WebSocket(`wss://${ngrokDomain}/logs`, {
+        rejectUnauthorized: false // For self-signed certs
+      });
 
       const timeout = setTimeout(() => {
         if (this.wsConnection) {

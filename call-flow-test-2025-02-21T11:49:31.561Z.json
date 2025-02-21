@@ -1,0 +1,67 @@
+{
+  "timestamp": "2025-02-21T11:49:31.561Z",
+  "callSid": null,
+  "logs": [
+    {
+      "timestamp": "2025-02-21T11:49:29.502Z",
+      "type": "websocket",
+      "message": "Connecting to logs endpoint..."
+    },
+    {
+      "timestamp": "2025-02-21T11:49:30.807Z",
+      "type": "websocket",
+      "message": "Connected to logs endpoint"
+    },
+    {
+      "timestamp": "2025-02-21T11:49:30.807Z",
+      "type": "websocket",
+      "message": "Connecting to call endpoint..."
+    },
+    {
+      "timestamp": "2025-02-21T11:49:30.808Z",
+      "type": "websocket",
+      "message": "Received message on logs",
+      "data": {
+        "type": "status",
+        "message": "WebSocket connection established"
+      }
+    },
+    {
+      "timestamp": "2025-02-21T11:49:31.018Z",
+      "type": "websocket",
+      "message": "Connected to call endpoint"
+    },
+    {
+      "timestamp": "2025-02-21T11:49:31.018Z",
+      "type": "call",
+      "message": "Initiating test call..."
+    },
+    {
+      "timestamp": "2025-02-21T11:49:31.235Z",
+      "type": "call",
+      "message": "Server health check passed"
+    },
+    {
+      "timestamp": "2025-02-21T11:49:31.437Z",
+      "type": "websocket",
+      "message": "WebSocket connection successful"
+    },
+    {
+      "timestamp": "2025-02-21T11:49:31.495Z",
+      "type": "websocket",
+      "message": "Connection closed for call"
+    },
+    {
+      "timestamp": "2025-02-21T11:49:31.561Z",
+      "type": "error",
+      "message": "Failed to initiate call",
+      "data": {}
+    },
+    {
+      "timestamp": "2025-02-21T11:49:31.561Z",
+      "type": "error",
+      "message": "Test failed",
+      "data": {}
+    }
+  ]
+}

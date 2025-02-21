@@ -1,0 +1,52 @@
+{
+  "timestamp": "2025-02-21T11:48:05.901Z",
+  "callSid": null,
+  "logs": [
+    {
+      "timestamp": "2025-02-21T11:48:04.990Z",
+      "type": "websocket",
+      "message": "Connecting to logs endpoint..."
+    },
+    {
+      "timestamp": "2025-02-21T11:48:05.352Z",
+      "type": "websocket",
+      "message": "Connected to logs endpoint"
+    },
+    {
+      "timestamp": "2025-02-21T11:48:05.352Z",
+      "type": "websocket",
+      "message": "Connecting to call endpoint..."
+    },
+    {
+      "timestamp": "2025-02-21T11:48:05.353Z",
+      "type": "websocket",
+      "message": "Received message on logs",
+      "data": {
+        "type": "status",
+        "message": "WebSocket connection established"
+      }
+    },
+    {
+      "timestamp": "2025-02-21T11:48:05.625Z",
+      "type": "websocket",
+      "message": "Connected to call endpoint"
+    },
+    {
+      "timestamp": "2025-02-21T11:48:05.625Z",
+      "type": "call",
+      "message": "Initiating test call..."
+    },
+    {
+      "timestamp": "2025-02-21T11:48:05.901Z",
+      "type": "error",
+      "message": "Failed to initiate call",
+      "data": {}
+    },
+    {
+      "timestamp": "2025-02-21T11:48:05.901Z",
+      "type": "error",
+      "message": "Test failed",
+      "data": {}
+    }
+  ]
+}

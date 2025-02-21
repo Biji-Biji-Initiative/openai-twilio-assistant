@@ -1,0 +1,127 @@
+
+> twilio-realtime-frontend@0.1.0 dev
+> next dev -p 3000 -p 3000
+
+  ▲ Next.js 14.2.5
+  - Local:        http://localhost:3000
+  - Environments: .env
+
+ ✓ Starting...
+2025-02-21T12:43:08.288Z next:router-server:filesystem nextDataRoutes Set(0) {}
+2025-02-21T12:43:08.288Z next:router-server:filesystem dynamicRoutes []
+2025-02-21T12:43:08.288Z next:router-server:filesystem pageFiles Set(0) {}
+2025-02-21T12:43:08.288Z next:router-server:filesystem appFiles Set(0) {}
+2025-02-21T12:43:09.163Z next:jsconfig-paths-plugin tsconfig.json or jsconfig.json paths: { '@/*': [ './*' ] }
+2025-02-21T12:43:09.163Z next:jsconfig-paths-plugin resolved baseUrl: { baseUrl: '/Users/agent-g/Windsurf/Twilio/webapp', isImplicit: true }
+2025-02-21T12:43:09.165Z next:jsconfig-paths-plugin tsconfig.json or jsconfig.json paths: { '@/*': [ './*' ] }
+2025-02-21T12:43:09.165Z next:jsconfig-paths-plugin resolved baseUrl: { baseUrl: '/Users/agent-g/Windsurf/Twilio/webapp', isImplicit: true }
+2025-02-21T12:43:09.171Z next:jsconfig-paths-plugin tsconfig.json or jsconfig.json paths: { '@/*': [ './*' ] }
+2025-02-21T12:43:09.171Z next:jsconfig-paths-plugin resolved baseUrl: { baseUrl: '/Users/agent-g/Windsurf/Twilio/webapp', isImplicit: true }
+ ✓ Ready in 1392ms
+2025-02-21T12:43:21.856Z next:router-server:main requestHandler! /api/health {
+  matchedOutput: null,
+  statusCode: undefined,
+  resHeaders: {},
+  bodyStream: false,
+  parsedUrl: { pathname: '/api/health', query: [Object: null prototype] {} },
+  finished: false
+}
+2025-02-21T12:43:21.856Z next:router-server:main invokeRender /api/health {
+  host: 'localhost:3000',
+  'user-agent': 'curl/8.7.1',
+  accept: '*/*',
+  'x-middleware-invoke': '',
+  'x-invoke-path': '/_not-found',
+  'x-invoke-query': '%7B%7D',
+  'x-invoke-status': '404'
+}
+2025-02-21T12:43:22.149Z next:jsconfig-paths-plugin moduleName did not match any paths pattern next-app-loader
+2025-02-21T12:43:22.151Z next:jsconfig-paths-plugin moduleName did not match any paths pattern next-app-loader
+2025-02-21T12:43:22.151Z next:jsconfig-paths-plugin moduleName did not match any paths pattern next-app-loader
+2025-02-21T12:43:22.152Z next:jsconfig-paths-plugin moduleName did not match any paths pattern next-app-loader
+2025-02-21T12:43:22.153Z next:jsconfig-paths-plugin moduleName did not match any paths pattern next-app-loader
+2025-02-21T12:43:22.153Z next:jsconfig-paths-plugin moduleName did not match any paths pattern next-app-loader
+2025-02-21T12:43:22.244Z next:jsconfig-paths-plugin moduleName did not match any paths pattern react-server-dom-webpack/server.edge
+2025-02-21T12:43:22.245Z next:jsconfig-paths-plugin moduleName did not match any paths pattern react-server-dom-webpack/server.edge
+2025-02-21T12:43:22.247Z next:jsconfig-paths-plugin moduleName did not match any paths pattern react-server-dom-webpack/server.edge
+2025-02-21T12:43:22.247Z next:jsconfig-paths-plugin moduleName did not match any paths pattern react-server-dom-webpack/server.edge
+2025-02-21T12:43:22.253Z next:jsconfig-paths-plugin moduleName did not match any paths pattern @opentelemetry/api
+2025-02-21T12:43:22.254Z next:jsconfig-paths-plugin moduleName did not match any paths pattern @opentelemetry/api
+ ○ Compiling /_not-found ...
+
+
+Source path: /Users/agent-g/Windsurf/Twilio/webapp/app/globals.css
+Setting up new context...
+Finding changed files: 3.755ms
+Reading changed files: 19.318ms
+Sorting candidates: 0.774ms
+Generate rules: 29.444ms
+Build stylesheet: 1.102ms
+Potential classes:  2137
+Active contexts:  1
+JIT TOTAL: 120.179ms
+
+
+ ✓ Compiled /_not-found in 775ms (458 modules)
+2025-02-21T12:43:22.719Z compression no compression: not acceptable
+ GET /api/health 404 in 865ms
+
+
+Source path: /Users/agent-g/Windsurf/Twilio/webapp/app/globals.css
+Finding changed files: 0.995ms
+Reading changed files: 0.074ms
+Sorting candidates: 0.002ms
+Generate rules: 0.083ms
+Build stylesheet: 0.001ms
+Potential classes:  1
+Active contexts:  1
+JIT TOTAL: 11.847ms
+
+
+ ✓ Compiled in 99ms (237 modules)
+2025-02-21T12:43:32.300Z next:router-server:main requestHandler! / {
+  matchedOutput: {
+    type: 'appFile',
+    fsPath: undefined,
+    locale: undefined,
+    itemsRoot: undefined,
+    itemPath: '/'
+  },
+  statusCode: undefined,
+  resHeaders: {},
+  bodyStream: false,
+  parsedUrl: { pathname: '/', query: [Object: null prototype] {} },
+  finished: true
+}
+2025-02-21T12:43:32.301Z next:router-server:main invokeRender / {
+  host: 'localhost:3000',
+  'user-agent': 'curl/8.7.1',
+  accept: '*/*',
+  'x-middleware-invoke': '',
+  'x-invoke-path': '/',
+  'x-invoke-query': '%7B%7D',
+  'x-invoke-output': '/'
+}
+2025-02-21T12:43:32.314Z next:jsconfig-paths-plugin moduleName did not match any paths pattern next-app-loader
+2025-02-21T12:43:32.316Z next:jsconfig-paths-plugin moduleName did not match any paths pattern next-app-loader
+2025-02-21T12:43:32.316Z next:jsconfig-paths-plugin moduleName did not match any paths pattern next-app-loader
+2025-02-21T12:43:32.316Z next:jsconfig-paths-plugin moduleName did not match any paths pattern next-app-loader
+2025-02-21T12:43:32.412Z next:jsconfig-paths-plugin moduleName did not match any paths pattern next-app-loader
+2025-02-21T12:43:32.412Z next:jsconfig-paths-plugin moduleName did not match any paths pattern next-app-loader
+2025-02-21T12:43:32.412Z next:jsconfig-paths-plugin moduleName did not match any paths pattern next-app-loader
+2025-02-21T12:43:32.413Z next:jsconfig-paths-plugin moduleName did not match any paths pattern next-app-loader
+2025-02-21T12:43:32.418Z next:jsconfig-paths-plugin moduleName did not match any paths pattern next-metadata-image-loader
+2025-02-21T12:43:32.419Z next:jsconfig-paths-plugin moduleName did not match any paths pattern next-metadata-image-loader
+2025-02-21T12:43:32.420Z next:jsconfig-paths-plugin moduleName did not match any paths pattern next-metadata-image-loader
+2025-02-21T12:43:32.420Z next:jsconfig-paths-plugin moduleName did not match any paths pattern next-metadata-image-loader
+2025-02-21T12:43:32.420Z next:jsconfig-paths-plugin skipping request as it is an absolute path /Users/agent-g/Windsurf/Twilio/webapp/components/main-tabs
+2025-02-21T12:43:32.421Z next:jsconfig-paths-plugin skipping request as it is an absolute path /Users/agent-g/Windsurf/Twilio/webapp/components/main-tabs
+2025-02-21T12:43:32.422Z next:jsconfig-paths-plugin skipping request as it is an absolute path /Users/agent-g/Windsurf/Twilio/webapp/components/main-tabs
+2025-02-21T12:43:32.422Z next:jsconfig-paths-plugin skipping request as it is an absolute path /Users/agent-g/Windsurf/Twilio/webapp/components/main-tabs
+2025-02-21T12:43:32.425Z next:jsconfig-paths-plugin skipping request as it is inside node_modules url
+2025-02-21T12:43:32.425Z next:jsconfig-paths-plugin skipping request as it is inside node_modules path
+2025-02-21T12:43:32.426Z next:jsconfig-paths-plugin skipping request as it is inside node_modules url
+2025-02-21T12:43:32.429Z next:jsconfig-paths-plugin skipping request as it is inside node_modules path
+ ✓ Compiled / in 420ms (859 modules)
+2025-02-21T12:43:32.836Z compression no compression: not acceptable
+ GET / 200 in 535ms

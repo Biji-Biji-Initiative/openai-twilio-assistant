@@ -1,0 +1,54 @@
++++ dirname ./start.sh
+++ cd .
+++ pwd
++ SOURCE_DIR=/Users/agent-g/Windsurf/Twilio/scripts
+++ cd /Users/agent-g/Windsurf/Twilio/scripts/..
+++ pwd
++ SCRIPT_DIR=/Users/agent-g/Windsurf/Twilio
++ source /Users/agent-g/Windsurf/Twilio/scripts/utils.sh
+++ set -euo pipefail
+++ IFS='
+	'
+++ WEBAPP_PORT=3000
+++ WEBSOCKET_PORT=8081
+++ NGROK_PORT=4040
+++ NGROK_DOMAIN=mereka.ngrok.io
+++ LOG_DIR=logs
+++ MAX_ATTEMPTS=30
+++ SLEEP_INTERVAL=1
+++ RED='\033[0;31m'
+++ GREEN='\033[0;32m'
+++ YELLOW='\033[1;33m'
+++ BLUE='\033[0;34m'
+++ NC='\033[0m'
+++ CHECK_MARK=$'â\234\223'
+++ CROSS_MARK=$'â\234\227'
+++ INFO_MARK=$'â\204¹'
+++ export -f log_info log_success log_error log_warning
+++ export -f cleanup check_dependencies check_port
+++ export -f create_webapp_env create_websocket_env
+++ export -f wait_for_service check_ngrok install_deps
++ set -euo pipefail
++ WEBAPP_PID=
++ WS_PID=
++ NGROK_PID=
++ main
++ trap cleanup EXIT INT TERM
++ cd /Users/agent-g/Windsurf/Twilio/scripts/..
++ log_info '=== Starting Twilio Demo Setup ==='
++ echo -e '\033[0;34mâ„¹ === Starting Twilio Demo Setup ===\033[0m'
+[0;34mâ„¹ === Starting Twilio Demo Setup ===[0m
++ cleanup
++ do_cleanup
++ [[ '' == \t\r\u\e ]]
++ CLEANUP_IN_PROGRESS=true
++ log_info 'Cleaning up processes...'
++ echo -e '\033[0;34mâ„¹ Cleaning up processes...\033[0m'
+[0;34mâ„¹ Cleaning up processes...[0m
++ for port in '$WEBAPP_PORT' '$WEBSOCKET_PORT' '$NGROK_PORT'
+++ lsof -ti :3000
++ pid=
++ cleanup
++ do_cleanup
++ [[ true == \t\r\u\e ]]
++ return 0

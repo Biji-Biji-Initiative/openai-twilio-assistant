@@ -1,7 +1,0 @@
-version: "2"
-authtoken: 2sy7rzIlzrNhrpsYw151gKDIXcy_3aPfJJCdxwkyJ19KF9XnF
-tunnels:
-  websocket:
-    proto: http
-    addr: 8081
-    hostname: mereka.ngrok.io

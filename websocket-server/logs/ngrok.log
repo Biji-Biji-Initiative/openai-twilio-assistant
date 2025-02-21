@@ -1,0 +1,12 @@
+t=2025-02-21T23:41:13+1100 lvl=info msg="open config file" path=/Users/agent-g/Windsurf/Twilio/websocket-server/ngrok.yml err=nil
+t=2025-02-21T23:41:13+1100 lvl=info msg="starting web service" obj=web addr=127.0.0.1:4040 allow_hosts=[]
+t=2025-02-21T23:41:14+1100 lvl=info msg="client session established" obj=tunnels.session
+t=2025-02-21T23:41:14+1100 lvl=info msg="tunnel session started" obj=tunnels.session
+t=2025-02-21T23:41:14+1100 lvl=info msg="started tunnel" obj=tunnels name=websocket addr=http://localhost:8081 url=https://mereka.ngrok.io
+t=2025-02-21T23:41:14+1100 lvl=info msg=start pg=/api/tunnels id=01cebdcafad4dab4
+t=2025-02-21T23:41:14+1100 lvl=info msg=end pg=/api/tunnels id=01cebdcafad4dab4 status=200 dur=450.208µs
+t=2025-02-21T23:41:17+1100 lvl=info msg="update available" obj=updater
+t=2025-02-21T23:41:34+1100 lvl=info msg="received stop request" obj=app stopReq="{err:<nil> restart:false}"
+t=2025-02-21T23:41:34+1100 lvl=info msg="session closing" obj=tunnels.session err=nil
+t=2025-02-21T23:41:34+1100 lvl=info msg="accept failed" obj=tunnels.session obj=csess id=ff0fb6f36ef8 err="reconnecting session closed"
+t=2025-02-21T23:41:34+1100 lvl=info msg="no more state changes" obj=tunnels.session

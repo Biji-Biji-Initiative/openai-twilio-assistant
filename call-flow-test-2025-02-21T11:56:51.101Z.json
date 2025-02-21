@@ -1,0 +1,126 @@
+{
+  "timestamp": "2025-02-21T11:56:51.101Z",
+  "callSid": "CA2cbc8fb147a825b9995ec6c083d22bcc",
+  "logs": [
+    {
+      "timestamp": "2025-02-21T11:56:11.701Z",
+      "type": "websocket",
+      "message": "Connecting to logs endpoint..."
+    },
+    {
+      "timestamp": "2025-02-21T11:56:12.167Z",
+      "type": "websocket",
+      "message": "Connected to logs endpoint"
+    },
+    {
+      "timestamp": "2025-02-21T11:56:12.167Z",
+      "type": "websocket",
+      "message": "Connecting to call endpoint..."
+    },
+    {
+      "timestamp": "2025-02-21T11:56:12.168Z",
+      "type": "websocket",
+      "message": "Received message on logs",
+      "data": {
+        "type": "status",
+        "message": "WebSocket connection established"
+      }
+    },
+    {
+      "timestamp": "2025-02-21T11:56:12.501Z",
+      "type": "websocket",
+      "message": "Connected to call endpoint"
+    },
+    {
+      "timestamp": "2025-02-21T11:56:12.501Z",
+      "type": "call",
+      "message": "Initiating test call..."
+    },
+    {
+      "timestamp": "2025-02-21T11:56:12.834Z",
+      "type": "websocket",
+      "message": "Connected to logs endpoint"
+    },
+    {
+      "timestamp": "2025-02-21T11:56:12.868Z",
+      "type": "websocket",
+      "message": "Logs: WebSocket connection established"
+    },
+    {
+      "timestamp": "2025-02-21T11:56:12.918Z",
+      "type": "websocket",
+      "message": "Connection closed for logs"
+    },
+    {
+      "timestamp": "2025-02-21T11:56:13.679Z",
+      "type": "call",
+      "message": "Call initiated with SID: CA2cbc8fb147a825b9995ec6c083d22bcc"
+    },
+    {
+      "timestamp": "2025-02-21T11:56:18.223Z",
+      "type": "websocket",
+      "message": "Connection closed for call"
+    },
+    {
+      "timestamp": "2025-02-21T11:56:20.549Z",
+      "type": "call",
+      "message": "Call initiated",
+      "data": {
+        "callSid": "CA2cbc8fb147a825b9995ec6c083d22bcc"
+      }
+    },
+    {
+      "timestamp": "2025-02-21T11:56:20.549Z",
+      "type": "call",
+      "message": "Monitoring call status..."
+    },
+    {
+      "timestamp": "2025-02-21T11:56:21.100Z",
+      "type": "call",
+      "message": "Call status: completed",
+      "data": {
+        "sid": "CA2cbc8fb147a825b9995ec6c083d22bcc",
+        "dateCreated": "2025-02-21T11:56:13.000Z",
+        "dateUpdated": "2025-02-21T11:56:19.000Z",
+        "parentCallSid": null,
+        "accountSid": "ACab6a3b51e6078865e1e39e8005dc2bcd",
+        "to": "+60393880467",
+        "toFormatted": "+60393880467",
+        "from": "+60393880542",
+        "fromFormatted": "+60393880542",
+        "phoneNumberSid": "PN94c5aeb92ffe04fb7b04617379d7848c",
+        "status": "completed",
+        "startTime": "2025-02-21T11:56:15.000Z",
+        "endTime": "2025-02-21T11:56:19.000Z",
+        "duration": "4",
+        "price": null,
+        "priceUnit": "USD",
+        "direction": "outbound-api",
+        "answeredBy": null,
+        "apiVersion": "2010-04-01",
+        "forwardedFrom": "+60393880467",
+        "groupSid": null,
+        "callerName": "",
+        "queueTime": "0",
+        "trunkSid": "",
+        "uri": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA2cbc8fb147a825b9995ec6c083d22bcc.json",
+        "subresourceUris": {
+          "notifications": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA2cbc8fb147a825b9995ec6c083d22bcc/Notifications.json",
+          "user_defined_messages": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA2cbc8fb147a825b9995ec6c083d22bcc/UserDefinedMessages.json",
+          "transcriptions": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA2cbc8fb147a825b9995ec6c083d22bcc/Transcriptions.json",
+          "recordings": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA2cbc8fb147a825b9995ec6c083d22bcc/Recordings.json",
+          "streams": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA2cbc8fb147a825b9995ec6c083d22bcc/Streams.json",
+          "payments": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA2cbc8fb147a825b9995ec6c083d22bcc/Payments.json",
+          "user_defined_message_subscriptions": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA2cbc8fb147a825b9995ec6c083d22bcc/UserDefinedMessageSubscriptions.json",
+          "siprec": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA2cbc8fb147a825b9995ec6c083d22bcc/Siprec.json",
+          "events": "/2010-04-01/Accounts/ACab6a3b51e6078865e1e39e8005dc2bcd/Calls/CA2cbc8fb147a825b9995ec6c083d22bcc/Events.json"
+        }
+      }
+    },
+    {
+      "timestamp": "2025-02-21T11:56:21.100Z",
+      "type": "websocket",
+      "message": "Collecting final logs..."
+    }
+  ]
+}
